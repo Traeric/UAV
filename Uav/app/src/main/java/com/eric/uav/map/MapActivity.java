@@ -25,6 +25,7 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.eric.uav.R;
+import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
@@ -41,6 +42,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     // 底部栏相关
     private TextView homepageActivityView;
     private TextView profileActivityView;
+    private TextView applicationActivityView;
 
     private static final int M_PERMISSION_CODE = 1001;
 
@@ -60,6 +62,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         homepageActivityView.setOnClickListener(this);
         profileActivityView = findViewById(R.id.personnal_activity);
         profileActivityView.setOnClickListener(this);
+        applicationActivityView = findViewById(R.id.application_activity);
+        applicationActivityView.setOnClickListener(this);
 
         // 获取权限
         getPermission();
@@ -111,6 +115,14 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.personnal_activity: {
                 // 跳转到首页
                 Intent intent = new Intent(MapActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                // 去掉入场动画
+                overridePendingTransition(0, 0);
+            }
+            break;
+            case R.id.application_activity: {
+                // 跳转到首页
+                Intent intent = new Intent(MapActivity.this, ApplicationActivity.class);
                 startActivity(intent);
                 // 去掉入场动画
                 overridePendingTransition(0, 0);

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.eric.uav.R;
 
 /**
- * A fragment with a Google +1 button.
+ * A fragment with a Google +demo button.
  */
 public class SetPasswordFragment extends Fragment {
     @Nullable

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eric.uav.R;
+import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.map.MapActivity;
 
@@ -14,6 +15,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     // 底部栏相关状态
     private TextView homepageActivity;
     private TextView mapActivity;
+    private TextView applicationActivityView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         homepageActivity.setOnClickListener(this);
         mapActivity = findViewById(R.id.map_activity);
         mapActivity.setOnClickListener(this);
+        applicationActivityView = findViewById(R.id.application_activity);
+        applicationActivityView.setOnClickListener(this);
     }
 
     @Override
@@ -48,6 +52,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
+            break;
+            case R.id.application_activity: {
+                Intent intent = new Intent(ProfileActivity.this, ApplicationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+            }
+            break;
             default:
                 break;
         }

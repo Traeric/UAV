@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                         builder.hide();
                         if ("0".equals(result)) {
                             Dialog.tipsDialog(LoginActivity.this, "该邮箱还未注册！");
-                        } else if ("1".equals(result)) {
+                        } else if ("demo".equals(result)) {
                             // 登录成功
                             // 将邮箱存到SharedPreferences中，方便后面使用
                             editor.putString("email", userName);

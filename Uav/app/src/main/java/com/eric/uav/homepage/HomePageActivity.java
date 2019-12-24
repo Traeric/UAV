@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eric.uav.R;
+import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
@@ -42,6 +43,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     // 底部栏相关
     private TextView mapActivity;
     private TextView profileActivity;
+    private TextView applicationActivity;
 
     // 搜索到的蓝牙设备会放到这个列表里面
     private List<BluetoothDevice> searchedBlueToothList = new LinkedList<>();
@@ -99,11 +101,17 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        // 供存储使用
-        SharedPreferences sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
-        // 检查是否登录
-        String loginStatus = sharedPreferences.getString("logined", "false");
-        if (!"true".equals(loginStatus)) {
+        try {
+            // 供存储使用
+            SharedPreferences sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
+            // 检查是否登录
+            String loginStatus = sharedPreferences.getString("logined", "false");
+            if (!"true".equals(loginStatus)) {
+                // 没有登录，直接跳转首页
+                Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        } catch (Exception e) {
             // 没有登录，直接跳转首页
             Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -124,6 +132,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         mapActivity.setOnClickListener(this);
         profileActivity = findViewById(R.id.personnal_activity);
         profileActivity.setOnClickListener(this);
+        applicationActivity = findViewById(R.id.application_activity);
+        applicationActivity.setOnClickListener(this);
 
         searchingTipsView = findViewById(R.id.search_status);
         connectingTipsView = findViewById(R.id.connecting_tips);
@@ -217,6 +227,14 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case R.id.personnal_activity: {
                 // 跳转到profileActivity
                 Intent intent = new Intent(HomePageActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                // 去掉进场动画
+                overridePendingTransition(0, 0);
+            }
+            break;
+            case R.id.application_activity: {
+                // 跳转到applicationActivity
+                Intent intent = new Intent(HomePageActivity.this, ApplicationActivity.class);
                 startActivity(intent);
                 // 去掉进场动画
                 overridePendingTransition(0, 0);

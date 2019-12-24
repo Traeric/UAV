@@ -57,5 +57,20 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#409eff</item>
     </style>
+
+    <style name="applicationsTheme" parent="XUITheme.Phone">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#409eff</item>
+    </style>
+
+    <style name="uavvideoTheme" parent="XUITheme.Phone">
+        <!-- 使图片可以拉伸到状态栏 -->
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <!-- 使图片可以拉伸到虚拟键栏 -->
+        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
+        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+    </style>
 </resources>
 

@@ -33,9 +33,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".profile.ProfileActivity"
-            android:theme="@style/profileTheme"></activity>
-        <!-- 高德地图配置的key -->
+        <activity android:name=".uav_video.UavVideoActivity"
+            android:theme="@style/uavvideoTheme"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".applications.ApplicationActivity"
+            android:theme="@style/applicationsTheme" />
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:theme="@style/profileTheme" /> <!-- 高德地图配置的key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="b947f64dcd65b0987f953ac1ffc15f9d" />
@@ -45,7 +51,7 @@
             android:theme="@style/mapTheme" />
         <activity
             android:name=".homepage.HomePageActivity"
-            android:theme="@style/homepageTheme" >
+            android:theme="@style/homepageTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,8 +64,7 @@
         <activity
             android:name=".login.LoginActivity"
             android:theme="@style/xuiTheme"
-            android:windowSoftInputMode="stateVisible|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateVisible|adjustResize" />
     </application>
 
 </manifest>
