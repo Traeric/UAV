@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".login.LoginActivity"
+    android:background="@drawable/login_bg"
+    android:gravity="center"
+    android:id="@+id/parent_linear"
+    android:fitsSystemWindows="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:background="@drawable/radius"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:elevation="16dp">
+        <!-- logo显示区域 -->
+        <RelativeLayout
+            android:id="@+id/logo_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/logo" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_toRightOf="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UAV"
+                    android:height="80dp"
+                    android:gravity="center"
+                    android:textSize="45sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <!-- 表单区域 -->
+        <RelativeLayout
+            android:id="@+id/form"
+            android:layout_below="@id/logo_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- 头像 -->
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:id="@+id/avatarArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <com.xuexiang.xui.widget.imageview.RadiusImageView
+                    android:clickable="true"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/avatar"
+
+                    app:riv_border_color="#ececec"
+                    app:riv_border_width="2px"
+                    app:riv_is_circle="true"
+                    app:riv_selected_border_color="@color/xui_config_color_gray_4"
+                    app:riv_selected_border_width="2px"
+                    app:riv_selected_mask_color="@color/xui_config_color_gray_8"/>
+            </RelativeLayout>
+            <!-- 账户 -->
+            <RelativeLayout
+                android:layout_below="@+id/avatarArea"
+                android:id="@+id/account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/input_radius"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:layout_marginTop="20dp">
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="600dp"
+                    android:layout_height="50dp"
+                    android:hint="请输入邮箱号"
+                    android:paddingLeft="10dp"
+                    android:inputType="textEmailAddress"
+                    android:background="@null"/>
+            </RelativeLayout>
+            <!-- 密码 -->
+            <RelativeLayout
+                android:id="@+id/password"
+                android:layout_below="@+id/account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/input_radius"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:layout_marginTop="20dp">
+                <EditText
+                    android:id="@+id/login_password"
+                    android:layout_width="600dp"
+                    android:layout_height="50dp"
+                    android:hint="请输入密码"
+                    android:paddingLeft="10dp"
+                    android:inputType="textPassword"
+                    android:background="@null"/>
+            </RelativeLayout>
+            <!-- 按钮 -->
+            <RelativeLayout
+                android:layout_below="@+id/password"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/login_btn"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:text="登 录"
+                    android:textColor="@drawable/btn_text_color"
+                    android:background="@drawable/btn_style"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+        <!-- 提示区域 -->
+        <RelativeLayout
+            android:layout_below="@+id/form"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="忘记密码"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:textColor="@drawable/link_color"/>
+            <TextView
+                android:id="@+id/parameter"
+                android:layout_toRightOf="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:layout_marginLeft="30dp"/>
+            <TextView
+                android:id="@+id/register"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/parameter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户注册"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:textColor="@drawable/link_color"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="error_input">#66ff0000</color>
+
+    <color name="delete">#f56c6c</color>
+    <color name="success">#67c23a</color>
+    <color name="warn">#e6a23c</color>
+    <color name="tips">#D3D3D3</color>
+</resources>

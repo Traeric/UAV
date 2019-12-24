@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".register.EmailFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/title"
+            android:layout_below="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="请使用邮箱注册"
+            android:textSize="36sp"
+            android:textColor="#000"/>
+        <TextView
+            android:id="@+id/tips"
+            android:layout_below="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请在下面的输入框中填写邮箱并点击下一步"/>
+
+        <RelativeLayout
+            android:layout_below="@+id/tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/under_line"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/email_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/email" />
+
+            <EditText
+                android:id="@+id/register_email"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_toRightOf="@+id/email_icon"
+                android:hint="请输入邮箱"
+                android:inputType="textEmailAddress"
+                android:background="@null"
+                android:paddingLeft="10dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

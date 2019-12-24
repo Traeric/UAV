@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".register.RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back"
+            android:clickable="true" />
+
+        <FrameLayout
+            android:layout_below="@+id/back"
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+        </FrameLayout>
+        <Button
+            android:id="@+id/next_step"
+            android:layout_below="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="下一步"
+            android:textColor="#fff"
+            android:background="@drawable/next_step_btn"
+            android:layout_margin="20dp"
+            android:textStyle="bold"
+            />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile.ProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/head"
+            layout="@layout/head" />
+
+        <!-- 中间布局 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/head"
+            android:layout_marginBottom="60dp">
+            <!-- 顶部背景 -->
+            <RelativeLayout
+                android:id="@+id/top_bg"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/profile_bg">
+                <!-- 头像 -->
+                <LinearLayout
+                    android:id="@+id/avatar_wrap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/bg"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center">
+
+                    <com.xuexiang.xui.widget.imageview.RadiusImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:clickable="true"
+                        android:src="@drawable/avatar"
+                        app:riv_border_color="#ececec"
+                        app:riv_border_width="5px"
+                        app:riv_is_circle="true"
+                        app:riv_selected_border_color="@color/xui_config_color_gray_4"
+                        app:riv_selected_border_width="2px"
+                        app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
+                </LinearLayout>
+                <!-- 用户简介 -->
+                <RelativeLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/avatar_wrap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <!-- 昵称 -->
+                    <RelativeLayout
+                        android:id="@+id/nick_wrap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Eric Jin"
+                            android:textSize="20sp"
+                            android:textColor="#fff"/>
+                    </RelativeLayout>
+                    <!-- 邮箱 -->
+                    <RelativeLayout
+                        android:id="@+id/email_wrap"
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@+id/nick_wrap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2789519045@qq.com"
+                            android:textColor="#80ffffff"/>
+                    </RelativeLayout>
+                    <!-- 查看详细信息按钮 -->
+                    <RelativeLayout
+                        android:layout_below="@+id/email_wrap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp">
+                        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                            style="@style/RoundButton.Auto"
+                            android:text="查看详情" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- 退出登录 -->
+            <RelativeLayout
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@+id/top_bg"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/logout_bg_style">
+                <ImageView
+                    android:id="@+id/profile_logout_logo"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/profile_logout"/>
+                <TextView
+                    android:layout_toRightOf="@+id/profile_logout_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="退出登录"
+                    android:gravity="center"
+                    android:textSize="16sp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <include layout="@layout/footer" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

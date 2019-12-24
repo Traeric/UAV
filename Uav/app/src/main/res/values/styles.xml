@@ -1,0 +1,61 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 使图片可以拉伸到状态栏 -->
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <!-- 使图片可以拉伸到虚拟键栏 -->
+        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
+        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+    </style>
+
+    <!-- 设置状态栏为固有颜色 -->
+    <style name="FullScreenThemeColor" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#409eff</item>
+    </style>
+
+    <!-- xui主题 -->
+    <style name="xuiTheme" parent="XUITheme.Phone">
+        <!-- 使图片可以拉伸到状态栏 -->
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <!-- 使图片可以拉伸到虚拟键栏 -->
+        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
+        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+    </style>
+
+    <style name="registerTheme" parent="XUITheme.Phone">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#409eff</item>
+    </style>
+
+    <style name="homepageTheme" parent="XUITheme.Phone">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#409eff</item>
+    </style>
+
+    <style name="mapTheme" parent="XUITheme.Phone">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#409eff</item>
+    </style>
+
+    <style name="profileTheme" parent="XUITheme.Phone">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#409eff</item>
+    </style>
+</resources>
+

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homepage.HomePageActivity"
+    android:background="#fff">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <include layout="@layout/head" android:id="@+id/head" />
+
+        <!-- 中间布局 -->
+        <RelativeLayout
+            android:layout_below="@+id/head"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:id="@+id/connected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="已连接设备"
+                android:textStyle="bold"
+                android:textColor="#5EACF0"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                android:layout_below="@id/connected"
+                android:id="@+id/connectDevice_wrap"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/connectDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#EEEEEE">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/bond"
+                android:layout_below="@+id/connectDevice_wrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已配对设备"
+                android:textStyle="bold"
+                android:textColor="#5EACF0"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/connecting_tips"
+                android:layout_toRightOf="@+id/bond"
+                android:layout_below="@+id/connectDevice_wrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_below="@+id/bond"
+                android:id="@+id/bondDevice_wrap"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/bondDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#EEEEEE">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+            <!-- 分割线 -->
+            <TextView
+                android:layout_below="@id/bondDevice_wrap"
+                android:id="@+id/seporater"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F3F3F3"/>
+
+            <RelativeLayout
+                android:id="@+id/search_tips"
+                android:layout_below="@+id/seporater"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="可配对设备"
+                    android:textStyle="bold"
+                    android:textColor="#5EACF0"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_toRightOf="@+id/search"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/search_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请点击搜索..."
+                    android:textStyle="bold"
+                    android:textColor="#D6D6D6"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/test"
+                    android:layout_marginTop="6dp"
+                    style="@style/RoundButton.Auto"
+                    android:text="搜索设备" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_below="@+id/search_tips"
+                android:id="@+id/searchDevice_wrap"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/searchDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#EEEEEE">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+            <include layout="@layout/footer" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
