@@ -6,6 +6,7 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,12 +14,15 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.eric.uav.R;
+import com.kongqw.rockerlibrary.view.RockerView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class UavVideoActivity extends AppCompatActivity {
     private VideoView videoView;
+    // 摇杆
+    private RockerView rockerView;
 
     // 屏幕旋转监听
     /**
@@ -35,6 +39,7 @@ public class UavVideoActivity extends AppCompatActivity {
         linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置为不可见
 
         videoView = findViewById(R.id.videoView);
+        rockerView = findViewById(R.id.rockerView);
         // 加载视频文件
 //        videoView.setVideoPath("https://www.runoob.com/try/demo_source/movie.mp4");
         String uri = "android.resource://" + getPackageName() + "/" + R.raw.video;
@@ -65,6 +70,7 @@ public class UavVideoActivity extends AppCompatActivity {
 
     /**
      * 屏幕旋转
+     *
      * @param context
      */
     public void startOrientationChangeListener(Context context) {
@@ -93,4 +99,23 @@ public class UavVideoActivity extends AppCompatActivity {
             }
         };
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 点击屏幕
+            // 显示摇杆
+            rockerView.setVisibility(View.VISIBLE);
+            // 获取手指点击屏幕的位置
+            float rawX = ev.getRawX();
+            float rawY = ev.getRawY();
+        } else if (ev.getAction() == MotionEvent.ACTION_UP) {
+            // 离开屏幕
+            // 隐藏摇杆
+            rockerView.setVisibility(View.INVISIBLE);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+
 }
