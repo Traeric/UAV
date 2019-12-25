@@ -19,11 +19,9 @@ import com.eric.uav.R;
 import com.eric.uav.utils.BlueToothUtils;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class BondDeviceAdapter extends RecyclerView.Adapter<BondDeviceAdapter.LinearViewHolder> {

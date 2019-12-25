@@ -31,36 +31,40 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/quit" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_below="@+id/top_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_title">
         <!-- 显示区域 -->
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/display_panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
             android:background="#fff">
 
-        </LinearLayout>
+        </android.support.v7.widget.RecyclerView>
         <!-- 输入框 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true">
+
             <EditText
                 android:id="@+id/at_cmd"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:inputType="text"/>
+                android:inputType="text" />
+
             <ImageView
                 android:id="@+id/send_btn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
-                android:src="@drawable/send_message"/>
+                android:src="@drawable/send_message" />
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

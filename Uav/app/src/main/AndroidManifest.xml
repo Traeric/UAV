@@ -34,7 +34,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".send_at.SendATActivity"
-            android:theme="@style/sendATTheme"></activity>
+            android:theme="@style/sendATTheme"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity
             android:name=".uav_video.UavVideoActivity"
             android:screenOrientation="landscape"
@@ -48,7 +50,6 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="b947f64dcd65b0987f953ac1ffc15f9d" />
-
         <activity
             android:name=".map.MapActivity"
             android:theme="@style/mapTheme" />
