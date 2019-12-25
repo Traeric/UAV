@@ -1,17 +1,18 @@
 package com.eric.uav.applications;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eric.uav.R;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
+import com.eric.uav.send_at.SendATActivity;
 import com.eric.uav.uav_video.UavVideoActivity;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
 public class ApplicationActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏activity
@@ -19,7 +20,8 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private TextView mapActivityView;
     private TextView profileActivityView;
 
-    private RoundButton checkUavVideoBtn;
+    private ImageView checkUavVideoBtn;
+    private ImageView snedAtBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
         checkUavVideoBtn = findViewById(R.id.check_uav_video);
         checkUavVideoBtn.setOnClickListener(this);
+
+        snedAtBtn = findViewById(R.id.send_at);
+        snedAtBtn.setOnClickListener(this);
     }
 
     @Override
@@ -69,6 +74,12 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
             case R.id.check_uav_video: {
                 // 跳转到航拍画面的Activity
                 Intent intent = new Intent(ApplicationActivity.this, UavVideoActivity.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.send_at: {
+                // 跳转到发送指令的界面
+                Intent intent = new Intent(ApplicationActivity.this, SendATActivity.class);
                 startActivity(intent);
             }
             break;

@@ -27,15 +27,18 @@
     <application
         android:name=".UvaApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".uav_video.UavVideoActivity"
-            android:theme="@style/uavvideoTheme"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".send_at.SendATActivity"
+            android:theme="@style/sendATTheme"></activity>
+        <activity
+            android:name=".uav_video.UavVideoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/uavvideoTheme" />
         <activity
             android:name=".applications.ApplicationActivity"
             android:theme="@style/applicationsTheme" />

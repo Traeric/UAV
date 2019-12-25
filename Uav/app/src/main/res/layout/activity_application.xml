@@ -16,24 +16,60 @@
 
 
         <!-- 中间布局 -->
-        <RelativeLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/head"
-            android:layout_marginBottom="60dp">
-            <!-- 控制按钮 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center">
-                <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:layout_marginBottom="60dp"
+            android:padding="20dp">
+            <!-- 航拍视图 -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.xuexiang.xui.widget.imageview.RadiusImageView
                     android:id="@+id/check_uav_video"
-                    style="@style/RoundButton.Auto"
-                    android:layout_width="match_parent"
-                    android:text="查看航拍画面"
-                    android:layout_margin="10dp"/>
-            </LinearLayout>
-        </RelativeLayout>
+                    riv_corner_radius="16px"
+                    riv_is_touch_select_mode_enabled="true"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:src="@drawable/video"
+                    app:riv_selected_mask_color="#80000000" />
+                <TextView
+                    android:layout_below="@id/check_uav_video"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="航拍视角"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"/>
+            </RelativeLayout>
+            <!-- 发送指令 -->
+            <RelativeLayout
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.xuexiang.xui.widget.imageview.RadiusImageView
+                    android:id="@+id/send_at"
+                    riv_corner_radius="16px"
+                    riv_is_touch_select_mode_enabled="true"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:src="@drawable/send_at"
+                    app:riv_selected_mask_color="#80000000" />
+                <TextView
+                    android:layout_below="@id/send_at"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="发送指令"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"/>
+            </RelativeLayout>
+        </GridLayout>
 
         <RelativeLayout
             android:id="@+id/footer"
