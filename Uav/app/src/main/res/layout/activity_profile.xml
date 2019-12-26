@@ -96,6 +96,7 @@
 
             <!-- 退出登录 -->
             <RelativeLayout
+                android:id="@+id/logout"
                 android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

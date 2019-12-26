@@ -1,13 +1,16 @@
 package com.eric.uav.map;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -27,6 +30,7 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.eric.uav.R;
 import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.homepage.HomePageActivity;
+import com.eric.uav.login.LoginActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
@@ -43,6 +47,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private TextView homepageActivityView;
     private TextView profileActivityView;
     private TextView applicationActivityView;
+
+
+    private TextView logoutBtn;
 
     private static final int M_PERMISSION_CODE = 1001;
 
@@ -64,6 +71,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         profileActivityView.setOnClickListener(this);
         applicationActivityView = findViewById(R.id.application_activity);
         applicationActivityView.setOnClickListener(this);
+
+        logoutBtn = findViewById(R.id.logout_btn);
+        logoutBtn.setOnClickListener(this);
 
         // 获取权限
         getPermission();
@@ -126,6 +136,25 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
                 // 去掉入场动画
                 overridePendingTransition(0, 0);
+            }
+            break;
+            case R.id.logout_btn: {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+                builder.setTitle("确认退出？");
+                builder.setIcon(R.drawable.profile_logout);
+                builder.setMessage("是否要退出登录？");
+                builder.setPositiveButton("退出", (dialog, which) -> {
+                    // 供存储使用
+                    SharedPreferences sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
+                    @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("logined", "false");
+                    editor.apply();
+                    // 跳转到登录页面
+                    startActivity(new Intent(MapActivity.this, LoginActivity.class));
+                    overridePendingTransition(0, 0);
+                });
+                builder.setNegativeButton("取消", (dialog, which) -> {});
+                builder.show();
             }
             break;
             default:

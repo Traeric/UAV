@@ -78,5 +78,11 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#090723</item>
     </style>
+
+    <style name="splashTheme" parent="XUITheme.Phone">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#090723</item>
+    </style>
 </resources>
 

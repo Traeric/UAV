@@ -38,14 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // 检查是否登录
-        String loginStatus = sharedPreferences.getString("logined", "false");
-        if ("true".equals(loginStatus)) {
-            // 已经登录了，直接跳转首页
-            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-            startActivity(intent);
-        }
-
         registerBtn = findViewById(R.id.register);
         // 设置点击事件
         registerBtn.setOnClickListener(view -> {
@@ -93,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                         builder.hide();
                         if ("0".equals(result)) {
                             Dialog.tipsDialog(LoginActivity.this, "该邮箱还未注册！");
-                        } else if ("demo".equals(result)) {
+                        } else if ("1".equals(result)) {
                             // 登录成功
                             // 将邮箱存到SharedPreferences中，方便后面使用
                             editor.putString("email", userName);

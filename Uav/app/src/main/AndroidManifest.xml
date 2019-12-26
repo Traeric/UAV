@@ -31,12 +31,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".send_at.SendATActivity"
-            android:theme="@style/sendATTheme"
-            android:windowSoftInputMode="adjustPan">
+        <!-- 启动动画 -->
+        <activity android:name=".SplashActivity"
+            android:theme="@style/splashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".send_at.SendATActivity"
+            android:theme="@style/sendATTheme"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".uav_video.UavVideoActivity"
             android:screenOrientation="landscape"
@@ -50,17 +58,13 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="b947f64dcd65b0987f953ac1ffc15f9d" />
+
         <activity
             android:name=".map.MapActivity"
             android:theme="@style/mapTheme" />
         <activity
             android:name=".homepage.HomePageActivity"
             android:theme="@style/homepageTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".register.RegisterActivity"

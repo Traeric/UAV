@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +45,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private TextView mapActivity;
     private TextView profileActivity;
     private TextView applicationActivity;
+
+
+    private TextView logoutBtn;
 
     // 搜索到的蓝牙设备会放到这个列表里面
     private List<BluetoothDevice> searchedBlueToothList = new LinkedList<>();
@@ -101,22 +105,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        try {
-            // 供存储使用
-            SharedPreferences sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
-            // 检查是否登录
-            String loginStatus = sharedPreferences.getString("logined", "false");
-            if (!"true".equals(loginStatus)) {
-                // 没有登录，直接跳转首页
-                Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        } catch (Exception e) {
-            // 没有登录，直接跳转首页
-            Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("首页");
         findViewById(R.id.homepage_activity).setBackground(getResources().getDrawable(R.drawable.homepage_select));
@@ -126,6 +114,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         button = findViewById(R.id.test);
         button.setOnClickListener(this);
+        logoutBtn = findViewById(R.id.logout_btn);
+        logoutBtn.setOnClickListener(this);
 
         // 底部栏相关设置
         mapActivity = findViewById(R.id.map_activity);
@@ -238,6 +228,25 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 // 去掉进场动画
                 overridePendingTransition(0, 0);
+            }
+            break;
+            case R.id.logout_btn: {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomePageActivity.this);
+                builder.setTitle("确认退出？");
+                builder.setIcon(R.drawable.profile_logout);
+                builder.setMessage("是否要退出登录？");
+                builder.setPositiveButton("退出", (dialog, which) -> {
+                    // 供存储使用
+                    SharedPreferences sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
+                    @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("logined", "false");
+                    editor.apply();
+                    // 跳转到登录页面
+                    startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
+                    overridePendingTransition(0, 0);
+                });
+                builder.setNegativeButton("取消", (dialog, which) -> {});
+                builder.show();
             }
             break;
             default:

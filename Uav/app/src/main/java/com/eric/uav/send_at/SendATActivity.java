@@ -41,10 +41,10 @@ public class SendATActivity extends AppCompatActivity implements View.OnClickLis
 
         cmdDisplay = findViewById(R.id.display_panel);
         // 设置输入框随键盘上移
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        linearLayoutManager.setStackFromEnd(true);    // 设置此项，当软键盘弹出时，布局会自动顶上去
-//        cmdDisplay.setLayoutManager(linearLayoutManager);
-        cmdDisplay.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager.setStackFromEnd(true);    // 设置此项，当软键盘弹出时，布局会自动顶上去
+        cmdDisplay.setLayoutManager(linearLayoutManager);
+//        cmdDisplay.setLayoutManager(new LinearLayoutManager(this));
         cmdDisplay.setAdapter(new CommandDisplayAdapter(this, cmdList));
     }
 
