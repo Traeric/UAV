@@ -3,6 +3,7 @@ package com.eric.uav.voice.wakeup.listener;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.eric.uav.voice.VoiceActivity;
 import com.eric.uav.voice.wakeup.WakeUpResult;
 
 /**
@@ -25,7 +26,7 @@ public class SimpleWakeupListener implements IWakeupListener {
      */
     @Override
     public void onSuccess(String word, WakeUpResult result) {
-        Toast.makeText(context, "诶，你好呀！我是小则同学", Toast.LENGTH_SHORT).show();
+        ((VoiceActivity) context).getSynthesizer().speak("诶，你好呀！我是小则同学");
 //        MyLogger.info(TAG, "唤醒成功，唤醒词：" + word);
     }
 

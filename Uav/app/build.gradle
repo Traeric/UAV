@@ -51,4 +51,6 @@ dependencies {
     implementation 'com.github.kongqw:AndroidRocker:1.0.1'
     // 导入百度语音识别sdk
     implementation files('libs/bdasr_V3_20190515_c9eed5d.jar')
+    // 导入百度语音合成sdk
+    implementation files('libs/com.baidu.tts_2.6.1.106.20191213_e6dcd95.jar')
 }
