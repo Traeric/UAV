@@ -49,4 +49,6 @@ dependencies {
     implementation files('libs/AMap3DMap_7.1.0_AMapSearch_7.1.0_20191030.jar')
     // 添加遥感依赖
     implementation 'com.github.kongqw:AndroidRocker:1.0.1'
+    // 导入百度语音识别sdk
+    implementation files('libs/bdasr_V3_20190515_c9eed5d.jar')
 }

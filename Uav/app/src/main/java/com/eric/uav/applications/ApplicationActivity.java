@@ -17,6 +17,7 @@ import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.eric.uav.send_at.SendATActivity;
 import com.eric.uav.uav_video.UavVideoActivity;
+import com.eric.uav.voice.VoiceActivity;
 
 public class ApplicationActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏activity
@@ -24,8 +25,10 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private TextView mapActivityView;
     private TextView profileActivityView;
 
+    // 应用入口
     private ImageView checkUavVideoBtn;
     private ImageView snedAtBtn;
+    private ImageView voiceBtn;
 
     private TextView logoutBtn;
 
@@ -54,6 +57,9 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
         snedAtBtn = findViewById(R.id.send_at);
         snedAtBtn.setOnClickListener(this);
+
+        voiceBtn = findViewById(R.id.yuyingshibie);
+        voiceBtn.setOnClickListener(this);
 
         logoutBtn = findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(this);
@@ -107,8 +113,14 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
                     startActivity(new Intent(ApplicationActivity.this, LoginActivity.class));
                     overridePendingTransition(0, 0);
                 });
-                builder.setNegativeButton("取消", (dialog, which) -> {});
+                builder.setNegativeButton("取消", (dialog, which) -> {
+                });
                 builder.show();
+            }
+            break;
+            case R.id.yuyingshibie: {
+                Intent intent = new Intent(ApplicationActivity.this, VoiceActivity.class);
+                startActivity(intent);
             }
             break;
             default:

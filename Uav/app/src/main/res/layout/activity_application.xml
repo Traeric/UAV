@@ -69,6 +69,30 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"/>
             </RelativeLayout>
+            <!-- 语音操作 -->
+            <RelativeLayout
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.xuexiang.xui.widget.imageview.RadiusImageView
+                    android:id="@+id/yuyingshibie"
+                    riv_corner_radius="16px"
+                    riv_is_touch_select_mode_enabled="true"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:src="@drawable/yuyingshibie_app_logo"
+                    app:riv_selected_mask_color="#80000000" />
+                <TextView
+                    android:layout_below="@id/yuyingshibie"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="语音识别"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"/>
+            </RelativeLayout>
         </GridLayout>
 
         <RelativeLayout

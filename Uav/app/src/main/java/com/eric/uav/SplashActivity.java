@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        // 停留三秒进入主界面
+        // 停留一秒进入主界面
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -37,6 +37,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
-        }, 3000);
+        }, 1000);
     }
 }
