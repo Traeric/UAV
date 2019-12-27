@@ -94,13 +94,61 @@
                 </RelativeLayout>
             </RelativeLayout>
 
+            <!-- 查看资料 -->
+            <RelativeLayout
+                android:id="@+id/look_profile"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@+id/top_bg"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/logout_bg_style">
+                <ImageView
+                    android:id="@+id/profile_look"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/mine_select"/>
+                <TextView
+                    android:layout_toRightOf="@+id/profile_look"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="查看资料"
+                    android:gravity="center"
+                    android:textSize="16sp"/>
+            </RelativeLayout>
+            <!-- 设置 -->
+            <RelativeLayout
+                android:id="@+id/profile_setting"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@+id/look_profile"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/logout_bg_style">
+                <ImageView
+                    android:id="@+id/profile_setting_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/setting"/>
+                <TextView
+                    android:layout_toRightOf="@+id/profile_setting_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="设置"
+                    android:gravity="center"
+                    android:textSize="16sp"/>
+            </RelativeLayout>
             <!-- 退出登录 -->
             <RelativeLayout
                 android:id="@+id/logout"
                 android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_below="@+id/top_bg"
+                android:layout_below="@+id/profile_setting"
                 android:layout_marginTop="20dp"
                 android:paddingLeft="5dp"
                 android:background="@drawable/logout_bg_style">

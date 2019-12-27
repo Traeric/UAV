@@ -55,4 +55,6 @@ dependencies {
     implementation files('libs/com.baidu.tts_2.6.1.106.20191213_e6dcd95.jar')
     // Glide图片加载框架
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    // 滑块依赖
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
 }

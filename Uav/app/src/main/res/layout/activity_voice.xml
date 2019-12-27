@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".voice.VoiceActivity">
 
     <RelativeLayout
@@ -24,6 +25,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/line_2"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_below="@+id/line_1">
@@ -41,6 +43,29 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:text="试着对他说小则同学或者你好小则吧"></TextView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/line_2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="启用连续对话模式: "
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="75dp">
+
+            </TextView>
+            <com.suke.widget.SwitchButton
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/switch_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
         <RelativeLayout

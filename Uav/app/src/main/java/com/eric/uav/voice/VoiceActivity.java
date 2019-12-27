@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.baidu.speech.asr.SpeechConstant;
 import com.baidu.tts.chainofresponsibility.logger.LoggerProxy;
@@ -26,6 +28,7 @@ import com.eric.uav.voice.recog.listener.MessageStatusRecogListener;
 import com.eric.uav.voice.wakeup.MyWakeup;
 import com.eric.uav.voice.wakeup.listener.IWakeupListener;
 import com.eric.uav.voice.wakeup.listener.SimpleWakeupListener;
+import com.suke.widget.SwitchButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ public class VoiceActivity extends AppCompatActivity {
     private MyWakeup myWakeup;
     private MySyntherizer synthesizer;
     private MyRecognizer recognizer;
+
+    private SwitchButton switchButton;
 
     private ImageView quitApp;
 
@@ -63,6 +68,11 @@ public class VoiceActivity extends AppCompatActivity {
         });
 
         voiceAssistantLogo = findViewById(R.id.voice_assistant_img);
+
+        switchButton = findViewById(R.id.switch_button);
+        switchButton.setOnCheckedChangeListener((view, isChacked) -> {
+            Toast.makeText(VoiceActivity.this, String.valueOf(isChacked), Toast.LENGTH_SHORT).show();
+        });
 
         // 获取权限
         getAudioPermissions();
