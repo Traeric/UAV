@@ -4,13 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".voice.VoiceActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
-        <ImageView
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/line_1"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="#344751">
+
+            <ImageView
+                android:id="@+id/voice_assistant_img"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/voice_symble" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@drawable/voice_symble"
-            android:layout_centerInParent="true"/>
+            android:layout_below="@+id/line_1">
+
+            <TextView
+                android:id="@+id/line_line_1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="这里是语音助手小则同学"></TextView>
+
+            <TextView
+                android:layout_below="@id/line_line_1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="试着对他说小则同学或者你好小则吧"></TextView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true">
+            <ImageView
+                android:id="@+id/quit_xiaoze"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/quit"
+                android:layout_centerInParent="true">
+            </ImageView>
+        </RelativeLayout>
+
     </RelativeLayout>
 </LinearLayout>

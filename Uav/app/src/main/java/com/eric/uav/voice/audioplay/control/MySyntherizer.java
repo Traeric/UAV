@@ -5,6 +5,7 @@ import android.util.Pair;
 
 import com.baidu.tts.client.SpeechSynthesizeBag;
 import com.baidu.tts.client.SpeechSynthesizer;
+import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.eric.uav.voice.audioplay.MainHandlerConstant;
 
 import java.util.ArrayList;
@@ -21,23 +22,25 @@ public class MySyntherizer implements MainHandlerConstant {
 
     protected SpeechSynthesizer mSpeechSynthesizer;
     protected Context context;
+    protected SpeechSynthesizerListener listener;
 
     private static final String TAG = "NonBlockSyntherizer";
 
     protected static volatile boolean isInitied = false;
 
-    public MySyntherizer(Context context, InitConfig initConfig) {
-        this(context);
+    public MySyntherizer(Context context, InitConfig initConfig, SpeechSynthesizerListener listener) {
+        this(context, listener);
         init(initConfig);
     }
 
-    protected MySyntherizer(Context context) {
+    protected MySyntherizer(Context context, SpeechSynthesizerListener listener) {
         if (isInitied) {
             // SpeechSynthesizer.getInstance() 不要连续调用
             throw new RuntimeException("MySynthesizer 对象里面 SpeechSynthesizer还未释放，请勿新建一个新对象。" +
                     "如果需要新建，请先调用之前MySynthesizer对象的release()方法。");
         }
         this.context = context;
+        this.listener = listener;
         isInitied = true;
     }
 
@@ -52,6 +55,7 @@ public class MySyntherizer implements MainHandlerConstant {
         mSpeechSynthesizer = SpeechSynthesizer.getInstance();
 
         mSpeechSynthesizer.setContext(context);
+        mSpeechSynthesizer.setSpeechSynthesizerListener(listener);
 
 
         // 请替换为语音开发者平台上注册应用得到的App ID ,AppKey ，Secret Key ，填写在SynthActivity的开始位置
@@ -147,16 +151,14 @@ public class MySyntherizer implements MainHandlerConstant {
     }
 
     /**
-     * 播放语音
      * 引擎在合成时该方法不能调用！！！
      * 注意 只有 TtsMode.MIX 才可以切换离线发音
      *
      * @return
      */
     public int loadModel(String modelFilename, String textFilename) {
-        int res = mSpeechSynthesizer.loadModel(modelFilename, textFilename);
         // 切换离线发音人成功。
-        return res;
+        return mSpeechSynthesizer.loadModel(modelFilename, textFilename);
     }
 
     /**

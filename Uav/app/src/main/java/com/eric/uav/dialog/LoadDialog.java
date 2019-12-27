@@ -3,15 +3,21 @@ package com.eric.uav.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eric.uav.R;
+import com.eric.uav.voice.VoiceActivity;
 
 public class LoadDialog extends Dialog {
+    private ImageView loadIcon;
     private TextView title, content;
     private String tTitle, tContent;
 
@@ -48,6 +54,10 @@ public class LoadDialog extends Dialog {
         if (tContent != null) {
             content.setText(tContent);
         }
+
+        loadIcon = findViewById(R.id.load_icon);
+        Glide.with(getContext()).load(R.drawable.load).diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(loadIcon);
     }
 
     public LoadDialog settTitle(String tTitle) {

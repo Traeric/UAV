@@ -2,14 +2,11 @@ package com.eric.uav.voice;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.baidu.speech.asr.SpeechConstant;
 import com.baidu.tts.chainofresponsibility.logger.LoggerProxy;
@@ -19,9 +16,13 @@ import com.baidu.tts.client.TtsMode;
 import com.eric.uav.R;
 import com.eric.uav.voice.audioplay.control.InitConfig;
 import com.eric.uav.voice.audioplay.control.MySyntherizer;
+import com.eric.uav.voice.audioplay.listener.MessageListener;
 import com.eric.uav.voice.audioplay.utils.Auth;
 import com.eric.uav.voice.audioplay.utils.IOfflineResourceConst;
 import com.eric.uav.voice.audioplay.utils.OfflineResource;
+import com.eric.uav.voice.recog.MyRecognizer;
+import com.eric.uav.voice.recog.listener.IRecogListener;
+import com.eric.uav.voice.recog.listener.MessageStatusRecogListener;
 import com.eric.uav.voice.wakeup.MyWakeup;
 import com.eric.uav.voice.wakeup.listener.IWakeupListener;
 import com.eric.uav.voice.wakeup.listener.SimpleWakeupListener;
@@ -34,6 +35,9 @@ import java.util.Map;
 public class VoiceActivity extends AppCompatActivity {
     private MyWakeup myWakeup;
     private MySyntherizer synthesizer;
+    private MyRecognizer recognizer;
+
+    private ImageView quitApp;
 
     protected String appId;
 
@@ -45,10 +49,20 @@ public class VoiceActivity extends AppCompatActivity {
     // TtsMode.MIX; 离在线融合，在线优先； TtsMode.ONLINE 纯在线； TtsMode.OFFLINE 纯离线合成，需要纯离线SDK
     protected TtsMode ttsMode = IOfflineResourceConst.DEFAULT_OFFLINE_TTS_MODE;
 
+    private ImageView voiceAssistantLogo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice);
+
+        quitApp = findViewById(R.id.quit_xiaoze);
+        quitApp.setOnClickListener(view -> {
+            VoiceActivity.this.finish();
+            overridePendingTransition(0, 0);
+        });
+
+        voiceAssistantLogo = findViewById(R.id.voice_assistant_img);
 
         // 获取权限
         getAudioPermissions();
@@ -61,6 +75,12 @@ public class VoiceActivity extends AppCompatActivity {
         Map<String, Object> params = new HashMap<>();
         params.put(SpeechConstant.WP_WORDS_FILE, "assets:///WakeUp.bin");
         myWakeup.start(params);
+
+        // 语音识别部分
+        // 初始化一个listener
+        IRecogListener iRecogListener = new MessageStatusRecogListener(this);
+        // 初始化myRecognizer
+        recognizer = new MyRecognizer(this, iRecogListener);
 
 
         // 语音合成部分
@@ -82,6 +102,9 @@ public class VoiceActivity extends AppCompatActivity {
     protected void onDestroy() {
         // 退出事件管理器
         myWakeup.release();
+        synthesizer.release();
+        recognizer.release();
+        SimpleWakeupListener.flag = true;
         super.onDestroy();
     }
 
@@ -152,7 +175,8 @@ public class VoiceActivity extends AppCompatActivity {
         // 设置初始化参数
         // 此处可以改为 含有您业务逻辑的SpeechSynthesizerListener的实现类
         InitConfig config = getInitConfig();
-        synthesizer = new MySyntherizer(this, config);
+        SpeechSynthesizerListener listener = new MessageListener(VoiceActivity.this);
+        synthesizer = new MySyntherizer(this, config, listener);
     }
 
 
@@ -216,5 +240,13 @@ public class VoiceActivity extends AppCompatActivity {
 
     public MySyntherizer getSynthesizer() {
         return synthesizer;
+    }
+
+    public ImageView getVoiceAssistantLogo() {
+        return voiceAssistantLogo;
+    }
+
+    public MyRecognizer getRecognizer() {
+        return recognizer;
     }
 }

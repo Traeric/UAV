@@ -1,9 +1,12 @@
 package com.eric.uav.voice.wakeup.listener;
 
 import android.content.Context;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.eric.uav.R;
 import com.eric.uav.voice.VoiceActivity;
+import com.eric.uav.voice.audioplay.listener.FinishStatus;
 import com.eric.uav.voice.wakeup.WakeUpResult;
 
 /**
@@ -12,6 +15,7 @@ import com.eric.uav.voice.wakeup.WakeUpResult;
 
 public class SimpleWakeupListener implements IWakeupListener {
     private Context context;
+    public static boolean flag = true;
 
     private static final String TAG = "SimpleWakeupListener";
 
@@ -21,12 +25,24 @@ public class SimpleWakeupListener implements IWakeupListener {
 
     /**
      * 唤醒成功
+     *
      * @param word
      * @param result
      */
     @Override
     public void onSuccess(String word, WakeUpResult result) {
-        ((VoiceActivity) context).getSynthesizer().speak("诶，你好呀！我是小则同学");
+        if (flag) {
+            flag = false;
+            FinishStatus.finishAudioPlay = 0;
+            if (word.contains("同学")) {
+                ((VoiceActivity) context).getSynthesizer().speak("我在");
+            } else if (word.contains("你好")) {
+                ((VoiceActivity) context).getSynthesizer().speak("你好啊，请对我说指令吧！");
+            }
+            // 切换图片
+            Glide.with(context).load(R.drawable.audio).diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(((VoiceActivity) context).getVoiceAssistantLogo());
+        }
 //        MyLogger.info(TAG, "唤醒成功，唤醒词：" + word);
     }
 

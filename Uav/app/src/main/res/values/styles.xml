@@ -88,7 +88,7 @@
     <style name="voiceTheme" parent="XUITheme.Phone">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#D3D3DB</item>
+        <item name="android:statusBarColor">#344751</item>
     </style>
 </resources>
 
