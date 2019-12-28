@@ -18,6 +18,7 @@ import com.baidu.tts.client.TtsMode;
 import com.eric.uav.R;
 import com.eric.uav.voice.audioplay.control.InitConfig;
 import com.eric.uav.voice.audioplay.control.MySyntherizer;
+import com.eric.uav.voice.audioplay.listener.FinishStatus;
 import com.eric.uav.voice.audioplay.listener.MessageListener;
 import com.eric.uav.voice.audioplay.utils.Auth;
 import com.eric.uav.voice.audioplay.utils.IOfflineResourceConst;
@@ -70,9 +71,7 @@ public class VoiceActivity extends AppCompatActivity {
         voiceAssistantLogo = findViewById(R.id.voice_assistant_img);
 
         switchButton = findViewById(R.id.switch_button);
-        switchButton.setOnCheckedChangeListener((view, isChacked) -> {
-            Toast.makeText(VoiceActivity.this, String.valueOf(isChacked), Toast.LENGTH_SHORT).show();
-        });
+        switchButton.setOnCheckedChangeListener((view, isChacked) -> FinishStatus.continueConversationMode = isChacked);
 
         // 获取权限
         getAudioPermissions();
@@ -115,6 +114,7 @@ public class VoiceActivity extends AppCompatActivity {
         synthesizer.release();
         recognizer.release();
         SimpleWakeupListener.flag = true;
+        FinishStatus.continueConversationMode = false;
         super.onDestroy();
     }
 
@@ -218,7 +218,7 @@ public class VoiceActivity extends AppCompatActivity {
         // 设置合成的语速，0-15 ，默认 5
         params.put(SpeechSynthesizer.PARAM_SPEED, "5");
 
-        params.put(SpeechSynthesizer.PARAM_MIX_MODE, SpeechSynthesizer.MIX_MODE_DEFAULT);
+        params.put(SpeechSynthesizer.PARAM_MIX_MODE, SpeechSynthesizer.MIX_MODE_HIGH_SPEED_SYNTHESIZE);
         // 该参数设置为TtsMode.MIX生效。即纯在线模式不生效。
         // MIX_MODE_DEFAULT 默认 ，wifi状态下使用在线，非wifi离线。在线状态下，请求超时6s自动转离线
         // MIX_MODE_HIGH_SPEED_SYNTHESIZE_WIFI wifi状态下使用在线，非wifi离线。在线状态下， 请求超时1.2s自动转离线
@@ -258,5 +258,9 @@ public class VoiceActivity extends AppCompatActivity {
 
     public MyRecognizer getRecognizer() {
         return recognizer;
+    }
+
+    public SwitchButton getSwitchButton() {
+        return switchButton;
     }
 }

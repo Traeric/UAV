@@ -33,7 +33,7 @@ public class SimpleWakeupListener implements IWakeupListener {
     public void onSuccess(String word, WakeUpResult result) {
         if (flag) {
             flag = false;
-            FinishStatus.finishAudioPlay = 0;
+            FinishStatus.finishAudioPlay = FinishStatus.START_AUDIO_DISTINGUISH;
             if (word.contains("同学")) {
                 ((VoiceActivity) context).getSynthesizer().speak("我在");
             } else if (word.contains("你好")) {

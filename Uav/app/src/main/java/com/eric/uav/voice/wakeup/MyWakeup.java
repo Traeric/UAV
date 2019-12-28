@@ -1,7 +1,6 @@
 package com.eric.uav.voice.wakeup;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.baidu.speech.EventListener;
 import com.baidu.speech.EventManager;
