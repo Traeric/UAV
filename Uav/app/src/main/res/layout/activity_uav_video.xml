@@ -11,10 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <VideoView
-            android:id="@+id/videoView"
+<!--        <VideoView-->
+<!--            android:id="@+id/videoView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+        <TextureView
+            android:id="@+id/textureView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
 
         <com.kongqw.rockerlibrary.view.RockerView
             android:id="@+id/rockerView"

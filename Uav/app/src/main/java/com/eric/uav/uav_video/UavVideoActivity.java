@@ -1,34 +1,30 @@
 package com.eric.uav.uav_video;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.hardware.SensorManager;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.eric.uav.R;
+import com.eric.uav.utils.CameraUtils;
 import com.kongqw.rockerlibrary.view.RockerView;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class UavVideoActivity extends AppCompatActivity implements View.OnClickListener {
-    private VideoView videoView;
+    private TextureView videoView;
     // 摇杆
     private RockerView rockerView;
 
@@ -53,6 +49,7 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uav_video);
+
         // 隐藏状态栏
         LinearLayout linearLayout = findViewById(R.id.uav_activity);
         linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置为不可见
@@ -62,27 +59,11 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
         quiteVideo = findViewById(R.id.quit_video);
         quiteVideo.setOnClickListener(this);
 
-        videoView = findViewById(R.id.videoView);
         rockerView = findViewById(R.id.rockerView);
-        // 设置拉伸全屏
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        videoView.setLayoutParams(layoutParams);
-        // 加载视频文件
-//        videoView.setVideoPath("https://www.runoob.com/try/demo_source/movie.mp4");
-        String uri = "android.resource://" + getPackageName() + "/" + R.raw.demo;
-        videoView.setVideoURI(Uri.parse(uri));
-        // 让VideoView获取焦点
-        videoView.requestFocus();
-        videoView.setOnPreparedListener(mediaPlayer -> {
-            // 设置循环
-            mediaPlayer.setLooping(true);
-            // 开始播放
-            mediaPlayer.start();
-        });
+        // 相机相关操作
+        videoView = findViewById(R.id.textureView);
+        requestPermission();   // 获取相机权限
+        CameraUtils.getInstance(this, 0).openCamera(videoView);
 
         // 屏幕旋转监听
         startOrientationChangeListener(UavVideoActivity.this);
@@ -235,6 +216,22 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
             break;
             default:
                 break;
+        }
+    }
+
+    public TextureView getVideoView() {
+        return videoView;
+    }
+
+    /**
+     * 请求相机权限
+     */
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                Toast.makeText(this, "Camera permission are required for this demo", Toast.LENGTH_LONG).show();
+            }
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
         }
     }
 }
