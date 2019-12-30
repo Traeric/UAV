@@ -6,10 +6,12 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eric.uav.R;
 import com.eric.uav.applications.ApplicationActivity;
@@ -114,5 +116,33 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 实现按下返回键提示用户再按一次返回桌面，而不是返回上一个页面
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            // 用户按下了返回键
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Dialog.toastWithoutAppName(this, "再按一次退出Uav");
+                exitTime = System.currentTimeMillis();
+            } else {
+                // 退出到桌面
+                Intent backHome = new Intent(Intent.ACTION_MAIN);
+                backHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                backHome.addCategory(Intent.CATEGORY_HOME);
+                startActivity(backHome);
+                return true;
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

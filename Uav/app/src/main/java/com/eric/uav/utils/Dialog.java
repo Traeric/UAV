@@ -2,6 +2,7 @@ package com.eric.uav.utils;
 
 import android.app.Activity;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.eric.uav.R;
 
@@ -15,7 +16,11 @@ public class Dialog {
         builder.show();
     }
 
-
+    public static void toastWithoutAppName(Activity activity, String msg) {
+        Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
+        toast.setText(msg);
+        toast.show();
+    }
 }
 
 
