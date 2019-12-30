@@ -3,15 +3,29 @@ package com.eric.uav.uav_video;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
+import android.media.Image;
+import android.media.ImageReader;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,7 +35,13 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.eric.uav.R;
 import com.eric.uav.utils.CameraUtils;
+import com.eric.uav.utils.Dialog;
 import com.kongqw.rockerlibrary.view.RockerView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class UavVideoActivity extends AppCompatActivity implements View.OnClickListener {
     private TextureView videoView;
@@ -38,6 +58,13 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
     // 右上角控制键
     private TextView openMap;
     private TextView quiteVideo;
+    private TextView recordScreen;
+    private TextView cutScreen;
+
+    private MediaProjectionManager mediaProjectionManager;
+    private VirtualDisplay virtualDisplay;
+
+    private LinearLayout linearLayout;
 
     // 屏幕旋转监听
     /**
@@ -51,8 +78,8 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_uav_video);
 
         // 隐藏状态栏
-        LinearLayout linearLayout = findViewById(R.id.uav_activity);
-        linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置为不可见
+        linearLayout = findViewById(R.id.uav_activity);
+        linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置状态栏为不可见
 
         openMap = findViewById(R.id.open_map);
         openMap.setOnClickListener(this);
@@ -80,6 +107,12 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
         mapView = findViewById(R.id.video_map);
         mapView.onCreate(savedInstanceState);
         aMap = mapView.getMap();
+
+        // 录屏
+        recordScreen = findViewById(R.id.record_screen);
+        recordScreen.setOnClickListener(this);
+        cutScreen = findViewById(R.id.cut_screen);
+        cutScreen.setOnClickListener(this);
     }
 
     @Override
@@ -183,6 +216,9 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    private static final int REQUEST_CUT_CAPTURE = 1;
+    private static final int REQUEST_RECORD_SCREEN = 2;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -214,13 +250,94 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(0, 0);
             }
             break;
+            case R.id.record_screen: {
+                Dialog.toastWithoutAppName(this, "录屏");
+            }
+            break;
+            case R.id.cut_screen: {
+                // 实例化MediaProjectionManager
+                mediaProjectionManager = (MediaProjectionManager) getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+                // 利用MediaProjectionManager类实例的功能函数createScreenCaptureIntent()生成intent，为接下来的的抓取屏幕做准备
+                Intent screenCaptureIntent = mediaProjectionManager.createScreenCaptureIntent();
+                startActivityForResult(screenCaptureIntent, REQUEST_CUT_CAPTURE);
+            }
+            break;
             default:
                 break;
         }
     }
 
-    public TextureView getVideoView() {
-        return videoView;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            // 此处是截图功能的返回
+            case REQUEST_CUT_CAPTURE: {
+                linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置状态栏为不可见
+                MediaProjection mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data);
+                if (resultCode == RESULT_OK && mediaProjection != null) {
+                    // 图片路径
+                    String nameImage = "/sdcard/Uav/Uav无人机航拍画面截图" + System.currentTimeMillis() + ".png";
+                    //WindowManager对象用于获取屏幕尺寸
+                    WindowManager windowManager = (WindowManager) getApplication().getSystemService(Context.WINDOW_SERVICE);
+                    int windowheight = windowManager.getDefaultDisplay().getHeight();
+                    int windowWidth = windowManager.getDefaultDisplay().getWidth();
+                    ImageReader imageReader = ImageReader.newInstance(windowWidth, windowheight, PixelFormat.RGBA_8888, 2);
+                    virtualDisplay = mediaProjection.createVirtualDisplay("屏幕捕获", windowWidth, windowheight, 240,
+                            DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, imageReader.getSurface(), null, null);
+                    // 延时500毫秒在抓取
+                    new Handler().postDelayed(() -> {
+                        // 获取Image对象
+                        Image image = imageReader.acquireLatestImage();
+                        int width = image.getWidth();
+                        int height = image.getHeight();
+                        Image.Plane[] planes = image.getPlanes();
+                        ByteBuffer buffer = planes[0].getBuffer();
+                        int pixelStride = planes[0].getPixelStride();
+                        int rowStride = planes[0].getRowStride();
+                        int rowPadding = rowStride - pixelStride * width;
+                        // 创建Bitmap对象
+                        Bitmap bitmap = Bitmap.createBitmap(width + rowPadding / pixelStride, height, Bitmap.Config.ARGB_8888);
+                        bitmap.copyPixelsFromBuffer(buffer);
+                        bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
+                        image.close();
+                        if (bitmap != null) {
+                            File file = new File(nameImage);
+                            if (!file.exists()) {
+                                // 不存在就创建
+                                try {
+                                    file.createNewFile();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            try {
+                                // 保存文件
+                                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                                fileOutputStream.flush();
+                                fileOutputStream.close();
+                                Intent media = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                                Uri contentUri = Uri.fromFile(file);
+                                media.setData(contentUri);
+                                this.sendBroadcast(media);
+                                Dialog.toastWithoutAppName(this, "截图成功");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, 500);
+                }
+            }
+            break;
+            // 此处是录制屏幕的返回
+            case REQUEST_RECORD_SCREEN: {
+
+            }
+            break;
+            default:
+                break;
+        }
     }
 
     /**

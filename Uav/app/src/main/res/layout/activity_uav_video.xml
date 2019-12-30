@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        <VideoView-->
-<!--            android:id="@+id/videoView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
+        <!--        <VideoView-->
+        <!--            android:id="@+id/videoView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent" />-->
         <TextureView
             android:id="@+id/textureView"
             android:layout_width="match_parent"
@@ -40,27 +40,38 @@
 
         <!-- 显示控件 -->
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/video_controls_style">
+
             <TextView
                 android:id="@+id/open_map"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/open_map"/>
+                android:background="@drawable/open_map" />
+
+            <TextView
+                android:id="@+id/cut_screen"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/cut_picture" />
+
+            <TextView
+                android:id="@+id/record_screen"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/screen" />
+
             <TextView
                 android:id="@+id/quit_video"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/quit"/>
-            <!--<TextView-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_margin="5dp"-->
-                <!--android:background="@drawable/screen"/>-->
+                android:background="@drawable/quit" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
