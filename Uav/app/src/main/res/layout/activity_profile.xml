@@ -88,6 +88,7 @@
                         android:gravity="center"
                         android:layout_marginTop="10dp">
                         <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                            android:id="@+id/look_detail_profile_info"
                             style="@style/RoundButton.Auto"
                             android:text="查看详情" />
                     </RelativeLayout>

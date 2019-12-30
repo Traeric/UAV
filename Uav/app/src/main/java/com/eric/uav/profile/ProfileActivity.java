@@ -19,6 +19,7 @@ import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.utils.Dialog;
+import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏相关状态
@@ -26,7 +27,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TextView mapActivity;
     private TextView applicationActivityView;
     private RelativeLayout logout;
+
     private TextView logoutBtn;
+    private RoundButton detailInfo;
+    private RelativeLayout lookDetailLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         logout.setOnClickListener(this);
         logoutBtn = findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(this);
+
+        detailInfo = findViewById(R.id.look_detail_profile_info);
+        View.OnClickListener onClickListener = view -> startActivity(new Intent(ProfileActivity.this, ProfileInfoActivity.class));
+        detailInfo.setOnClickListener(onClickListener);
+        lookDetailLayout = findViewById(R.id.look_profile);
+        lookDetailLayout.setOnClickListener(onClickListener);
     }
 
     @Override

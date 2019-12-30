@@ -45,7 +45,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".profile.ProfileInfoActivity"></activity>
+        <activity android:name=".profile.ProfileInfoActivity"
+            android:theme="@style/profileInfoTheme"></activity>
         <activity
             android:name=".voice.VoiceActivity"
             android:theme="@style/voiceTheme" /> <!-- 启动动画 -->
