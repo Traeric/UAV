@@ -5,23 +5,30 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.Image;
 import android.media.ImageReader;
+import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
+import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +69,9 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
     private TextView cutScreen;
 
     private MediaProjectionManager mediaProjectionManager;
-    private VirtualDisplay virtualDisplay;
+    private boolean stopRecordScreen = false;
+    private MediaRecorder mediaRecorder = new MediaRecorder();
+
 
     private LinearLayout linearLayout;
 
@@ -113,6 +122,11 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
         recordScreen.setOnClickListener(this);
         cutScreen = findViewById(R.id.cut_screen);
         cutScreen.setOnClickListener(this);
+        // 创建存储录屏文件的目录
+        File file = new File("/sdcard/Uav/");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
     }
 
     @Override
@@ -251,7 +265,30 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
             }
             break;
             case R.id.record_screen: {
-                Dialog.toastWithoutAppName(this, "录屏");
+                if (stopRecordScreen) {
+                    // 停止录屏
+                    mediaRecorder.stop();
+                    Dialog.toastWithoutAppName(UavVideoActivity.this, "录屏完成");
+                    // 切换图标
+                    recordScreen.setBackgroundResource(R.drawable.screen);
+                    stopRecordScreen = false;
+                    return;
+                }
+                // 动态权限申请
+                if (ContextCompat.checkSelfPermission(UavVideoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_RECORD_SCREEN);
+                }
+                if (ContextCompat.checkSelfPermission(UavVideoActivity.this, Manifest.permission.RECORD_AUDIO)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_SCREEN);
+                }
+
+                // 实例化MediaProjectionManager
+                mediaProjectionManager = (MediaProjectionManager) getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+                // 利用MediaProjectionManager类实例的功能函数createScreenCaptureIntent()生成intent，为接下来的的抓取屏幕做准备
+                Intent screenCaptureIntent = mediaProjectionManager.createScreenCaptureIntent();
+                startActivityForResult(screenCaptureIntent, REQUEST_RECORD_SCREEN);
             }
             break;
             case R.id.cut_screen: {
@@ -267,23 +304,24 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置状态栏为不可见
+        MediaProjection mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data);
+        //WindowManager对象用于获取屏幕尺寸
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int windowHeight = displayMetrics.heightPixels;
+        int windowWidth = displayMetrics.widthPixels;
         switch (requestCode) {
             // 此处是截图功能的返回
             case REQUEST_CUT_CAPTURE: {
-                linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置状态栏为不可见
-                MediaProjection mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data);
                 if (resultCode == RESULT_OK && mediaProjection != null) {
                     // 图片路径
                     String nameImage = "/sdcard/Uav/Uav无人机航拍画面截图" + System.currentTimeMillis() + ".png";
-                    //WindowManager对象用于获取屏幕尺寸
-                    WindowManager windowManager = (WindowManager) getApplication().getSystemService(Context.WINDOW_SERVICE);
-                    int windowheight = windowManager.getDefaultDisplay().getHeight();
-                    int windowWidth = windowManager.getDefaultDisplay().getWidth();
-                    ImageReader imageReader = ImageReader.newInstance(windowWidth, windowheight, PixelFormat.RGBA_8888, 2);
-                    virtualDisplay = mediaProjection.createVirtualDisplay("屏幕捕获", windowWidth, windowheight, 240,
+                    ImageReader imageReader = ImageReader.newInstance(windowWidth, windowHeight, PixelFormat.RGBA_8888, 2);
+                    mediaProjection.createVirtualDisplay("屏幕捕获", windowWidth, windowHeight, 240,
                             DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, imageReader.getSurface(), null, null);
                     // 延时500毫秒在抓取
                     new Handler().postDelayed(() -> {
@@ -332,7 +370,38 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
             break;
             // 此处是录制屏幕的返回
             case REQUEST_RECORD_SCREEN: {
+                if (resultCode == RESULT_OK && mediaProjection != null) {
+                    // 视频保存路径
+                    String videoPath = "/sdcard/Uav/Uav无人机航拍画面录屏" + System.currentTimeMillis() + ".mp4";
+                    File file = new File(videoPath);
+                    // mediaRecorder相关设置
+                    mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+                    mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                    mediaRecorder.setOutputFile(file);
+                    mediaRecorder.setVideoSize(2048, 1024);
+                    mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+                    mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                    mediaRecorder.setVideoEncodingBitRate(5 * 2048 * 1024);
+                    mediaRecorder.setVideoFrameRate(30);
+                    try {
+                        mediaRecorder.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    // 创建virtualDisplay
+                    mediaProjection.createVirtualDisplay("screen mirror", windowWidth, windowHeight, 240,
+                            DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, mediaRecorder.getSurface(), null, null);
 
+                    // 保存视频
+                    new Handler().postDelayed(() -> {
+                        // 开始保存
+                        mediaRecorder.start();
+                        stopRecordScreen = true;
+                        // 切换图标
+                        recordScreen.setBackgroundResource(R.drawable.stop);
+                    }, 500);
+                }
             }
             break;
             default:
