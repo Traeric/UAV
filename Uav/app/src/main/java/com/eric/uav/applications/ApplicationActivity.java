@@ -10,17 +10,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eric.uav.R;
+import com.eric.uav.applications.look_album.LookAlbumActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
-import com.eric.uav.send_at.SendATActivity;
-import com.eric.uav.uav_video.UavVideoActivity;
+import com.eric.uav.applications.send_at.SendATActivity;
+import com.eric.uav.applications.uav_video.UavVideoActivity;
 import com.eric.uav.utils.Dialog;
-import com.eric.uav.voice.VoiceActivity;
+import com.eric.uav.applications.voice.VoiceActivity;
 
 public class ApplicationActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏activity
@@ -32,6 +32,7 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private ImageView checkUavVideoBtn;
     private ImageView snedAtBtn;
     private ImageView voiceBtn;
+    private ImageView lookAlbum;
 
     private TextView logoutBtn;
 
@@ -66,6 +67,9 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
         logoutBtn = findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(this);
+
+        lookAlbum = findViewById(R.id.look_Album);
+        lookAlbum.setOnClickListener(this);
     }
 
     @Override
@@ -126,6 +130,10 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
                 startActivity(intent);
             }
             break;
+            case R.id.look_Album: {
+                startActivity(new Intent(ApplicationActivity.this, LookAlbumActivity.class));
+            }
+            break;
             default:
                 break;
         }
@@ -133,11 +141,13 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
     /**
      * 实现按下返回键提示用户再按一次返回桌面，而不是返回上一个页面
+     *
      * @param keyCode
      * @param event
      * @return
      */
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {

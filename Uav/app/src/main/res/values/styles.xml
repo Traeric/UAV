@@ -96,5 +96,11 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#344751</item>
     </style>
+
+    <style name="lookAlbumTheme" parent="XUITheme.Phone">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#c6e48b</item>
+    </style>
 </resources>
 

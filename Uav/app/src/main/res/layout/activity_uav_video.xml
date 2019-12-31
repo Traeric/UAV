@@ -5,7 +5,7 @@
     android:id="@+id/uav_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".uav_video.UavVideoActivity">
+    tools:context=".applications.uav_video.UavVideoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

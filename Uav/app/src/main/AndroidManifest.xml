@@ -3,28 +3,25 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.eric.uav">
     <!-- 录屏权限 -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-    <!-- 摄像头相关权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 语音合成权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 摄像头相关权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 语音合成权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 百度语音识别相关权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 百度语音识别相关权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 高德地图开发需要的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 高德地图开发需要的权限 -->
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许程序获取网络状态 -->
@@ -54,11 +51,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
+        <activity android:name=".applications.look_album.LookAlbumActivity"
+            android:theme="@style/lookAlbumTheme"></activity>
         <activity
             android:name=".profile.ProfileInfoActivity"
-            android:theme="@style/profileInfoTheme"></activity>
+            android:theme="@style/profileInfoTheme" />
         <activity
-            android:name=".voice.VoiceActivity"
+            android:name=".applications.voice.VoiceActivity"
             android:theme="@style/voiceTheme" /> <!-- 启动动画 -->
         <activity
             android:name=".SplashActivity"
@@ -70,11 +69,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".send_at.SendATActivity"
+            android:name=".applications.send_at.SendATActivity"
             android:theme="@style/sendATTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".uav_video.UavVideoActivity"
+            android:name=".applications.uav_video.UavVideoActivity"
             android:screenOrientation="landscape"
             android:theme="@style/uavvideoTheme" />
         <activity
