@@ -10,6 +10,7 @@
 
 
     <LinearLayout
+        android:id="@+id/album_top"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="45dp"
@@ -53,6 +54,7 @@
 
     <!-- 主体部分 -->
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/album_top"
         android:id="@+id/parent_recycle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

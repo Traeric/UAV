@@ -1,12 +1,16 @@
 package com.eric.uav.applications.look_album;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -15,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.VideoView;
 
 import com.eric.uav.R;
+import com.eric.uav.applications.look_album.image_viewer.ImageViewerActivity;
+import com.eric.uav.applications.look_album.video_viewer.VideoViewerActivity;
 
 import java.util.List;
 
@@ -34,6 +40,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
         return new GridViewHolder(LayoutInflater.from(this.context).inflate(R.layout.album_recycle_item, viewGroup, false));
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull GridViewHolder gridViewHolder, int i) {
         if (list.get(i).getFile().getAbsolutePath().endsWith(".mp4")) {
@@ -44,10 +51,27 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
             layoutParams.height = 0;
             layoutParams.width = 0;
             gridViewHolder.imageView.setLayoutParams(layoutParams);
+
+            // 为视频设置点击事件
+            gridViewHolder.videoView.setOnTouchListener((view, motionEvent) -> {
+                Intent intent = new Intent(context, VideoViewerActivity.class);
+                DataTransform.videoSrc = list.get(i).getFile().getAbsolutePath();
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(0, 0);
+                return false;
+            });
         } else {
             // 设置图片地址
             gridViewHolder.imageView.setImageBitmap(list.get(i).getBitmap());
             gridViewHolder.imageView.setScaleType(ImageView.ScaleType.CENTER);
+
+            // 为图片设置点击事件
+            gridViewHolder.imageView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, ImageViewerActivity.class);
+                DataTransform.imageBitmap = list.get(i).getBitmap();
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(0, 0);
+            });
         }
     }
 

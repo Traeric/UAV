@@ -51,8 +51,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".applications.look_album.LookAlbumActivity"
-            android:theme="@style/lookAlbumTheme"></activity>
+        <activity android:name=".applications.look_album.video_viewer.VideoViewerActivity"
+            android:theme="@style/imageViewerTheme"></activity>
+        <activity
+            android:name=".applications.look_album.image_viewer.ImageViewerActivity"
+            android:theme="@style/imageViewerTheme" />
+        <activity
+            android:name=".applications.look_album.LookAlbumActivity"
+            android:theme="@style/lookAlbumTheme" />
         <activity
             android:name=".profile.ProfileInfoActivity"
             android:theme="@style/profileInfoTheme" />
