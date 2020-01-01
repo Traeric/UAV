@@ -13,8 +13,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eric.uav.R;
 
 import java.io.File;
@@ -34,31 +32,33 @@ public class LookAlbumActivity extends AppCompatActivity {
     private Map<Long, List<File>> fileMap = new ConcurrentHashMap<>(); // 每天都对对应很多个文件，使用map将每天跟每天的文件对应起来
     private List<Long> keys = new LinkedList<>();   // 所有时间节点的集合
 
+    private boolean hasListedFlag = false;
+
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_look_album);
+
+        // 获取Uav目录下的所有文件
+        File file = new File("/sdcard/Uav");
+        files = Arrays.asList(file.listFiles());
+        files = new ArrayList<>(files);
+
+        // 获取今天0点的时刻
+        long current = System.currentTimeMillis();
+        long startTime = current - (current + TimeZone.getDefault().getRawOffset()) % (1000 * 3600 * 24);
+        // 以及今天最后时刻
+        long endTime = startTime + 24 * 60 * 60 * 1000;
+        // 生成数据
+        this.sortFileByDate(startTime, endTime);
     }
 
     @SuppressLint("SimpleDateFormat")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            // 获取Uav目录下的所有文件
-            File file = new File("/sdcard/Uav");
-            files = Arrays.asList(file.listFiles());
-            files = new ArrayList<>(files);
-
-            // 获取今天0点的时刻
-            long current = System.currentTimeMillis();
-            long startTime = current - (current + TimeZone.getDefault().getRawOffset()) % (1000 * 3600 * 24);
-            // 以及今天最后时刻
-            long endTime = startTime + 24 * 60 * 60 * 1000;
-            // 生成数据
-            this.sortFileByDate(startTime, endTime);
-
+        if (hasFocus && !hasListedFlag) {
             // 添加到页面
             LinearLayout linearLayout1 = findViewById(R.id.image_body);
             for (long item : keys) {
@@ -68,6 +68,8 @@ public class LookAlbumActivity extends AppCompatActivity {
                 // 生成一天布局
                 LinearLayout linearLayout = new LinearLayout(this);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
+                // 添加到页面中
+                linearLayout1.addView(linearLayout);
                 // 生成时间tips
                 TextView textView = new TextView(this);
                 textView.setText(new SimpleDateFormat("yyyy年MM月dd日").format(item));
@@ -79,14 +81,13 @@ public class LookAlbumActivity extends AppCompatActivity {
                 // 添加图片
                 addItem(Objects.requireNonNull(fileMap.get(item)), linearLayout2);
                 linearLayout.addView(linearLayout2);
-                // 添加到页面中
-                linearLayout1.addView(linearLayout);
-                // 设置scroolview到最顶层
-                ScrollView scrollView = findViewById(R.id.scroll_view);
-                scrollView.smoothScrollTo(0, 20);
-                // 禁用滑动事件
-                linearLayout1.setNestedScrollingEnabled(false);
             }
+            // 设置scroolview到最顶层
+            ScrollView scrollView = findViewById(R.id.scroll_view);
+            scrollView.smoothScrollTo(0, 20);
+            // 禁用滑动事件
+            linearLayout1.setNestedScrollingEnabled(false);
+            hasListedFlag = true;   // 已经渲染了
         }
     }
 
