@@ -1,8 +1,6 @@
 package com.eric.uav.applications.look_album;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -18,14 +16,13 @@ import android.widget.VideoView;
 
 import com.eric.uav.R;
 
-import java.io.File;
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHolder> {
-    private List<File> list;
+    private List<ConvertFile> list;
     private Context context;
 
-    public AlbumAdapter(List<File> list, Context context) {
+    public AlbumAdapter(List<ConvertFile> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -39,8 +36,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
 
     @Override
     public void onBindViewHolder(@NonNull GridViewHolder gridViewHolder, int i) {
-        if (list.get(i).getAbsolutePath().endsWith(".mp4")) {
-            gridViewHolder.videoView.setVideoPath(list.get(i).getAbsolutePath());
+        if (list.get(i).getFile().getAbsolutePath().endsWith(".mp4")) {
+            gridViewHolder.videoView.setVideoPath(list.get(i).getFile().getAbsolutePath());
             gridViewHolder.videoView.setBackgroundResource(R.drawable.video_scale);
             // 设置imageView宽高为0
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -49,8 +46,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
             gridViewHolder.imageView.setLayoutParams(layoutParams);
         } else {
             // 设置图片地址
-            Bitmap bitmap = BitmapFactory.decodeFile(list.get(i).getAbsolutePath());
-            gridViewHolder.imageView.setImageBitmap(bitmap);
+            gridViewHolder.imageView.setImageBitmap(list.get(i).getBitmap());
             gridViewHolder.imageView.setScaleType(ImageView.ScaleType.CENTER);
         }
     }

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.eric.uav.R;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +20,17 @@ import java.util.Objects;
 
 public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.ListViewHolder> {
     private List<Long> keys;
-    private Map<Long, List<File>> listMap;
+    private Map<Long, List<ConvertFile>> listMap;
     private Context context;
     private String mode;
 
-    public ParentAdapter(List<Long> keys, Map<Long, List<File>> listMap, Context context) {
+    public ParentAdapter(List<Long> keys, Map<Long, List<ConvertFile>> listMap, Context context) {
         this.keys = keys;
         this.listMap = listMap;
         this.context = context;
     }
 
-    public ParentAdapter(List<Long> keys, Map<Long, List<File>> listMap, Context context, String mode) {
+    public ParentAdapter(List<Long> keys, Map<Long, List<ConvertFile>> listMap, Context context, String mode) {
         this.keys = keys;
         this.listMap = listMap;
         this.context = context;
@@ -55,18 +54,18 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.ListViewHo
         listViewHolder.dayRecycle.addItemDecoration(new RecyclerViewSpacesItemDecoration(10));
 
         // 筛选数据
-        List<File> tempList = new ArrayList<>();
+        List<ConvertFile> tempList = new ArrayList<>();
         if ("image".equals(mode)) {
             // 只展示图片
-            for (File file : Objects.requireNonNull(listMap.get(key))) {
-                if (file.getAbsolutePath().endsWith(".png")) {
+            for (ConvertFile file : Objects.requireNonNull(listMap.get(key))) {
+                if (file.getFile().getAbsolutePath().endsWith(".png")) {
                     tempList.add(file);
                 }
             }
         } else if ("video".equals(mode)) {
             // 只展示视频
-            for (File file : Objects.requireNonNull(listMap.get(key))) {
-                if (file.getAbsolutePath().endsWith(".mp4")) {
+            for (ConvertFile file : Objects.requireNonNull(listMap.get(key))) {
+                if (file.getFile().getAbsolutePath().endsWith(".mp4")) {
                     tempList.add(file);
                 }
             }
