@@ -53,12 +53,11 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
             gridViewHolder.imageView.setLayoutParams(layoutParams);
 
             // 为视频设置点击事件
-            gridViewHolder.videoView.setOnTouchListener((view, motionEvent) -> {
+            gridViewHolder.videoView.setOnClickListener((view) -> {
                 Intent intent = new Intent(context, VideoViewerActivity.class);
                 DataTransform.videoSrc = list.get(i).getFile().getAbsolutePath();
                 context.startActivity(intent);
                 ((Activity) context).overridePendingTransition(0, 0);
-                return false;
             });
         } else {
             // 设置图片地址

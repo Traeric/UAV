@@ -47,6 +47,9 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.ListViewHo
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder listViewHolder, int i) {
         Long key = keys.get(i);
+        if (Objects.requireNonNull(listMap.get(key)).size() <= 0) {
+            return;
+        }
         listViewHolder.dayText.setText(new SimpleDateFormat("yyyy年MM月dd日").format(key));
         // 设置recycle
         listViewHolder.dayRecycle.setLayoutManager(new GridLayoutManager(this.context, 4));
@@ -83,7 +86,13 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.ListViewHo
 
     @Override
     public int getItemCount() {
-        return keys.size();
+        int count = 1;
+        for (Long l : keys) {
+            if (Objects.requireNonNull(listMap.get(l)).size() > 0) {
+                count++;
+            }
+        }
+        return count;
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {
