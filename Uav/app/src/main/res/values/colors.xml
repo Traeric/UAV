@@ -12,4 +12,8 @@
     <color name="success">#67c23a</color>
     <color name="warn">#e6a23c</color>
     <color name="tips">#D3D3D3</color>
+
+    <color name="album_tips">#c6e48b</color>
+
+    <color name="default_text_color">#5C5C5C</color>
 </resources>
