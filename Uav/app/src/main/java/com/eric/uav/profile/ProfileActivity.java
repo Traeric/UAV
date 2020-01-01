@@ -23,9 +23,9 @@ import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏相关状态
-    private TextView homepageActivity;
-    private TextView mapActivity;
-    private TextView applicationActivityView;
+    private RelativeLayout homepageActivity;
+    private RelativeLayout mapActivity;
+    private RelativeLayout applicationActivityView;
     private RelativeLayout logout;
 
     private TextView logoutBtn;
@@ -39,10 +39,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("个人中心");
-        findViewById(R.id.homepage_activity).setBackground(getResources().getDrawable(R.drawable.home_page));
-        findViewById(R.id.map_activity).setBackground(getResources().getDrawable(R.drawable.map));
-        findViewById(R.id.application_activity).setBackground(getResources().getDrawable(R.drawable.other));
-        findViewById(R.id.personnal_activity).setBackground(getResources().getDrawable(R.drawable.mine_select));
+        findViewById(R.id.homepage_activity_item).setBackgroundResource(R.drawable.home_page);
+        findViewById(R.id.map_activity_item).setBackgroundResource(R.drawable.map);
+        findViewById(R.id.application_activity_item).setBackgroundResource(R.drawable.other);
+        findViewById(R.id.personnal_activity_item).setBackgroundResource(R.drawable.mine_select);
+
+        ((TextView) findViewById(R.id.homepage_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.select_color));
 
         // 底部栏按钮
         homepageActivity = findViewById(R.id.homepage_activity);

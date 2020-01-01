@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,9 +45,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private TextView connectingTipsView;
 
     // 底部栏相关
-    private TextView mapActivity;
-    private TextView profileActivity;
-    private TextView applicationActivity;
+    private RelativeLayout mapActivity;
+    private RelativeLayout profileActivity;
+    private RelativeLayout applicationActivity;
 
 
     private TextView logoutBtn;
@@ -109,10 +110,15 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("首页");
-        findViewById(R.id.homepage_activity).setBackground(getResources().getDrawable(R.drawable.homepage_select));
-        findViewById(R.id.map_activity).setBackground(getResources().getDrawable(R.drawable.map));
-        findViewById(R.id.application_activity).setBackground(getResources().getDrawable(R.drawable.other));
-        findViewById(R.id.personnal_activity).setBackground(getResources().getDrawable(R.drawable.mine));
+        findViewById(R.id.homepage_activity_item).setBackgroundResource(R.drawable.homepage_select);
+        findViewById(R.id.map_activity_item).setBackgroundResource(R.drawable.map);
+        findViewById(R.id.application_activity_item).setBackgroundResource(R.drawable.other);
+        findViewById(R.id.personnal_activity_item).setBackgroundResource(R.drawable.mine);
+
+        ((TextView) findViewById(R.id.homepage_activity_item_tips)).setTextColor(getResources().getColor(R.color.select_color));
+        ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
 
         button = findViewById(R.id.test);
         button.setOnClickListener(this);

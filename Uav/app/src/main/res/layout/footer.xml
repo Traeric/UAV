@@ -7,59 +7,107 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="4"
-        android:gravity="center">
+        android:gravity="center"
+        android:weightSum="4">
         <!-- 首页 -->
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/homepage_activity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
+
             <TextView
-                android:id="@+id/homepage_activity"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/homepage_select"/>
-        </LinearLayout>
+                android:id="@+id/homepage_activity_item"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/homepage_select" />
+
+            <TextView
+                android:id="@+id/homepage_activity_item_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/homepage_activity_item"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="-2dp"
+                android:text="首页"
+                android:textSize="12sp" />
+        </RelativeLayout>
 
         <!-- 地图 -->
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/map_activity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
+
             <TextView
-                android:id="@+id/map_activity"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/map"/>
-        </LinearLayout>
+                android:id="@+id/map_activity_item"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/map" />
+
+            <TextView
+                android:id="@+id/map_activity_item_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/map_activity_item"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="-2dp"
+                android:text="地图"
+                android:textSize="12sp" />
+        </RelativeLayout>
 
         <!-- 应用 -->
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/application_activity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
+
             <TextView
-                android:id="@+id/application_activity"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/other"/>
-        </LinearLayout>
+                android:id="@+id/application_activity_item"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/other" />
+
+            <TextView
+                android:id="@+id/application_activity_item_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/application_activity_item"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="-2dp"
+                android:text="应用"
+                android:textSize="12sp" />
+        </RelativeLayout>
 
 
         <!-- 个人主页 -->
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/personnal_activity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
+
             <TextView
-                android:id="@+id/personnal_activity"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/mine"/>
-        </LinearLayout>
+                android:id="@+id/personnal_activity_item"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/mine" />
+
+            <TextView
+                android:id="@+id/personnal_activity_item_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/personnal_activity_item"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="-2dp"
+                android:text="主页"
+                android:textSize="12sp" />
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

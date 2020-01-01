@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,9 +47,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private AMap aMap;
 
     // 底部栏相关
-    private TextView homepageActivityView;
-    private TextView profileActivityView;
-    private TextView applicationActivityView;
+    private RelativeLayout homepageActivityView;
+    private RelativeLayout profileActivityView;
+    private RelativeLayout applicationActivityView;
 
 
     private TextView logoutBtn;
@@ -62,10 +63,15 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
 
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("地图");
-        findViewById(R.id.homepage_activity).setBackground(getResources().getDrawable(R.drawable.home_page));
-        findViewById(R.id.map_activity).setBackground(getResources().getDrawable(R.drawable.map_select));
-        findViewById(R.id.application_activity).setBackground(getResources().getDrawable(R.drawable.other));
-        findViewById(R.id.personnal_activity).setBackground(getResources().getDrawable(R.drawable.mine));
+        findViewById(R.id.homepage_activity_item).setBackgroundResource(R.drawable.home_page);
+        findViewById(R.id.map_activity_item).setBackgroundResource(R.drawable.map_select);
+        findViewById(R.id.application_activity_item).setBackgroundResource(R.drawable.other);
+        findViewById(R.id.personnal_activity_item).setBackgroundResource(R.drawable.mine);
+
+        ((TextView) findViewById(R.id.homepage_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.select_color));
+        ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
 
         homepageActivityView = findViewById(R.id.homepage_activity);
         homepageActivityView.setOnClickListener(this);

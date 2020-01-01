@@ -16,4 +16,7 @@
     <color name="album_tips">#c6e48b</color>
 
     <color name="default_text_color">#5C5C5C</color>
+
+    <color name="select_color">#1fa4fc</color>
+    <color name="no_select_color">#bfbfbf</color>
 </resources>

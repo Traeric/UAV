@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eric.uav.R;
@@ -24,9 +25,9 @@ import com.eric.uav.applications.voice.VoiceActivity;
 
 public class ApplicationActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏activity
-    private TextView homepageActivityView;
-    private TextView mapActivityView;
-    private TextView profileActivityView;
+    private RelativeLayout homepageActivityView;
+    private RelativeLayout mapActivityView;
+    private RelativeLayout profileActivityView;
 
     // 应用入口
     private ImageView checkUavVideoBtn;
@@ -43,10 +44,15 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("应用");
-        findViewById(R.id.homepage_activity).setBackground(getResources().getDrawable(R.drawable.home_page));
-        findViewById(R.id.map_activity).setBackground(getResources().getDrawable(R.drawable.map));
-        findViewById(R.id.application_activity).setBackground(getResources().getDrawable(R.drawable.other_select));
-        findViewById(R.id.personnal_activity).setBackground(getResources().getDrawable(R.drawable.mine));
+        findViewById(R.id.homepage_activity_item).setBackgroundResource(R.drawable.home_page);
+        findViewById(R.id.map_activity_item).setBackgroundResource(R.drawable.map);
+        findViewById(R.id.application_activity_item).setBackgroundResource(R.drawable.other_select);
+        findViewById(R.id.personnal_activity_item).setBackgroundResource(R.drawable.mine);
+
+        ((TextView) findViewById(R.id.homepage_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.select_color));
+        ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
 
         // 底部栏
         homepageActivityView = findViewById(R.id.homepage_activity);
