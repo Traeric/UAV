@@ -95,7 +95,7 @@
                     android:layout_below="@id/yuyingshibie"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:text="语音识别"
+                    android:text="语音助手"
                     android:textSize="12sp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"/>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EEEEEE"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="操作"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="5"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.xuexiang.xui.widget.imageview.RadiusImageView
+                    riv_corner_radius="16px"
+                    riv_is_touch_select_mode_enabled="true"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:src="@drawable/delete_image" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.xuexiang.xui.widget.imageview.RadiusImageView
+                    riv_corner_radius="16px"
+                    riv_is_touch_select_mode_enabled="true"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:src="@drawable/share_qq" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.xuexiang.xui.widget.imageview.RadiusImageView
+                    riv_corner_radius="16px"
+                    riv_is_touch_select_mode_enabled="true"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:src="@drawable/share_wechat" />
+            </RelativeLayout>
+        </GridLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#000"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</LinearLayout>
