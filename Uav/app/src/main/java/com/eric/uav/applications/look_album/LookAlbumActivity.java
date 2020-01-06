@@ -7,8 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eric.uav.R;
 
 import java.io.File;
@@ -32,6 +36,9 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
     private TextView imageAlbum;
     private TextView videoAlbum;
 
+    private ImageView loadIcon;
+    private LinearLayout loadParent;
+
     private RecyclerView parentRecycle;
 
     @SuppressLint("SimpleDateFormat")
@@ -40,6 +47,11 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_look_album);
 
+        // 加载动画
+        loadParent = findViewById(R.id.load_parent);
+        loadIcon = findViewById(R.id.prev_load);
+        Glide.with(this).load(R.drawable.load).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(loadIcon);
 
         // 获取顶部切换栏的项
         allAlbum = findViewById(R.id.all_album);
@@ -55,25 +67,31 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus && !hasListedFlag) {
-            // 获取Uav目录下的所有文件
-            File file = new File("/sdcard/Uav");
-            for (File file1 : file.listFiles()) {
-                files.add(new ConvertFile(file1));
-            }
+            new Thread(() -> {
+                // 获取Uav目录下的所有文件
+                File file = new File("/sdcard/Uav");
+                for (File file1 : file.listFiles()) {
+                    files.add(new ConvertFile(file1));
+                }
 
-            // 获取今天0点的时刻
-            long current = System.currentTimeMillis();
-            long startTime = current - (current + TimeZone.getDefault().getRawOffset()) % (1000 * 3600 * 24);
-            // 以及今天最后时刻
-            long endTime = startTime + 24 * 60 * 60 * 1000;
-            // 生成数据
-            this.sortFileByDate(startTime, endTime);
-            // 添加到页面
-            parentRecycle = findViewById(R.id.parent_recycle);
-            parentRecycle.setLayoutManager(new LinearLayoutManager(this));
-            parentRecycle.addItemDecoration(new RecycleViewLinearItemDecoration(60));
-            parentRecycle.setAdapter(new ParentAdapter(keys, fileMap, this));
-            hasListedFlag = true;   // 已经渲染了
+                // 获取今天0点的时刻
+                long current = System.currentTimeMillis();
+                long startTime = current - (current + TimeZone.getDefault().getRawOffset()) % (1000 * 3600 * 24);
+                // 以及今天最后时刻
+                long endTime = startTime + 24 * 60 * 60 * 1000;
+                // 生成数据
+                this.sortFileByDate(startTime, endTime);
+                LookAlbumActivity.this.runOnUiThread(() -> {
+                    // 删除加载图标
+                    loadParent.setVisibility(View.GONE);
+                    // 添加到页面
+                    parentRecycle = findViewById(R.id.parent_recycle);
+                    parentRecycle.setLayoutManager(new LinearLayoutManager(this));
+                    parentRecycle.addItemDecoration(new RecycleViewLinearItemDecoration(60));
+                    parentRecycle.setAdapter(new ParentAdapter(keys, fileMap, this));
+                    hasListedFlag = true;   // 已经渲染了
+                });
+            }).start();
         }
     }
 
@@ -102,9 +120,12 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
                 files.remove(file);
             }
         }
-        // 添加到Map
-        fileMap.put(start, todayList);
-        keys.add(start);
+        // 今天有图片才存
+        if (todayList.size() > 0) {
+            // 添加到Map
+            fileMap.put(start, todayList);
+            keys.add(start);
+        }
         // 递归调用
         this.sortFileByDate(start - (24 * 60 * 60 * 1000), start);
     }
