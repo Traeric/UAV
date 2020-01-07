@@ -100,7 +100,7 @@
     <style name="lookAlbumTheme" parent="XUITheme.Phone">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#c6e48b</item>
+        <item name="android:statusBarColor">#EEEEEE</item>
     </style>
 
     <style name="imageViewerTheme" parent="XUITheme.Phone">

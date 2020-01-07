@@ -13,11 +13,12 @@
     <LinearLayout
         android:id="@+id/album_top"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
+        android:layout_height="50dp"
+        android:paddingRight="45dp"
+        android:paddingLeft="45dp"
         android:gravity="center_vertical"
-        android:weightSum="3">
+        android:weightSum="3"
+        android:background="@drawable/under_line">
 
         <TextView
             android:id="@+id/all_album"

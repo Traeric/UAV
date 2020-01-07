@@ -14,14 +14,15 @@ import android.widget.TextView;
 
 import com.eric.uav.R;
 import com.eric.uav.applications.look_album.LookAlbumActivity;
+import com.eric.uav.applications.send_at.SendATActivity;
+import com.eric.uav.applications.uav_video.UavVideoActivity;
+import com.eric.uav.applications.voice.VoiceActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
-import com.eric.uav.applications.send_at.SendATActivity;
-import com.eric.uav.applications.uav_video.UavVideoActivity;
 import com.eric.uav.utils.Dialog;
-import com.eric.uav.applications.voice.VoiceActivity;
+import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 public class ApplicationActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏activity
@@ -36,6 +37,9 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private ImageView lookAlbum;
 
     private TextView logoutBtn;
+
+    private RadiusImageView bannerVideo;
+    private RadiusImageView bannerAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,11 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
         lookAlbum = findViewById(R.id.look_Album);
         lookAlbum.setOnClickListener(this);
+
+        bannerVideo = findViewById(R.id.banner_video);
+        bannerVideo.setOnClickListener(this);
+        bannerAlbum = findViewById(R.id.banner_album);
+        bannerAlbum.setOnClickListener(this);
     }
 
     @Override
@@ -138,6 +147,16 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
             break;
             case R.id.look_Album: {
                 startActivity(new Intent(ApplicationActivity.this, LookAlbumActivity.class));
+            }
+            break;
+            case R.id.banner_video: {
+                // 跳转到航拍画面的Activity
+                startActivity(new Intent(ApplicationActivity.this, UavVideoActivity.class));
+            }
+            break;
+            case R.id.banner_album: {
+                Intent intent = new Intent(ApplicationActivity.this, LookAlbumActivity.class);
+                startActivity(intent);
             }
             break;
             default:
