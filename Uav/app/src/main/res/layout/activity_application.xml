@@ -14,144 +14,249 @@
             android:id="@+id/head"
             layout="@layout/head" />
 
-
-        <!-- 中间布局 -->
-        <GridLayout
+        <RelativeLayout
+            android:id="@+id/app_line_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/head"
-            android:layout_marginBottom="60dp"
-            android:columnCount="4"
-            android:alignmentMode="alignBounds"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp">
-            <!-- 航拍视图 -->
-            <RelativeLayout
-                android:layout_columnWeight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+            android:background="#fff"
+            android:padding="10dp">
 
-                <com.xuexiang.xui.widget.imageview.RadiusImageView
-                    android:id="@+id/check_uav_video"
-                    riv_corner_radius="16px"
-                    riv_is_touch_select_mode_enabled="true"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:src="@drawable/video"
-                    app:riv_selected_mask_color="#80000000" />
-                <TextView
-                    android:layout_below="@id/check_uav_video"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="航拍视角"
-                    android:textSize="12sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"/>
-            </RelativeLayout>
-            <!-- 发送指令 -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <com.xuexiang.xui.widget.imageview.RadiusImageView
+                android:id="@+id/style_image"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:gravity="center">
+                android:clickable="true"
+                android:src="@drawable/app_banner"
+                app:riv_corner_radius="4dp" />
 
-                <com.xuexiang.xui.widget.imageview.RadiusImageView
-                    android:id="@+id/send_at"
-                    riv_corner_radius="16px"
-                    riv_is_touch_select_mode_enabled="true"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:src="@drawable/send_at"
-                    app:riv_selected_mask_color="#80000000" />
-                <TextView
-                    android:layout_below="@id/send_at"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="发送指令"
-                    android:textSize="12sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"/>
-            </RelativeLayout>
-            <!-- 语音操作 -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <!-- 中间布局 -->
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:gravity="center">
-
-                <com.xuexiang.xui.widget.imageview.RadiusImageView
-                    android:id="@+id/yuyingshibie"
-                    riv_corner_radius="16px"
-                    riv_is_touch_select_mode_enabled="true"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:src="@drawable/yuyingshibie_app_logo"
-                    app:riv_selected_mask_color="#80000000" />
-                <TextView
-                    android:layout_below="@id/yuyingshibie"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="语音助手"
-                    android:textSize="12sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"/>
-            </RelativeLayout>
-            <!-- 查看截图 -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:gravity="center">
-
-                <com.xuexiang.xui.widget.imageview.RadiusImageView
-                    android:id="@+id/look_Album"
-                    riv_corner_radius="16px"
-                    riv_is_touch_select_mode_enabled="true"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:src="@drawable/look_uav_album"
-                    app:riv_selected_mask_color="#80000000" />
-                <TextView
-                    android:layout_below="@id/look_Album"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="查看航拍"
-                    android:textSize="12sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"/>
-            </RelativeLayout>
-            <!-- 设置 -->
-            <RelativeLayout
+                android:layout_below="@+id/style_image"
                 android:layout_marginTop="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:gravity="center">
-
-                <com.xuexiang.xui.widget.imageview.RadiusImageView
-                    android:id="@+id/app_setting"
-                    riv_corner_radius="16px"
-                    riv_is_touch_select_mode_enabled="true"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:src="@drawable/app_setting"
-                    app:riv_selected_mask_color="#80000000" />
-                <TextView
-                    android:layout_below="@id/app_setting"
-                    android:layout_width="60dp"
+                android:alignmentMode="alignBounds"
+                android:columnCount="4"
+                android:orientation="horizontal">
+                <!-- 航拍视图 -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="应用设置"
-                    android:textSize="12sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"/>
-            </RelativeLayout>
-        </GridLayout>
+                    android:layout_columnWeight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/check_uav_video"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:clickable="true"
+                            android:src="@drawable/video"
+                            app:riv_corner_radius="12dp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/check_uav_video"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="航拍视角"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- 发送指令 -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/send_at"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:clickable="true"
+                            android:src="@drawable/send_at"
+                            app:riv_corner_radius="12dp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/send_at"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="发送指令"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- 语音操作 -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/yuyingshibie"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:clickable="true"
+                            android:src="@drawable/yuyingshibie_app_logo"
+                            app:riv_corner_radius="12dp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/yuyingshibie"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="语音助手"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- 查看截图 -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/look_Album"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:clickable="true"
+                            android:src="@drawable/look_uav_album"
+                            app:riv_corner_radius="12dp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/look_Album"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="查看航拍"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- 设置 -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/app_setting"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:clickable="true"
+                            android:src="@drawable/app_setting"
+                            app:riv_corner_radius="12dp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/app_setting"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="应用设置"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </GridLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/app_line_1"
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            android:padding="10dp">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alignmentMode="alignBounds"
+                android:columnCount="2"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center">
+
+                    <com.xuexiang.xui.widget.imageview.RadiusImageView
+                        android:id="@+id/banner_video"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/uav_video"
+                        app:riv_corner_radius="4dp" />
+                    <TextView
+                        android:layout_below="@+id/banner_video"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:layout_marginTop="5dp"
+                        android:text="航拍：查看无人机的拍摄画面"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center">
+
+                    <com.xuexiang.xui.widget.imageview.RadiusImageView
+                        android:id="@+id/banner_album"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/look_album"
+                        app:riv_corner_radius="4dp" />
+
+                    <TextView
+                        android:layout_below="@+id/banner_album"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:text="相册：查看无人机拍摄的图片"/>
+                </RelativeLayout>
+            </GridLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/footer"
