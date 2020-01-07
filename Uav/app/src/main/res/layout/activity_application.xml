@@ -23,6 +23,7 @@
             android:padding="10dp">
 
             <com.xuexiang.xui.widget.imageview.RadiusImageView
+                android:elevation="8dp"
                 android:id="@+id/style_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
