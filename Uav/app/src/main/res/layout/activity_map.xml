@@ -40,6 +40,7 @@
                     android:text="获取当前定位" />
 
                 <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                    android:id="@+id/uav_position"
                     app:rb_borderColor="@color/success"
                     android:textColor="@color/success"
                     style="@style/RoundButton.Auto"
@@ -47,6 +48,7 @@
                     android:text="切换到无人机定位" />
 
                 <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                    android:id="@+id/phone_position"
                     app:rb_borderColor="@color/warn"
                     android:textColor="@color/warn"
                     style="@style/RoundButton.Auto"

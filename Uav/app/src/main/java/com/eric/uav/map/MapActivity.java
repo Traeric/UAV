@@ -2,18 +2,16 @@ package com.eric.uav.map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
+import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -25,22 +23,28 @@ import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.PolylineOptions;
 import com.eric.uav.R;
 import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.utils.MarkerUtils;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements View.OnClickListener {
+public class MapActivity extends AppCompatActivity implements View.OnClickListener, AMap.OnMapClickListener {
     private RoundButton getLocation;
+    private RoundButton phonePosition;
+    private RoundButton uavPosition;
 
     private MapView mapView;
     private MyLocationStyle myLocationStyle;
@@ -55,6 +59,10 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private TextView logoutBtn;
 
     private static final int M_PERMISSION_CODE = 1001;
+
+    // 点击过的位置
+    private List<LatLng> clickLatLngList = new ArrayList<>();
+    private Marker uavMarker;   // 无人机的marker
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,23 +102,18 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         locationMap();
         // 设置地图ui样式
         setMapUi();
-
-//        while (true) {
-//            if (aMap.getMyLocation() != null) {
-//                aMap.setOnMapLoadedListener(() -> {
-//                    // map加载完毕执行的回调函数
-//                    // 将当前位置移动到屏幕中央
-//                    CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(
-//                            new LatLng(30.67, 104.07), 10, 0, 0));
-//                    aMap.moveCamera(cameraUpdate);
-//                });
-//                break;
-//            }
-//        }
+        // 设置地图点击事件
+        aMap.setOnMapClickListener(this);
 
         // 获取定位信息
         getLocation = findViewById(R.id.current_location);
         getLocation.setOnClickListener(this);
+        // 切换到手机定位
+        phonePosition = findViewById(R.id.phone_position);
+        phonePosition.setOnClickListener(this);
+        // 切换到无人机定位
+        uavPosition = findViewById(R.id.uav_position);
+        uavPosition.setOnClickListener(this);
     }
 
     @Override
@@ -125,9 +128,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             }
             break;
             case R.id.current_location: {
-                Toast.makeText(MapActivity.this,
-                        "当前位置：\n经度：" + aMap.getMyLocation().getLongitude() + "\n纬度：" + aMap.getMyLocation().getLatitude(),
-                        Toast.LENGTH_SHORT).show();
+                Dialog.toastWithoutAppName(MapActivity.this,
+                        "当前位置：\n经度：" + aMap.getMyLocation().getLongitude() + "\n纬度：" + aMap.getMyLocation().getLatitude());
             }
             break;
             case R.id.personnal_activity: {
@@ -161,8 +163,36 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                     startActivity(new Intent(MapActivity.this, LoginActivity.class));
                     overridePendingTransition(0, 0);
                 });
-                builder.setNegativeButton("取消", (dialog, which) -> {});
+                builder.setNegativeButton("取消", (dialog, which) -> {
+                });
                 builder.show();
+            }
+            break;
+            case R.id.phone_position: {
+                // 获取当前定位
+                // 经度
+                double longitude = aMap.getMyLocation().getLongitude();
+                // 纬度
+                double latitude = aMap.getMyLocation().getLatitude();
+                CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(
+                        new CameraPosition(new LatLng(latitude, longitude), 15, 30, 0));
+                aMap.moveCamera(mCameraUpdate);
+            }
+            break;
+            case R.id.uav_position: {
+                if (uavMarker != null) {
+                    // 如果已经绘制过了，先清除上一次绘制的位置
+                    uavMarker.remove();
+                    // 刷新地图
+                    aMap.reloadMap();
+                }
+                LatLng latLng = new LatLng(31.033262, 112.209156);
+                CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(
+                        new CameraPosition(latLng, 15, 30, 0));
+                aMap.moveCamera(mCameraUpdate);
+                // 绘制marker
+                uavMarker = MarkerUtils.drawUavMarker(latLng, MapActivity.this, aMap);
+                clickLatLngList.add(0, latLng);
             }
             break;
             default:
@@ -274,11 +304,13 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
 
     /**
      * 实现按下返回键提示用户再按一次返回桌面，而不是返回上一个页面
+     *
      * @param keyCode
      * @param event
      * @return
      */
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -297,5 +329,23 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 地图点击事件
+     * @param latLng 位置信息
+     */
+    @Override
+    public void onMapClick(LatLng latLng) {
+        if (clickLatLngList.size() <= 0) {
+            Dialog.toastWithoutAppName(this, "请先获取无人机的位置");
+            return;
+        }
+        // 首先在所点击的位置画一个点
+        MarkerUtils.drawClickMarker(latLng, aMap);
+        clickLatLngList.add(latLng);
+        // 将该点与上一个点连起来
+        aMap.addPolyline(new PolylineOptions().
+                addAll(clickLatLngList).width(2).color(Color.argb(255, 255, 1, 1)));
     }
 }
