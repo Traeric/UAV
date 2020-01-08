@@ -3,143 +3,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homepage.HomePageActivity"
-    android:background="#fff">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    tools:context=".homepage.HomePageActivity">
 
     <RelativeLayout
+        android:layout_marginTop="28dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <include layout="@layout/head" android:id="@+id/head" />
-
-        <!-- 中间布局 -->
-        <RelativeLayout
-            android:layout_below="@+id/head"
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:elevation="8dp"
+            android:id="@+id/head"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp">
-            <TextView
-                android:id="@+id/connected"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="已连接设备"
-                android:textStyle="bold"
-                android:textColor="#5EACF0"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-            <LinearLayout
-                android:layout_below="@id/connected"
-                android:id="@+id/connectDevice_wrap"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/connectDevice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#EEEEEE">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/app_banner"
+            app:riv_corner_radius="4dp" />
 
-                </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/bond"
-                android:layout_below="@+id/connectDevice_wrap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="已配对设备"
-                android:textStyle="bold"
-                android:textColor="#5EACF0"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-            <TextView
-                android:id="@+id/connecting_tips"
-                android:layout_toRightOf="@+id/bond"
-                android:layout_below="@+id/connectDevice_wrap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_below="@+id/bond"
-                android:id="@+id/bondDevice_wrap"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/bondDevice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#EEEEEE">
-
-                </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-            <!-- 分割线 -->
-            <TextView
-                android:layout_below="@id/bondDevice_wrap"
-                android:id="@+id/seporater"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#F3F3F3"/>
+        <ScrollView
+            android:layout_below="@+id/head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/search_tips"
-                android:layout_below="@+id/seporater"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical">
-                <TextView
-                    android:id="@+id/search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="可配对设备"
-                    android:textStyle="bold"
-                    android:textColor="#5EACF0"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
-
-                <TextView
-                    android:layout_toRightOf="@+id/search"
-                    android:layout_marginLeft="20dp"
-                    android:id="@+id/search_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="请点击搜索..."
-                    android:textStyle="bold"
-                    android:textColor="#D6D6D6"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
-
-                <com.xuexiang.xui.widget.button.roundbutton.RoundButton
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/test"
-                    android:layout_marginTop="6dp"
-                    style="@style/RoundButton.Auto"
-                    android:text="搜索设备" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_below="@+id/search_tips"
-                android:id="@+id/searchDevice_wrap"
-                android:layout_width="match_parent"
-                android:layout_height="300dp">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/searchDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <!-- 中间布局 -->
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#EEEEEE">
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="60dp">
 
-                </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/connected"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="已连接设备"
+                        android:textColor="#5EACF0"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/connectDevice_wrap"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/connected">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/connectDevice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#EEEEEE">
+
+                        </android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/bond"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/connectDevice_wrap"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="已配对设备"
+                        android:textColor="#5EACF0"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/connecting_tips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/connectDevice_wrap"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/bond"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/bondDevice_wrap"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/bond">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/bondDevice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#EEEEEE">
+
+                        </android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
+                    <!-- 分割线 -->
+                    <TextView
+                        android:id="@+id/seporater"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/bondDevice_wrap"
+                        android:background="#F3F3F3" />
+
+                    <RelativeLayout
+                        android:id="@+id/search_tips"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/seporater"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="可配对设备"
+                            android:textColor="#5EACF0"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/search_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_toRightOf="@+id/search"
+                            android:text="请点击搜索..."
+                            android:textColor="#D6D6D6"
+                            android:textStyle="bold" />
+
+                        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                            android:id="@+id/test"
+                            style="@style/RoundButton.Auto"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="6dp"
+                            android:text="搜索设备" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/searchDevice_wrap"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_below="@+id/search_tips">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/searchDevice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#EEEEEE">
+
+                        </android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
 
         <RelativeLayout
             android:id="@+id/footer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
+
             <include layout="@layout/footer" />
         </RelativeLayout>
     </RelativeLayout>

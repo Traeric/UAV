@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content">
 
                 <com.xuexiang.xui.widget.imageview.RadiusImageView
+                    android:id="@+id/delete_file"
                     riv_corner_radius="16px"
                     riv_is_touch_select_mode_enabled="true"
                     android:layout_width="60dp"
@@ -68,6 +69,7 @@
         </GridLayout>
 
         <TextView
+            android:id="@+id/popup_window_cancel"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"

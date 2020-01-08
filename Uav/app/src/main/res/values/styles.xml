@@ -43,25 +43,25 @@
     <style name="homepageTheme" parent="XUITheme.Phone">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#409eff</item>
+        <item name="android:statusBarColor">#404040</item>
     </style>
 
     <style name="mapTheme" parent="XUITheme.Phone">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#409eff</item>
+        <item name="android:statusBarColor">#404040</item>
     </style>
 
     <style name="profileTheme" parent="XUITheme.Phone">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#409eff</item>
+        <item name="android:statusBarColor">#404040</item>
     </style>
 
     <style name="applicationsTheme" parent="XUITheme.Phone">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#409eff</item>
+        <item name="android:statusBarColor">#404040</item>
     </style>
 
     <style name="uavvideoTheme" parent="XUITheme.Phone">

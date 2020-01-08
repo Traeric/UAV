@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -47,6 +48,11 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
         if (list.get(i).getFile().getAbsolutePath().endsWith(".mp4")) {
             gridViewHolder.videoView.setVideoPath(list.get(i).getFile().getAbsolutePath());
             gridViewHolder.videoView.setBackgroundResource(R.drawable.video_scale);
+            // 禁止无法播放视频的弹窗
+            gridViewHolder.videoView.setOnErrorListener((MediaPlayer mp, int what, int extra) -> {
+                gridViewHolder.videoView.stopPlayback(); //播放异常，则停止播放，防止弹窗使界面阻塞
+                return true;
+            });
             // 设置imageView宽高为0
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.height = 0;
@@ -57,7 +63,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
             gridViewHolder.videoWrap.setOnClickListener((view) -> {
                 Intent intent = new Intent(context, VideoViewerActivity.class);
                 DataTransform.videoSrc = list.get(i).getFile().getAbsolutePath();
-                context.startActivity(intent);
+                DataTransform.file = list.get(i).getFile();
+                ((Activity) context).startActivityForResult(intent, DataTransform.DELETE_VIDEO);
                 ((Activity) context).overridePendingTransition(0, 0);
             });
         } else {
@@ -69,7 +76,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
             gridViewHolder.imageView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, ImageViewerActivity.class);
                 DataTransform.imageBitmap = list.get(i).getBitmap();
-                context.startActivity(intent);
+                DataTransform.file = list.get(i).getFile();
+                ((Activity) context).startActivityForResult(intent, DataTransform.DELETE_IMAGE);
                 ((Activity) context).overridePendingTransition(0, 0);
             });
         }

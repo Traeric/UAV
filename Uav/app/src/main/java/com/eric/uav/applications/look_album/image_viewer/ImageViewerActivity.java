@@ -1,6 +1,5 @@
 package com.eric.uav.applications.look_album.image_viewer;
 
-import android.annotation.SuppressLint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,17 +12,27 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.eric.uav.R;
 import com.eric.uav.applications.look_album.DataTransform;
+import com.eric.uav.utils.Dialog;
+import com.xuexiang.xui.widget.imageview.RadiusImageView;
+
+import java.io.File;
 
 public class ImageViewerActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView imageView;
     private RelativeLayout linearLayout;
     private Button txtBtn;
+
+    private TextView popupWindowCancel;
+    private RadiusImageView deleteFile;
+
+    private PopupWindow popupWindow;
+    private View popupView;
 
 
     @Override
@@ -60,8 +69,8 @@ public class ImageViewerActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.share_btn: {
-                @SuppressLint("InflateParams") View popupView = getLayoutInflater().inflate(R.layout.share_popup_window, null);
-                PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT,
+                popupView = getLayoutInflater().inflate(R.layout.image_share_popup_window, null);
+                popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT,
                         WindowManager.LayoutParams.WRAP_CONTENT);
                 // 设置背景图片
                 popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -87,6 +96,32 @@ public class ImageViewerActivity extends AppCompatActivity implements View.OnCli
                 });
 
                 popupWindow.showAsDropDown(txtBtn);
+
+                popupWindowCancel = popupView.findViewById(R.id.popup_window_cancel);
+                popupWindowCancel.setOnClickListener(this);
+
+                deleteFile = popupView.findViewById(R.id.delete_file);
+                deleteFile.setOnClickListener(this);
+            }
+            break;
+            case R.id.popup_window_cancel: {
+                // 关闭popup窗口
+                popupWindow.dismiss();
+            }
+            break;
+            case R.id.delete_file: {
+                // 获取要删除的文件路径
+                File file = DataTransform.file;
+                // 删除文件
+                if (file.delete()) {
+                    // 删除成功
+                    setResult(DataTransform.DELETE_IMAGE);  // 设置返回码
+                    this.finish();
+                    overridePendingTransition(0, 0);
+                } else {
+                    // 删除失败
+                    Dialog.toastWithoutAppName(ImageViewerActivity.this, "删除失败");
+                }
             }
             break;
             default:

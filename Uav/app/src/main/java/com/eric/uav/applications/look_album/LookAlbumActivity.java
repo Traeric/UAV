@@ -1,8 +1,10 @@
 package com.eric.uav.applications.look_album;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eric.uav.R;
+import com.eric.uav.utils.Dialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,6 +70,9 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus && !hasListedFlag) {
+            files.clear();
+            keys.clear();
+            fileMap.clear();
             new Thread(() -> {
                 // 获取Uav目录下的所有文件
                 File file = new File("/sdcard/Uav");
@@ -160,6 +166,22 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
             break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 接收Activity的返回
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == DataTransform.DELETE_IMAGE || resultCode == DataTransform.DELETE_VIDEO) {
+            // 刷新activity
+            hasListedFlag = false;
+            Dialog.toastWithoutAppName(this, "删除成功");
         }
     }
 }

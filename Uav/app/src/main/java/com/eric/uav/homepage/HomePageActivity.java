@@ -109,7 +109,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_home_page);
 
         // 初始化样式
-        ((TextView) findViewById(R.id.title)).setText("首页");
+//        ((TextView) findViewById(R.id.title)).setText("首页");
         findViewById(R.id.homepage_activity_item).setBackgroundResource(R.drawable.homepage_select);
         findViewById(R.id.map_activity_item).setBackgroundResource(R.drawable.map);
         findViewById(R.id.application_activity_item).setBackgroundResource(R.drawable.other);
@@ -122,8 +122,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         button = findViewById(R.id.test);
         button.setOnClickListener(this);
-        logoutBtn = findViewById(R.id.logout_btn);
-        logoutBtn.setOnClickListener(this);
+//        logoutBtn = findViewById(R.id.logout_btn);
+//        logoutBtn.setOnClickListener(this);
 
         // 底部栏相关设置
         mapActivity = findViewById(R.id.map_activity);
