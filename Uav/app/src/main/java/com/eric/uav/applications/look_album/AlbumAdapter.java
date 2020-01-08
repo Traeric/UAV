@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.eric.uav.R;
@@ -53,7 +54,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
             gridViewHolder.imageView.setLayoutParams(layoutParams);
 
             // 为视频设置点击事件
-            gridViewHolder.videoView.setOnClickListener((view) -> {
+            gridViewHolder.videoWrap.setOnClickListener((view) -> {
                 Intent intent = new Intent(context, VideoViewerActivity.class);
                 DataTransform.videoSrc = list.get(i).getFile().getAbsolutePath();
                 context.startActivity(intent);
@@ -88,11 +89,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
     class GridViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private VideoView videoView;
+        private RelativeLayout videoWrap;
 
         public GridViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.album_image);
             videoView = itemView.findViewById(R.id.album_video);
+            videoWrap = itemView.findViewById(R.id.video_wrap);
             LinearLayout linearLayout = itemView.findViewById(R.id.wrap_item);
 
             // 根据不同的手机设置每一项不同的宽度

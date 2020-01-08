@@ -2,6 +2,7 @@ package com.eric.uav.applications.uav_video;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -29,6 +30,7 @@ import android.view.OrientationEventListener;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -77,6 +79,7 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
      */
     private OrientationEventListener orientationEventListener;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,15 +175,24 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics dm = new DisplayMetrics();
+            wm.getDefaultDisplay().getMetrics(dm);
+            // 屏幕密度（0.75 / 1.0 / 1.5）
+            float density = dm.density;
+            // 获取屏幕宽度
+            int width = dm.widthPixels;
+
+
             // 获取手指点击屏幕的位置
             float rawX = ev.getRawX();
             float rawY = ev.getRawY();
             // 判断是否点击了地图控件
-            if (rawX > 0 && rawX < 450 && rawY > 0 && rawY < 450) {
+            if (rawX > 0 && rawX < 200 * density && rawY > 0 && rawY < 200 * density) {
                 return super.dispatchTouchEvent(ev);
             }
             // 判断是否点击了右侧控件
-            if (rawX > 1900 && rawY < 140) {
+            if (rawX > (width - 160 * density) && rawY < 40 * density) {
                 return super.dispatchTouchEvent(ev);
             }
             clicked = true;
@@ -189,7 +201,7 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
             rockerView.setVisibility(View.VISIBLE);
             // 定义一个LayoutParams
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins((int) rawX - 275, (int) rawY - 210, 0, 0);
+            layoutParams.setMargins((int) (rawX - 75 * density), (int) (rawY - 75 * density), 0, 0);
             rockerView.setLayoutParams(layoutParams);
         } else if (ev.getAction() == MotionEvent.ACTION_UP) {
             clicked = false;
@@ -233,9 +245,15 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.open_map: {
+                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                DisplayMetrics dm = new DisplayMetrics();
+                wm.getDefaultDisplay().getMetrics(dm);
+                // 屏幕密度（0.75 / 1.0 / 1.5）
+                float density = dm.density;
+
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.height = 450 - mapView.getWidth();
-                layoutParams.width = 450 - mapView.getWidth();
+                layoutParams.height = (int) (200 * density - mapView.getWidth());
+                layoutParams.width = (int) (200 * density - mapView.getWidth());
                 mapView.setLayoutParams(layoutParams);
 
                 ValueAnimator vaMap;
@@ -374,7 +392,7 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
                     mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                     mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
                     mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                    mediaRecorder.setOutputFile(file);
+                    mediaRecorder.setOutputFile(file.getAbsolutePath());
                     mediaRecorder.setVideoSize(2048, 1024);
                     mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
                     mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
