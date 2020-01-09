@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eric.uav.R;
+import com.eric.uav.applications.link_bluetooth.BlueToothActivity;
 import com.eric.uav.applications.look_album.LookAlbumActivity;
 import com.eric.uav.applications.send_at.SendATActivity;
 import com.eric.uav.applications.uav_video.UavVideoActivity;
@@ -35,6 +36,7 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private ImageView snedAtBtn;
     private ImageView voiceBtn;
     private ImageView lookAlbum;
+    private ImageView blueTooth;
 
     private TextView logoutBtn;
 
@@ -83,8 +85,12 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
         bannerVideo = findViewById(R.id.banner_video);
         bannerVideo.setOnClickListener(this);
+
         bannerAlbum = findViewById(R.id.banner_album);
         bannerAlbum.setOnClickListener(this);
+
+        blueTooth = findViewById(R.id.link_bluetooth);
+        blueTooth.setOnClickListener(this);
     }
 
     @Override
@@ -156,6 +162,11 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
             break;
             case R.id.banner_album: {
                 Intent intent = new Intent(ApplicationActivity.this, LookAlbumActivity.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.link_bluetooth: {
+                Intent intent = new Intent(ApplicationActivity.this, BlueToothActivity.class);
                 startActivity(intent);
             }
             break;

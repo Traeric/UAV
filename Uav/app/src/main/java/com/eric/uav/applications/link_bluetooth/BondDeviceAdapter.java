@@ -1,4 +1,4 @@
-package com.eric.uav.homepage;
+package com.eric.uav.applications.link_bluetooth;
 
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -71,7 +71,7 @@ public class BondDeviceAdapter extends RecyclerView.Adapter<BondDeviceAdapter.Li
             BlueToothUtils blueToothUtils = new BlueToothUtils((AppCompatActivity) context);
             blueToothUtils.connectBlueTooth(device, UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
             // 显示提示
-            TextView connectingTipsView = ((HomePageActivity) context).getConnectingTipsView();
+            TextView connectingTipsView = ((BlueToothActivity) context).getConnectingTipsView();
             connectingTipsView.setText("正在连接中...");
             connectingTipsView.setTextColor(context.getResources().getColor(R.color.tips));
         });
@@ -84,10 +84,10 @@ public class BondDeviceAdapter extends RecyclerView.Adapter<BondDeviceAdapter.Li
                 method.invoke(device, (Object[]) null);
 
                 // 删除该设备
-                List<BluetoothDevice> bondBlueToothList = ((HomePageActivity) context).getBondBlueToothList();
+                List<BluetoothDevice> bondBlueToothList = ((BlueToothActivity) context).getBondBlueToothList();
                 bondBlueToothList.remove(device);   // 移除设备
-                ((HomePageActivity) context).setBondBlueToothList(bondBlueToothList);
-                RecyclerView bondBlueToothView = ((HomePageActivity) context).getBondBlueToothView();
+                ((BlueToothActivity) context).setBondBlueToothList(bondBlueToothList);
+                RecyclerView bondBlueToothView = ((BlueToothActivity) context).getBondBlueToothView();
                 bondBlueToothView.setAdapter(new BondDeviceAdapter(context, bondBlueToothList));
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();

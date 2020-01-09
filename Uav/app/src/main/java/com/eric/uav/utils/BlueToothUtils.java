@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.eric.uav.applications.link_bluetooth.BlueToothActivity;
 import com.eric.uav.homepage.HomePageActivity;
 
 import java.io.IOException;
@@ -145,7 +146,7 @@ public class BlueToothUtils {
                 e.printStackTrace();
             }
             // 执行回调
-            ((HomePageActivity) currentActivity).callback();
+            ((BlueToothActivity) currentActivity).callback();
         }).start();
     }
 }

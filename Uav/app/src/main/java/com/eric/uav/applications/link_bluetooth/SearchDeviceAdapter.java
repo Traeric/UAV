@@ -1,4 +1,4 @@
-package com.eric.uav.homepage;
+package com.eric.uav.applications.link_bluetooth;
 
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eric.uav.R;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
@@ -18,7 +17,6 @@ import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 
 public class SearchDeviceAdapter extends RecyclerView.Adapter<SearchDeviceAdapter.LinearViewHolder> {
     private Context context;

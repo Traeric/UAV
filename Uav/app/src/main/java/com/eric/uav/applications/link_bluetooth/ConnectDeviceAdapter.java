@@ -1,13 +1,11 @@
-package com.eric.uav.homepage;
+package com.eric.uav.applications.link_bluetooth;
 
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eric.uav.R;
-import com.eric.uav.utils.BlueToothUtils;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
 import java.util.List;

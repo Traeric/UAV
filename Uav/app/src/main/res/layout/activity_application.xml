@@ -164,6 +164,38 @@
                             android:textSize="12sp" />
                     </RelativeLayout>
                 </RelativeLayout>
+                <!-- 连接蓝牙 -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/link_bluetooth"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:clickable="true"
+                            android:src="@drawable/link_bluetooth"
+                            app:riv_corner_radius="12dp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/link_bluetooth"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="蓝牙连接"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
                 <!-- 设置 -->
                 <RelativeLayout
                     android:layout_width="wrap_content"
