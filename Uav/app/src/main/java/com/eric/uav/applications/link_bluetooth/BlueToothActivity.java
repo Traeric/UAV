@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.eric.uav.R;
 import com.eric.uav.utils.BlueToothUtils;
+import com.eric.uav.utils.Dialog;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +46,8 @@ public class BlueToothActivity extends AppCompatActivity implements View.OnClick
     // 已经连接的蓝牙设备
     private List<BluetoothDevice> connecttedBlueToothList = new LinkedList<>();
 
+    private boolean searchFinished = true;
+
 
     private BroadcastReceiver searchDevices = new BroadcastReceiver() {
 
@@ -65,6 +68,7 @@ public class BlueToothActivity extends AppCompatActivity implements View.OnClick
                 // 修改提示字母
                 searchingTipsView.setText("扫描完成...");
                 searchingTipsView.setTextColor(getResources().getColor(R.color.success));
+                searchFinished = true;
                 // 取消搜索
 //                BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
             } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
@@ -102,6 +106,10 @@ public class BlueToothActivity extends AppCompatActivity implements View.OnClick
 
         bondBlueToothView = findViewById(R.id.bondDevice);
         bondBlueToothView.setLayoutManager(new LinearLayoutManager(BlueToothActivity.this));
+        // 防止卡顿
+        bondBlueToothView.setFocusable(false);
+        bondBlueToothView.setHasFixedSize(true);
+        bondBlueToothView.setNestedScrollingEnabled(false);
 //        bondBlueToothView.addItemDecoration(new BlueToothDecoration());   // 添加分割线
 
         // 开启搜索蓝牙权限
@@ -128,14 +136,20 @@ public class BlueToothActivity extends AppCompatActivity implements View.OnClick
         searchBlueToothView.setLayoutManager(new LinearLayoutManager(BlueToothActivity.this));
         // 设置Adapter
         searchBlueToothView.setAdapter(new SearchDeviceAdapter(BlueToothActivity.this, searchedBlueToothList));
-
+        // 防止卡顿
+        searchBlueToothView.setFocusable(false);
+        searchBlueToothView.setHasFixedSize(true);
+        searchBlueToothView.setNestedScrollingEnabled(false);
 
         // 加载已连接的蓝牙设备的RecycleView
         connecttedBlueToothView = findViewById(R.id.connectDevice);
         connecttedBlueToothView.setLayoutManager(new LinearLayoutManager(BlueToothActivity.this));
         // 设置Adapter
         connecttedBlueToothView.setAdapter(new ConnectDeviceAdapter(BlueToothActivity.this, connecttedBlueToothList));
-
+        // 防止卡顿
+        connecttedBlueToothView.setFocusable(false);
+        connecttedBlueToothView.setHasFixedSize(true);
+        connecttedBlueToothView.setNestedScrollingEnabled(false);
 
         /*
         设置蓝牙连接监听
@@ -166,8 +180,14 @@ public class BlueToothActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.search_device: {
+                if (!searchFinished) {
+                    Dialog.toastWithoutAppName(this, "扫描还未完成");
+                    return;
+                }
+                searchFinished = false;
                 // 清空列表
                 searchedBlueToothList.clear();
+                searchBlueToothView.setAdapter(new SearchDeviceAdapter(BlueToothActivity.this, searchedBlueToothList));
                 BlueToothUtils blueToothUtils = new BlueToothUtils(BlueToothActivity.this);
                 // 注册
                 registerReceiver(searchDevices, blueToothUtils.makeFilter());
