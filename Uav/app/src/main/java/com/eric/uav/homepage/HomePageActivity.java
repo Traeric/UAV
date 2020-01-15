@@ -10,17 +10,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eric.uav.R;
+import com.eric.uav.Settings;
 import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.applications.look_album.LookAlbumActivity;
-import com.eric.uav.applications.look_album.RecycleViewLinearItemDecoration;
 import com.eric.uav.applications.uav_video.UavVideoActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
@@ -32,7 +34,6 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     private TextView logoutBtn;
 
-    private RecyclerView recyclerView;
+    private WebView newListPanel;
     private List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
 
 
@@ -223,64 +224,76 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     /**
      * 加载新闻列表
      */
+    @SuppressLint("SetJavaScriptEnabled")
     public void initNewsList() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("title", "京瓷拟用无人机打造无信号地区移动通信中继站");
-        map.put("images", new String[] {
-                "https://pics4.baidu.com/feed/f3d3572c11dfa9ecc48abde994b6f005908fc111.jpeg?token=091a7457b1d5cac8de4e599df4192dde&s=990993578E5216D24A8494E50300C061",
-                "https://pics3.baidu.com/feed/e4dde71190ef76c6756d48d9b104fafcae516799.jpeg?token=2b490732a9e5973d2b008fb8cef3234e&s=F9878F50769E5FC26C1884D40300C0A3",
-                "https://pics2.baidu.com/feed/7acb0a46f21fbe0910cc7bc25d720b358644ad6a.jpeg?token=4486f85c7be96c36e55f54ff79e84f4a&s=611457990ED14CC24641BCC50300A0B2"});
-        map.put("author", "半导体投资联盟");
-        map.put("date", "2020年1月9日");
-        newsList.add(map);
-
-        Map<String, Object> map1 = new HashMap<>();
-        map1.put("title", "直播预告｜明天是春运第一天，警犬无人机将一起亮相，安检员乘务员会接力服务");
-        map1.put("images", new String[] {
-                "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3500851598,3121780975&fm=173&app=49&f=JPEG?w=640&h=480&s=AD60DB035A4F1ADA489904B50300D010",
-                "https://pics4.baidu.com/feed/a9d3fd1f4134970a0726415c8112d7cea6865d4d.jpeg?token=e43f4ca3174bd72b2e33895e68dfbfcd&s=F21470843E00035B04B278810300708A",
-                "https://dg-fd.zol-img.com.cn/t_s2000x2000/g2/M00/04/05/ChMlWVyi_PWILAvnAAAwAa7MJbsAAJLKgOxwKUAADAZ566.jpg"});
-        map1.put("author", "钱江晚报");
-        map1.put("date", "2020年1月9日");
-        newsList.add(map1);
-
-        Map<String, Object> map2 = new HashMap<>();
-        map2.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
-        map2.put("images", new String[] {
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
-        map2.put("author", "朱玲");
-        map2.put("date", "2019年1月11日");
-        newsList.add(map2);
-
-        Map<String, Object> map3 = new HashMap<>();
-        map3.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
-        map3.put("images", new String[] {
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
-        map3.put("author", "朱玲");
-        map3.put("date", "2019年1月11日");
-        newsList.add(map3);
-
-        Map<String, Object> map4 = new HashMap<>();
-        map4.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
-        map4.put("images", new String[] {
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
-                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
-        map4.put("author", "朱玲");
-        map4.put("date", "2019年1月11日");
-        newsList.add(map4);
-
-        recyclerView = findViewById(R.id.news_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new MyDecoration());
-        recyclerView.setAdapter(new NewsAdapter(this, newsList));
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("title", "京瓷拟用无人机打造无信号地区移动通信中继站");
+//        map.put("images", new String[] {
+//                "https://pics4.baidu.com/feed/f3d3572c11dfa9ecc48abde994b6f005908fc111.jpeg?token=091a7457b1d5cac8de4e599df4192dde&s=990993578E5216D24A8494E50300C061",
+//                "https://pics3.baidu.com/feed/e4dde71190ef76c6756d48d9b104fafcae516799.jpeg?token=2b490732a9e5973d2b008fb8cef3234e&s=F9878F50769E5FC26C1884D40300C0A3",
+//                "https://pics2.baidu.com/feed/7acb0a46f21fbe0910cc7bc25d720b358644ad6a.jpeg?token=4486f85c7be96c36e55f54ff79e84f4a&s=611457990ED14CC24641BCC50300A0B2"});
+//        map.put("author", "半导体投资联盟");
+//        map.put("date", "2020年1月9日");
+//        newsList.add(map);
+//
+//        Map<String, Object> map1 = new HashMap<>();
+//        map1.put("title", "直播预告｜明天是春运第一天，警犬无人机将一起亮相，安检员乘务员会接力服务");
+//        map1.put("images", new String[] {
+//                "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3500851598,3121780975&fm=173&app=49&f=JPEG?w=640&h=480&s=AD60DB035A4F1ADA489904B50300D010",
+//                "https://pics4.baidu.com/feed/a9d3fd1f4134970a0726415c8112d7cea6865d4d.jpeg?token=e43f4ca3174bd72b2e33895e68dfbfcd&s=F21470843E00035B04B278810300708A",
+//                "https://dg-fd.zol-img.com.cn/t_s2000x2000/g2/M00/04/05/ChMlWVyi_PWILAvnAAAwAa7MJbsAAJLKgOxwKUAADAZ566.jpg"});
+//        map1.put("author", "钱江晚报");
+//        map1.put("date", "2020年1月9日");
+//        newsList.add(map1);
+//
+//        Map<String, Object> map2 = new HashMap<>();
+//        map2.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
+//        map2.put("images", new String[] {
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
+//        map2.put("author", "朱玲");
+//        map2.put("date", "2019年1月11日");
+//        newsList.add(map2);
+//
+//        Map<String, Object> map3 = new HashMap<>();
+//        map3.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
+//        map3.put("images", new String[] {
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
+//        map3.put("author", "朱玲");
+//        map3.put("date", "2019年1月11日");
+//        newsList.add(map3);
+//
+//        Map<String, Object> map4 = new HashMap<>();
+//        map4.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
+//        map4.put("images", new String[] {
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
+//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
+//        map4.put("author", "朱玲");
+//        map4.put("date", "2019年1月11日");
+//        newsList.add(map4);
+//
+//        recyclerView = findViewById(R.id.news_list);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.addItemDecoration(new MyDecoration());
+//        recyclerView.setAdapter(new NewsAdapter(this, newsList));
+        newListPanel = findViewById(R.id.news_list);
+        // 防止WebView打开浏览器
+        newListPanel.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        });
+        newListPanel.getSettings().setJavaScriptEnabled(true);    // 支持javascript
+        newListPanel.loadUrl("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/news_list");
+//        newListPanel.loadUrl("http://www.wrjzj.com/a/2.aspx");
     }
 
     class MyDecoration extends RecyclerView.ItemDecoration {

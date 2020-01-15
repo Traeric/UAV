@@ -2,8 +2,10 @@ import random
 
 from django.conf import settings
 from django.core.mail import send_mail
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse, render
 from . import models
+import urllib.request
+import re
 
 # Create your views here.
 
@@ -12,6 +14,9 @@ def send_email(request):
     if request.method == "POST":
         # 获取邮箱
         email = request.POST.get("email", "")
+        # 检查邮箱是否已经存在
+        if len(models.User.objects.filter(email=email)) != 0:
+            return HttpResponse("0")
         # 生成验证码
         code = "%d%d%d%d" % (random.randint(0, 9), random.randint(0, 9), random.randint(0, 9),
                              random.randint(0, 9))
@@ -64,3 +69,53 @@ def login(request):
             return HttpResponse("1")
         # 密码错误
         return HttpResponse("2")
+
+
+def news_list(request):
+    # 爬取链接
+    uav_url = "http://www.wrjzj.com/a/2.aspx"
+    # 想要伪装的头部
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
+                      '(KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+    }
+    # 构建请求对象
+    req = urllib.request.Request(url=uav_url, headers=headers)
+    content = urllib.request.urlopen(req).read().decode()
+    # 匹配出文章
+    pattern = re.compile(r'<li class="li02">.*?</li>', re.S)
+    news_list_html = pattern.findall(content)
+    news_list = []
+    for item in news_list_html:
+        # 获取标题
+        title_pattern = re.compile(r'<div class="title">.*?<a .*?>.*?</a>.*?<a .*?>(.*?)</a>.*?</div>', re.S)
+        title = title_pattern.findall(item)
+        item_dict = {
+            "title": title[0]
+        }
+        # 匹配图片
+        image_pattern = re.compile(r'<img src="(.*?)" .*?/>', re.S)
+        image = image_pattern.findall(item)
+        item_dict["image"] = "http://www.wrjzj.com" + image[0]
+        # 匹配摘要
+        summary_pattern = re.compile(r'<div class="intro"><a .*?><img .*?></a>(.*?)...【<a .*?>详情</a>】</div>', re.S)
+        summary = summary_pattern.findall(item)
+        item_dict["summary"] = summary[0]
+        # 匹配日期
+        date_pattern = re.compile(r'<span class="time">(.*?)</span>', re.S)
+        date = date_pattern.findall(item)
+        item_dict['date'] = date[0]
+        # 匹配查看人数
+        view_pattern = re.compile(r'<span class="yue">(.*?)</span>', re.S)
+        view = view_pattern.findall(item)
+        item_dict['view'] = view[0]
+        # 查看评论数
+        command_pattern = re.compile(r'<span class="pl">(.*?)</span>', re.S)
+        command = command_pattern.findall(item)
+        item_dict['command'] = command[0]
+        news_list.append(item_dict)
+    return render(request, "remote_pages/news_list.html", {
+        "news_list": news_list,
+    })
+
+

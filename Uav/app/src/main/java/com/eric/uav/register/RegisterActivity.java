@@ -82,17 +82,23 @@ public class RegisterActivity extends AppCompatActivity {
                     public void callback(String result) {
                         // 成功返回
                         // 该步必须放到runOnUiThread API接口中执行，在当前线程中是不能执行ui线程里的组件的
-                        runOnUiThread(builder::hide);
-                        // 将验证码存到SharedPreferences中，方便后面验证
-                        editor.putString("captcha", result);
-                        editor.putString("email", email);
-                        editor.apply();
-                        // 设置到验证码的哪一步
-                        step = CAPTCHA;
-                        // 加载填写验证码的Fragment
-                        currentFragment = new CaptchaFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment)
-                                .commitAllowingStateLoss();
+                        runOnUiThread(() -> {
+                            if ("0".equals(result)) {
+                                builder.dismiss();
+                                Dialog.tipsDialog(RegisterActivity.this, "该邮箱已注册");
+                                return;
+                            }
+                            // 将验证码存到SharedPreferences中，方便后面验证
+                            editor.putString("captcha", result);
+                            editor.putString("email", email);
+                            editor.apply();
+                            // 设置到验证码的哪一步
+                            step = CAPTCHA;
+                            // 加载填写验证码的Fragment
+                            currentFragment = new CaptchaFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment)
+                                    .commitAllowingStateLoss();
+                        });
                     }
                 };
                 httpUtils.sendPost(Settings.routerMap.get("sendEmail"), param);
