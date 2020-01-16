@@ -1,0 +1,177 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uav后端登录页面</title>
+    <link rel="stylesheet" href="{% static 'plugins/layui/css/layui.css' %}">
+    <style>
+        .head {
+            height: 80px;
+        }
+
+        .head .wrap {
+            height: 100%;
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .head .wrap .logo {
+            height: 100%;
+            font-size: 36px;
+            line-height: 80px;
+            color: #5FB878;
+            float: left;
+        }
+
+        .head .wrap .right {
+            float: right;
+            display: flex;
+            justify-content: flex-end;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .head .wrap .logo i {
+            font-size: 36px;
+        }
+
+        .content {
+            background-image: url("{% static 'images/login_banner.png' %}");
+            height: 600px;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .content .wrap {
+            width: 60%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100%;
+        }
+
+        .content .wrap .login-panel {
+            width: 350px;
+            height: 350px;
+            background-color: rgba(255, 255, 255, .9);
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .form-item {
+            width: 100%;
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .form-item .icon {
+            width: 38px;
+            line-height: 38px;
+            text-align: center;
+            background-color: #ddd;
+            color: #5FB878;
+        }
+
+        .form-item .input {
+            width: 100%;
+        }
+    </style>
+    <script src="{% static 'js/jquery.js' %}"></script>
+</head>
+<body>
+<div class="head">
+    <div class="wrap">
+        <div class="logo">
+            <i class="layui-icon layui-icon-release"></i>
+            UAV
+        </div>
+        <div class="right">
+            <span class="layui-badge layui-bg-orange">
+                无人机登录页面
+            </span>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="wrap">
+        <div class="login-panel account-password">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                <legend>账号密码登录</legend>
+            </fieldset>
+            <form class="layui-form" action="" style="margin-top: 30px;">
+                <div class="form-item">
+                    <div class="icon">
+                        <i class="layui-icon-face-surprised layui-icon"></i>
+                    </div>
+                    <div class="input">
+                        <input type="email" name="email" autocomplete="off" placeholder="请输入邮箱"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="icon">
+                        <i class="layui-icon-password layui-icon"></i>
+                    </div>
+                    <div class="input">
+                        <input type="password" name="password"
+                               placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <button type="button" class="layui-btn layui-btn-fluid layui-btn layui-btn-warm">登 录</button>
+            </form>
+            <div class="link" style="margin-top: 20px; display: flex; justify-content: center;">
+                <button class="layui-btn layui-btn-danger" onclick="changeErweima();">手机扫码登录</button>
+            </div>
+        </div>
+
+        <div class="login-panel erweima" style="display: none;">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                <legend>手机扫码，安全登录</legend>
+            </fieldset>
+            <div class="erweima-content" style="width: 150px; height: 150px; background-color: #fff; margin: 0 auto;
+                position: relative;">
+                <img id="erweima_img" src=""
+                     alt="no img" class="erweima-photo"
+                     style="width: 120px; height: 120px; margin-top: 15px; margin-left: 15px;">
+                <div id="cover" style="position: absolute; height: 100%; width: 100%; background-color: rgba(255, 255, 255, .9);
+                        top: 0; left: 0; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                    <div class="text" style="font-weight: bolder;">二维码已失效</div>
+                    <div class="link" style="display: flex; justify-content: center; margin-top: 10px;">
+                        <button class="layui-btn layui-btn-danger" onclick="changeErweima();">请点击刷新</button>
+                    </div>
+                </div>
+            </div>
+            <div class="link" style="margin-top: 20px; display: flex; justify-content: center;">
+                <button class="layui-btn" onclick="changeAccount();">账号密码登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function changeErweima() {
+        $("#cover").css("visibility", "hidden");
+        $(".account-password").css("display", "none");
+        $(".erweima").css("display", "block");
+        // 生成uuid
+        $.ajax({
+            url: "{% url 'get_uuid' %}",
+            type: "post",
+            success(args) {
+                $("#erweima_img").attr("src", "http://qr.topscan.com/api.php?text=" + args);
+                // 设置失效时间
+                setTimeout(() => {
+                    $("#cover").css("visibility", "visible");
+                }, 10000)
+            },
+        });
+    }
+
+    function changeAccount() {
+        $(".account-password").css("display", "block");
+        $(".erweima").css("display", "none");
+    }
+</script>
+</body>
+</html>

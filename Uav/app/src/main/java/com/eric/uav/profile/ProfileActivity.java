@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +30,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private RelativeLayout applicationActivityView;
     private RelativeLayout logout;
 
-    private TextView logoutBtn;
+    private LinearLayout logoutBtn;
+    private TextView moreFuncBtn;
+
     private RoundButton detailInfo;
     private RelativeLayout lookDetailLayout;
 
@@ -59,14 +63,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(this);
-        logoutBtn = findViewById(R.id.logout_btn);
-        logoutBtn.setOnClickListener(this);
 
         detailInfo = findViewById(R.id.look_detail_profile_info);
         View.OnClickListener onClickListener = view -> startActivity(new Intent(ProfileActivity.this, ProfileInfoActivity.class));
         detailInfo.setOnClickListener(onClickListener);
         lookDetailLayout = findViewById(R.id.look_profile);
         lookDetailLayout.setOnClickListener(onClickListener);
+
+        moreFuncBtn = findViewById(R.id.more_func);
+        moreFuncBtn.setOnClickListener(this);
     }
 
     @Override
@@ -109,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 builder.show();
             }
             break;
-            case R.id.logout_btn: {
+            case R.id.logout_lin: {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
                 builder.setTitle("确认退出？");
                 builder.setIcon(R.drawable.profile_logout);
@@ -126,6 +131,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 });
                 builder.setNegativeButton("取消", (dialog, which) -> {});
                 builder.show();
+            }
+            break;
+            case R.id.more_func: {
+                View moreFuncView = getLayoutInflater().inflate(R.layout.popupwindow_more_func, null);
+                PopupWindow popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
+                popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
+                popupWindow.showAsDropDown(moreFuncBtn);
+
+                logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
+                logoutBtn.setOnClickListener(this);
             }
             break;
             default:

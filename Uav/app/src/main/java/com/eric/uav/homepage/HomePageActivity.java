@@ -3,19 +3,21 @@ package com.eric.uav.homepage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Rect;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import com.eric.uav.applications.uav_video.UavVideoActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
+import com.eric.uav.scan_for_login.zxing.android.CaptureActivity;
 import com.eric.uav.utils.Dialog;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -34,8 +37,6 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, OnBannerListener {
     // 底部栏相关
@@ -44,10 +45,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout applicationActivity;
 
 
-    private TextView logoutBtn;
+    private TextView moreFuncBtn;
+    private LinearLayout logoutBtn;
+    private LinearLayout scanScreen;
 
     private WebView newListPanel;
-    private List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
+
+    public static int REQUEST_CODE_SCAN = 0;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -68,9 +72,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
 
-        logoutBtn = findViewById(R.id.logout_btn);
-        logoutBtn.setOnClickListener(this);
-
         // 底部栏相关设置
         mapActivity = findViewById(R.id.map_activity);
         mapActivity.setOnClickListener(this);
@@ -83,6 +84,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         initBanner();
         // 初始化新闻列表
         initNewsList();
+
+        moreFuncBtn = findViewById(R.id.more_func);
+        moreFuncBtn.setOnClickListener(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -113,7 +117,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(0, 0);
             }
             break;
-            case R.id.logout_btn: {
+            case R.id.logout_lin: {
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomePageActivity.this);
                 builder.setTitle("确认退出？");
                 builder.setIcon(R.drawable.profile_logout);
@@ -131,6 +135,25 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 builder.setNegativeButton("取消", (dialog, which) -> {
                 });
                 builder.show();
+            }
+            break;
+            case R.id.more_func: {
+                View moreFuncView = getLayoutInflater().inflate(R.layout.popupwindow_more_func, null);
+                PopupWindow popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
+                popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
+                popupWindow.showAsDropDown(moreFuncBtn);
+
+                logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
+                logoutBtn.setOnClickListener(this);
+
+                scanScreen = moreFuncView.findViewById(R.id.scan_btn);
+                scanScreen.setOnClickListener(this);
+            }
+            break;
+            case R.id.scan_btn: {
+                // 开始二维码扫描
+                startActivityForResult(new Intent(this, CaptureActivity.class), REQUEST_CODE_SCAN);
             }
             break;
             default:
@@ -226,63 +249,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
      */
     @SuppressLint("SetJavaScriptEnabled")
     public void initNewsList() {
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("title", "京瓷拟用无人机打造无信号地区移动通信中继站");
-//        map.put("images", new String[] {
-//                "https://pics4.baidu.com/feed/f3d3572c11dfa9ecc48abde994b6f005908fc111.jpeg?token=091a7457b1d5cac8de4e599df4192dde&s=990993578E5216D24A8494E50300C061",
-//                "https://pics3.baidu.com/feed/e4dde71190ef76c6756d48d9b104fafcae516799.jpeg?token=2b490732a9e5973d2b008fb8cef3234e&s=F9878F50769E5FC26C1884D40300C0A3",
-//                "https://pics2.baidu.com/feed/7acb0a46f21fbe0910cc7bc25d720b358644ad6a.jpeg?token=4486f85c7be96c36e55f54ff79e84f4a&s=611457990ED14CC24641BCC50300A0B2"});
-//        map.put("author", "半导体投资联盟");
-//        map.put("date", "2020年1月9日");
-//        newsList.add(map);
-//
-//        Map<String, Object> map1 = new HashMap<>();
-//        map1.put("title", "直播预告｜明天是春运第一天，警犬无人机将一起亮相，安检员乘务员会接力服务");
-//        map1.put("images", new String[] {
-//                "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3500851598,3121780975&fm=173&app=49&f=JPEG?w=640&h=480&s=AD60DB035A4F1ADA489904B50300D010",
-//                "https://pics4.baidu.com/feed/a9d3fd1f4134970a0726415c8112d7cea6865d4d.jpeg?token=e43f4ca3174bd72b2e33895e68dfbfcd&s=F21470843E00035B04B278810300708A",
-//                "https://dg-fd.zol-img.com.cn/t_s2000x2000/g2/M00/04/05/ChMlWVyi_PWILAvnAAAwAa7MJbsAAJLKgOxwKUAADAZ566.jpg"});
-//        map1.put("author", "钱江晚报");
-//        map1.put("date", "2020年1月9日");
-//        newsList.add(map1);
-//
-//        Map<String, Object> map2 = new HashMap<>();
-//        map2.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
-//        map2.put("images", new String[] {
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
-//        map2.put("author", "朱玲");
-//        map2.put("date", "2019年1月11日");
-//        newsList.add(map2);
-//
-//        Map<String, Object> map3 = new HashMap<>();
-//        map3.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
-//        map3.put("images", new String[] {
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
-//        map3.put("author", "朱玲");
-//        map3.put("date", "2019年1月11日");
-//        newsList.add(map3);
-//
-//        Map<String, Object> map4 = new HashMap<>();
-//        map4.put("title", "CES2019现场：折叠放进手机壳的SELFLY无人机");
-//        map4.put("images", new String[] {
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-If2dqAA-dHJTetIwAAuUrQLBQNYAD500638.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8mIOihpABQXJC_HRHoAAuUrQKooDEAFBc8015.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJlw4J8iIU1CUAA2AeDFAqtYAAuUrQKbH6EADYCQ233.jpg",
-//                "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0A/ChMkJ1w4J8-IRHJTAA36kVoTB68AAuUrQLsJp8ADfqp368.jpg"});
-//        map4.put("author", "朱玲");
-//        map4.put("date", "2019年1月11日");
-//        newsList.add(map4);
-//
-//        recyclerView = findViewById(R.id.news_list);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.addItemDecoration(new MyDecoration());
-//        recyclerView.setAdapter(new NewsAdapter(this, newsList));
         newListPanel = findViewById(R.id.news_list);
         // 防止WebView打开浏览器
         newListPanel.setWebViewClient(new WebViewClient() {
@@ -293,14 +259,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         });
         newListPanel.getSettings().setJavaScriptEnabled(true);    // 支持javascript
         newListPanel.loadUrl("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/news_list");
-//        newListPanel.loadUrl("http://www.wrjzj.com/a/2.aspx");
     }
 
-    class MyDecoration extends RecyclerView.ItemDecoration {
-        @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(0, 0, 0, getResources().getDimensionPixelOffset(R.dimen.dividerHeight));
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 扫描二维码/条码回传
+        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
+            if (data != null) {
+                //返回的文本内容
+                String content = data.getStringExtra("codedContent");
+                //返回的BitMap图像
+                Bitmap bitmap = data.getParcelableExtra("codedBitmap");
+
+                Dialog.toastWithoutAppName(this, content);
+            }
         }
     }
 }

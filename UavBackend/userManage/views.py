@@ -6,8 +6,11 @@ from django.shortcuts import HttpResponse, render
 from . import models
 import urllib.request
 import re
+import uuid
 
 # Create your views here.
+# 全局变量
+USER_INFO = {}
 
 
 def send_email(request):
@@ -26,6 +29,11 @@ def send_email(request):
 
 
 def register(request):
+    """
+    注册
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         # 获取邮箱跟密码
         email = request.POST.get("email")
@@ -46,7 +54,7 @@ def test(request):
 def login(request):
     """
     0 邮箱未注册
-    1 密码正确
+    id 密码正确
     2 密码错误
     :param request:
     :return:
@@ -66,12 +74,17 @@ def login(request):
         # 比对密码
         if data_password == password:
             # 密码正确
-            return HttpResponse("1")
+            return HttpResponse(user[0].id)
         # 密码错误
         return HttpResponse("2")
 
 
 def news_list(request):
+    """
+    无人机新闻页面
+    :param request:
+    :return:
+    """
     # 爬取链接
     uav_url = "http://www.wrjzj.com/a/2.aspx"
     # 想要伪装的头部
@@ -85,7 +98,7 @@ def news_list(request):
     # 匹配出文章
     pattern = re.compile(r'<li class="li02">.*?</li>', re.S)
     news_list_html = pattern.findall(content)
-    news_list = []
+    news_arr = []
     for item in news_list_html:
         # 获取标题
         title_pattern = re.compile(r'<div class="title">.*?<a .*?>.*?</a>.*?<a .*?>(.*?)</a>.*?</div>', re.S)
@@ -113,9 +126,32 @@ def news_list(request):
         command_pattern = re.compile(r'<span class="pl">(.*?)</span>', re.S)
         command = command_pattern.findall(item)
         item_dict['command'] = command[0]
-        news_list.append(item_dict)
+        news_arr.append(item_dict)
     return render(request, "remote_pages/news_list.html", {
-        "news_list": news_list,
+        "news_list": news_arr,
     })
 
 
+def login_back(request):
+    """
+    后台登录
+    :param request:
+    :return:
+    """
+    if request.method == "GET":
+        return render(request, "login.html")
+
+
+def get_uuid(request):
+    """
+    生成uuid
+    :param request:
+    :return:
+    """
+    # 生成uuid
+    data = uuid.uuid1()
+    # 将生成的uuid添加到map中
+    USER_INFO = {
+        data: None,
+    }
+    return HttpResponse(data)

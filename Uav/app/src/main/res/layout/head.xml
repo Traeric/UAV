@@ -43,11 +43,11 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/logout_btn"
+            android:id="@+id/more_func"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/logout" />
+            android:background="@drawable/more_func" />
     </LinearLayout>
 </RelativeLayout>

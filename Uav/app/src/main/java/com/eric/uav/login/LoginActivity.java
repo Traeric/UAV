@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                             // 登录成功
                             // 将邮箱存到SharedPreferences中，方便后面使用
                             editor.putString("email", userName);
+                            editor.putString("id", result);    // 存id
                             editor.putString("logined", "true");
                             editor.apply();
                             // 跳转到首页
