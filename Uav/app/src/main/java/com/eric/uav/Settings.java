@@ -15,5 +15,8 @@ public final class Settings {
         routerMap.put("sendEmail", "/userManage/send_email/");
         routerMap.put("register", "/userManage/register/");
         routerMap.put("login", "/userManage/login/");
+        routerMap.put("refreshLoginStatus", "/userManage/refresh_login_status/");
+        routerMap.put("cancelLogin", "/userManage/cancel_login/");
+        routerMap.put("confirmLogin", "/userManage/confirm_login/");
     }
 }

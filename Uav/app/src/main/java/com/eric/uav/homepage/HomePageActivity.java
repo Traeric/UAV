@@ -3,10 +3,8 @@ package com.eric.uav.homepage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +27,7 @@ import com.eric.uav.applications.uav_video.UavVideoActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
-import com.eric.uav.scan_for_login.zxing.android.CaptureActivity;
+import com.eric.uav.zxing.android.CaptureActivity;
 import com.eric.uav.utils.Dialog;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -50,8 +48,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private LinearLayout scanScreen;
 
     private WebView newListPanel;
-
-    public static int REQUEST_CODE_SCAN = 0;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -153,7 +149,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             break;
             case R.id.scan_btn: {
                 // 开始二维码扫描
-                startActivityForResult(new Intent(this, CaptureActivity.class), REQUEST_CODE_SCAN);
+                startActivity(new Intent(this, CaptureActivity.class));
             }
             break;
             default:
@@ -259,21 +255,5 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         });
         newListPanel.getSettings().setJavaScriptEnabled(true);    // 支持javascript
         newListPanel.loadUrl("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/news_list");
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // 扫描二维码/条码回传
-        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
-            if (data != null) {
-                //返回的文本内容
-                String content = data.getStringExtra("codedContent");
-                //返回的BitMap图像
-                Bitmap bitmap = data.getParcelableExtra("codedBitmap");
-
-                Dialog.toastWithoutAppName(this, content);
-            }
-        }
     }
 }

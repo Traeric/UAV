@@ -7,10 +7,10 @@ from . import models
 import urllib.request
 import re
 import uuid
+from . import utils
+
 
 # Create your views here.
-# 全局变量
-USER_INFO = {}
 
 
 def send_email(request):
@@ -25,7 +25,7 @@ def send_email(request):
                              random.randint(0, 9))
         send_mail('UAV验证码', '您的验证码是：%s' % code, settings.EMAIL_HOST_USER,
                   [email, ], fail_silently=False)
-        return HttpResponse(code)   # 将验证码发送回去
+        return HttpResponse(code)  # 将验证码发送回去
 
 
 def register(request):
@@ -66,7 +66,7 @@ def login(request):
         user = models.User.objects.filter(email=email)
         if len(user) is 0:
             # 该邮箱未注册
-            return HttpResponse("0")
+            return HttpResponse("no_register")
         # 取出密码
         data_password = user[0].password
         # 对用户传过来的密码进行加密 后续做
@@ -74,9 +74,9 @@ def login(request):
         # 比对密码
         if data_password == password:
             # 密码正确
-            return HttpResponse(user[0].id)
+            return HttpResponse(str(user[0].id))
         # 密码错误
-        return HttpResponse("2")
+        return HttpResponse("error")
 
 
 def news_list(request):
@@ -149,9 +149,81 @@ def get_uuid(request):
     :return:
     """
     # 生成uuid
-    data = uuid.uuid1()
+    data = str(uuid.uuid1())
     # 将生成的uuid添加到map中
-    USER_INFO = {
-        data: None,
-    }
+    settings.USER_INFO[data] = None
     return HttpResponse(data)
+
+
+def refresh_login_status(request):
+    """
+    刷新登录状态
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        # 接收uuid
+        user_id = request.POST.get("uuid")
+        settings.USER_INFO[user_id] = {}
+        return HttpResponse("ok")
+
+
+def get_login_status(request):
+    """
+    获取用户扫描二维码状态
+    :param request:
+    :return:
+    """
+    # 获取uuid
+    user_id = request.GET.get("uuid")
+    if user_id in settings.USER_INFO:
+        if settings.USER_INFO.get(user_id) is None:
+            return HttpResponse("0")
+        elif settings.USER_INFO.get(user_id):
+            # 用户确认了登录
+            # 登录成功，存到session中
+            request.session["logined"] = True
+            return HttpResponse("3")
+        return HttpResponse("1")
+    else:
+        return HttpResponse("2")
+
+
+def cancel_login(request):
+    """
+    取消登录
+    :param request:
+    :return:
+    """
+    user_id = request.POST.get("uuid")
+    if user_id in settings.USER_INFO:
+        del settings.USER_INFO[user_id]
+    return HttpResponse("ok")
+
+
+def confirm_login(request):
+    """
+    确认登录
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        # 获取用户的id
+        user_id = request.POST.get("user_id")
+        # 获取uuid
+        user_uuid = request.POST.get("uuid")
+        # 查询出id对应的用户数据
+        user_info = models.User.objects.filter(id=user_id)[0]
+        # 存到用户字典中
+        settings.USER_INFO[user_uuid] = user_info
+        return HttpResponse("ok")
+
+
+@utils.login_checked
+def index(request):
+    """
+    首页
+    :param request:
+    :return:
+    """
+    return render(request, "index.html")

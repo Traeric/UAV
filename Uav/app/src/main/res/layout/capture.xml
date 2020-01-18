@@ -9,7 +9,7 @@
         android:layout_height="fill_parent" />
 
     <!-- 扫描取景框 -->
-    <com.eric.uav.scan_for_login.zxing.view.ViewfinderView
+    <com.eric.uav.zxing.view.ViewfinderView
         android:id="@+id/viewfinder_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

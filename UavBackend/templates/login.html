@@ -27,7 +27,7 @@
         .head .wrap .right {
             float: right;
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             height: 100%;
             flex-direction: column;
         }
@@ -39,8 +39,7 @@
         .content {
             background-image: url("{% static 'images/login_banner.png' %}");
             height: 600px;
-            background-repeat: no-repeat;
-            background-size: cover;
+        {#background-repeat: no-repeat;#}{#background-size: cover;#}
         }
 
         .content .wrap {
@@ -58,6 +57,7 @@
             background-color: rgba(255, 255, 255, .9);
             padding: 15px;
             box-sizing: border-box;
+            border-radius: 4px;
         }
 
         .form-item {
@@ -77,6 +77,22 @@
         .form-item .input {
             width: 100%;
         }
+
+        .footer {
+            height: 200px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .footer .wrap {width: 60%; margin: 0 auto; display: flex;}
+
+        .footer .wrap .links .title {font-weight: bolder; font-size: 18px; margin-bottom: 10px;}
+        .footer .wrap .links ul li {margin-bottom: 5px;}
+
+        .footer .wrap .downloads {margin-left: 50px;}
+        .footer .wrap .downloads .title {font-weight: bolder; font-size: 18px; margin-bottom: 10px;}
     </style>
     <script src="{% static 'js/jquery.js' %}"></script>
 </head>
@@ -143,17 +159,44 @@
                     </div>
                 </div>
             </div>
+            <div id="scaned" style="display: none; justify-content: space-between;
+                            flex-direction: column; align-items: center;">
+                <img src="{% static 'images/phone.png' %}" alt="NO IMG" style="height: 150px; width: 150px;">
+                <span style="color: #82c8ff; font-weight: bolder;">手机已经扫描，请点击登录吧。</span>
+            </div>
             <div class="link" style="margin-top: 20px; display: flex; justify-content: center;">
                 <button class="layui-btn" onclick="changeAccount();">账号密码登录</button>
             </div>
         </div>
     </div>
 </div>
+<div class="footer">
+    <div class="wrap">
+        <div class="links">
+            <div class="title">链接</div>
+            <ul>
+                <li><a href="https://github.com/Traeric/UVA" target="_blank">作品地址</a></li>
+                <li><a href="https://github.com/Traeric" target="_blank">作者Github首页</a></li>
+            </ul>
+        </div>
+        <div class="downloads">
+            <div class="title">客户端下载</div>
+            <ul>
+                <li><a href="">下载客户端</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 <script>
+    let getStatusTimer = null;
+    let outTimeTimer = null;
+
     function changeErweima() {
         $("#cover").css("visibility", "hidden");
         $(".account-password").css("display", "none");
         $(".erweima").css("display", "block");
+        clearTimeout(outTimeTimer);
+        clearInterval(getStatusTimer);
         // 生成uuid
         $.ajax({
             url: "{% url 'get_uuid' %}",
@@ -161,9 +204,44 @@
             success(args) {
                 $("#erweima_img").attr("src", "http://qr.topscan.com/api.php?text=" + args);
                 // 设置失效时间
-                setTimeout(() => {
-                    $("#cover").css("visibility", "visible");
-                }, 10000)
+                outTimeTimer = setTimeout(() => {
+                    $.ajax({
+                        url: "{% url 'cancel_login' %}",
+                        type: "get",
+                        data: {
+                            "uuid": args,
+                        },
+                        success(data1) {
+                            $("#cover").css("visibility", "visible");
+                            clearInterval(getStatusTimer);
+                        }
+                    });
+                }, 15000);
+                // 监听用户是否扫码
+                getStatusTimer = setInterval(() => {
+                    $.ajax({
+                        url: "{% url 'get_login_status' %}",
+                        type: "get",
+                        data: {
+                            "uuid": args,
+                        },
+                        success(data) {
+                            if (data === "1") {
+                                // 扫描完毕
+                                $(".erweima-content").css("display", "none");
+                                $("#scaned").css("display", "flex");
+                                clearTimeout(outTimeTimer);
+                            } else if (data === "2") {
+                                // 用户点击了取消
+                                $("#scaned").css("display", "none");
+                                $(".erweima-content").css("display", "block");
+                                $("#cover").css("visibility", "visible");
+                            } else if (data === "3") {
+                                location.href = "{% url 'index' %}";
+                            }
+                        }
+                    });
+                }, 1000);
             },
         });
     }

@@ -95,25 +95,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 overridePendingTransition(0, 0);
             }
             break;
-            case R.id.logout: {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-                builder.setTitle("确认退出？");
-                builder.setIcon(R.drawable.profile_logout);
-                builder.setMessage("是否要退出登录？");
-                builder.setPositiveButton("退出", (dialog, which) -> {
-                    // 供存储使用
-                    SharedPreferences sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
-                    @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("logined", "false");
-                    editor.apply();
-                    // 跳转到登录页面
-                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                    overridePendingTransition(0, 0);
-                });
-                builder.setNegativeButton("取消", (dialog, which) -> {});
-                builder.show();
-            }
-            break;
             case R.id.logout_lin: {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
                 builder.setTitle("确认退出？");

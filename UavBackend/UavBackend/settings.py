@@ -125,6 +125,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+USER_INFO = {}
+
+
 
 # 发送邮件配置
 EMAIL_USE_SSL = True

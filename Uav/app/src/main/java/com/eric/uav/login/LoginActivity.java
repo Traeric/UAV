@@ -84,9 +84,11 @@ public class LoginActivity extends AppCompatActivity {
                     // 该步必须放到runOnUiThread API接口中执行，在当前线程中是不能执行ui线程里的组件的
                     runOnUiThread(() -> {
                         builder.hide();
-                        if ("0".equals(result)) {
+                        if ("no_register".equals(result)) {
                             Dialog.tipsDialog(LoginActivity.this, "该邮箱还未注册！");
-                        } else if ("1".equals(result)) {
+                        } else if ("error".equals(result)) {
+                            Dialog.tipsDialog(LoginActivity.this, "密码错误，请重试！");
+                        } else {
                             // 登录成功
                             // 将邮箱存到SharedPreferences中，方便后面使用
                             editor.putString("email", userName);
@@ -96,8 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                             // 跳转到首页
                             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                             startActivity(intent);
-                        } else if ("2".equals(result)) {
-                            Dialog.tipsDialog(LoginActivity.this, "密码错误，请重试！");
                         }
                     });
                 }
@@ -108,11 +108,13 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * 实现按下返回键提示用户再按一次返回桌面，而不是返回上一个页面
+     *
      * @param keyCode
      * @param event
      * @return
      */
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
