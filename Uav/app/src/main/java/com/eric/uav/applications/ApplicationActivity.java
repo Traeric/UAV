@@ -26,6 +26,7 @@ import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 public class ApplicationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,8 +42,9 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private ImageView lookAlbum;
     private ImageView blueTooth;
 
-    private LinearLayout logoutBtn;
     private TextView moreFuncBtn;
+    private LinearLayout logoutBtn;
+    private LinearLayout scanScreen;
 
     private RadiusImageView bannerVideo;
     private RadiusImageView bannerAlbum;
@@ -159,6 +161,14 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
                 logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
                 logoutBtn.setOnClickListener(this);
+
+                scanScreen = moreFuncView.findViewById(R.id.scan_btn);
+                scanScreen.setOnClickListener(this);
+            }
+            break;
+            case R.id.scan_btn: {
+                // 开始二维码扫描
+                startActivity(new Intent(this, CaptureActivity.class));
             }
             break;
             case R.id.yuyingshibie: {

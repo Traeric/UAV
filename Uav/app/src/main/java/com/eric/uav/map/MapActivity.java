@@ -38,6 +38,7 @@ import com.eric.uav.login.LoginActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.eric.uav.utils.Dialog;
 import com.eric.uav.utils.MarkerUtils;
+import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
 import java.util.ArrayList;
@@ -58,8 +59,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private RelativeLayout applicationActivityView;
 
 
-    private LinearLayout logoutBtn;
     private TextView moreFuncBtn;
+    private LinearLayout logoutBtn;
+    private LinearLayout scanScreen;
 
     private static final int M_PERMISSION_CODE = 1001;
 
@@ -180,6 +182,14 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
 
                 logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
                 logoutBtn.setOnClickListener(this);
+
+                scanScreen = moreFuncView.findViewById(R.id.scan_btn);
+                scanScreen.setOnClickListener(this);
+            }
+            break;
+            case R.id.scan_btn: {
+                // 开始二维码扫描
+                startActivity(new Intent(this, CaptureActivity.class));
             }
             break;
             case R.id.phone_position: {

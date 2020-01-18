@@ -3,9 +3,9 @@ package com.eric.uav.profile;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eric.uav.R;
 import com.eric.uav.applications.ApplicationActivity;
@@ -21,6 +20,7 @@ import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -30,8 +30,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private RelativeLayout applicationActivityView;
     private RelativeLayout logout;
 
-    private LinearLayout logoutBtn;
     private TextView moreFuncBtn;
+    private LinearLayout logoutBtn;
+    private LinearLayout scanScreen;
 
     private RoundButton detailInfo;
     private RelativeLayout lookDetailLayout;
@@ -95,7 +96,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 overridePendingTransition(0, 0);
             }
             break;
-            case R.id.logout_lin: {
+            case R.id.logout_lin:
+            case R.id.logout: {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
                 builder.setTitle("确认退出？");
                 builder.setIcon(R.drawable.profile_logout);
@@ -110,7 +112,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                     overridePendingTransition(0, 0);
                 });
-                builder.setNegativeButton("取消", (dialog, which) -> {});
+                builder.setNegativeButton("取消", (dialog, which) -> {
+                });
                 builder.show();
             }
             break;
@@ -123,6 +126,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
                 logoutBtn.setOnClickListener(this);
+
+                scanScreen = moreFuncView.findViewById(R.id.scan_btn);
+                scanScreen.setOnClickListener(this);
+            }
+            break;
+            case R.id.scan_btn: {
+                // 开始二维码扫描
+                startActivity(new Intent(this, CaptureActivity.class));
             }
             break;
             default:
@@ -133,11 +144,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     /**
      * 实现按下返回键提示用户再按一次返回桌面，而不是返回上一个页面
+     *
      * @param keyCode
      * @param event
      * @return
      */
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
