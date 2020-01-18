@@ -183,6 +183,7 @@ def get_login_status(request):
             # 用户确认了登录
             # 登录成功，存到session中
             request.session["logined"] = True
+            request.session["user_key"] = user_id
             return HttpResponse("3")
         return HttpResponse("1")
     else:
@@ -226,4 +227,8 @@ def index(request):
     :param request:
     :return:
     """
-    return render(request, "index.html")
+    # 获取用户信息
+    user_info = settings.USER_INFO[request.session["user_key"]]
+    return render(request, "index.html", {
+        "user_info": user_info,
+    })
