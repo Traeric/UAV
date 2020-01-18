@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c991ac1d-c430-4873-b52d-367ef2d5bf3a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/carousel.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/carousel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/colorpicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/colorpicker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/element.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/element.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/layer.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/layer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/laypage.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/laypage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/mobile.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/mobile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/rate.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/rate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/slider.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/slider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/table.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/transfer.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/transfer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/lay/modules/tree.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/lay/modules/tree.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/plugins/layui/layui.all.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/plugins/layui/layui.all.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userManage/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/userManage/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="c991ac1d-c430-4873-b52d-367ef2d5bf3a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,12 +290,12 @@
       <workItem from="1578830553066" duration="1218000" />
       <workItem from="1579006378533" duration="7167000" />
       <workItem from="1579139535227" duration="23801000" />
-      <workItem from="1579309012962" duration="13076000" />
+      <workItem from="1579309012962" duration="14273000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57770000" />
+    <option name="totallyTimeSpent" value="58967000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
