@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c991ac1d-c430-4873-b52d-367ef2d5bf3a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/userManage/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1892">
+            <state relative-caret-position="7136">
               <caret line="232" column="31" selection-start-line="232" selection-start-column="31" selection-end-line="232" selection-end-column="31" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -73,12 +71,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="224">
               <caret line="181" column="42" selection-start-line="181" selection-start-column="42" selection-end-line="181" selection-end-column="42" />
-              <folding>
-                <element signature="n#nav#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#li#0;n#ul#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +125,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="115" />
     <option name="y" value="536" />
     <option name="width" value="1400" />
@@ -147,6 +139,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -173,7 +166,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -281,16 +273,16 @@
       <workItem from="1579139535227" duration="23801000" />
       <workItem from="1579309012962" duration="14273000" />
       <workItem from="1579407204082" duration="162000" />
-      <workItem from="1579407655679" duration="553000" />
+      <workItem from="1579407655679" duration="1152000" />
+      <workItem from="1579431382511" duration="295000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59682000" />
+    <option name="totallyTimeSpent" value="60576000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1734375" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -413,6 +405,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="das://2c6c3053-8625-4b32-a712-ec679273ce3b/schema/main/table/userManage_user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="e1c3aa6b-aaa5-4470-a895-7f2ea356ac85">
+          <filtering />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/userManage/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -423,16 +422,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/userManage/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/userManage/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1892">
+        <state relative-caret-position="7136">
           <caret line="232" column="31" selection-start-line="232" selection-start-column="31" selection-end-line="232" selection-end-column="31" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -440,10 +432,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://2c6c3053-8625-4b32-a712-ec679273ce3b/schema/main/table/userManage_user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="e1c3aa6b-aaa5-4470-a895-7f2ea356ac85">
-          <filtering />
+    <entry file="file://$PROJECT_DIR$/userManage/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
         </state>
       </provider>
     </entry>

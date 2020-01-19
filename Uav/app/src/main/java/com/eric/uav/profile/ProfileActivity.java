@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -123,6 +124,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
                 popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
                 popupWindow.showAsDropDown(moreFuncBtn);
+                // 设置阴影
+                WindowManager.LayoutParams lp = ProfileActivity.this.getWindow().getAttributes();
+                lp.alpha = 0.8f;
+                ProfileActivity.this.getWindow().setAttributes(lp);
+                popupWindow.setOnDismissListener(() -> {
+                    WindowManager.LayoutParams lpDel = ProfileActivity.this.getWindow().getAttributes();
+                    lpDel.alpha = 1f;
+                    ProfileActivity.this.getWindow().setAttributes(lpDel);
+                });
 
                 logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
                 logoutBtn.setOnClickListener(this);

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,6 +24,7 @@ import com.eric.uav.R;
 import com.eric.uav.Settings;
 import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.applications.look_album.LookAlbumActivity;
+import com.eric.uav.applications.look_album.image_viewer.ImageViewerActivity;
 import com.eric.uav.applications.uav_video.UavVideoActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
@@ -139,6 +141,15 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
                 popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
                 popupWindow.showAsDropDown(moreFuncBtn);
+                // 设置阴影
+                WindowManager.LayoutParams lp = HomePageActivity.this.getWindow().getAttributes();
+                lp.alpha = 0.8f;
+                HomePageActivity.this.getWindow().setAttributes(lp);
+                popupWindow.setOnDismissListener(() -> {
+                    WindowManager.LayoutParams lpDel = HomePageActivity.this.getWindow().getAttributes();
+                    lpDel.alpha = 1f;
+                    HomePageActivity.this.getWindow().setAttributes(lpDel);
+                });
 
                 logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
                 logoutBtn.setOnClickListener(this);

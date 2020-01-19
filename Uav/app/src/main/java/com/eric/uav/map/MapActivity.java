@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -179,6 +180,15 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
                 popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
                 popupWindow.showAsDropDown(moreFuncBtn);
+                // 设置阴影
+                WindowManager.LayoutParams lp = MapActivity.this.getWindow().getAttributes();
+                lp.alpha = 0.8f;
+                MapActivity.this.getWindow().setAttributes(lp);
+                popupWindow.setOnDismissListener(() -> {
+                    WindowManager.LayoutParams lpDel = MapActivity.this.getWindow().getAttributes();
+                    lpDel.alpha = 1f;
+                    MapActivity.this.getWindow().setAttributes(lpDel);
+                });
 
                 logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
                 logoutBtn.setOnClickListener(this);
