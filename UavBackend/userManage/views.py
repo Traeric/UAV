@@ -221,14 +221,33 @@ def confirm_login(request):
 
 
 @utils.login_checked
-def index(request):
+def index(request, user_info):
     """
     首页
+    :param user_info:
     :param request:
     :return:
     """
-    # 获取用户信息
-    user_info = settings.USER_INFO[request.session["user_key"]]
     return render(request, "index.html", {
         "user_info": user_info,
     })
+
+
+@utils.login_checked
+def key_word(request, user_info):
+    """
+    语音助手关键词配置
+    :param user_info:
+    :param request:
+    :return:
+    """
+    # 获取所有的关键字信息
+    key_words = models.VoiceAssistantKeyWord.objects.filter(users=user_info)
+    # 获取用户拥有的关键字
+    user_key_word = user_info.key_words
+    return render(request, "key_word.html", {
+        "user_info": user_info,
+        "key_words": key_words,
+        "user_key_word": user_key_word,
+    })
+

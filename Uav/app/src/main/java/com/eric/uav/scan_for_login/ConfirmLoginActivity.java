@@ -1,4 +1,4 @@
-package com.eric.uav.applications.scan_for_login;
+package com.eric.uav.scan_for_login;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

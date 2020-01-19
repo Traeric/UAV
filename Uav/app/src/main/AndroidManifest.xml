@@ -51,7 +51,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".applications.scan_for_login.ConfirmLoginActivity"
+        <activity android:name=".scan_for_login.ConfirmLoginActivity"
             android:theme="@style/confirmLoginTheme"></activity>
         <activity
             android:name=".zxing.android.CaptureActivity"

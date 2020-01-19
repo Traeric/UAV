@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+
+{% block title %}语音助手-关键词配置{% endblock %}
+
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title" style="display: flex; justify-content: space-between;">
+                    <span>你的关键字</span>
+                    <button type="button" class="btn btn-icon btn-round btn-success" data-toggle="tooltip" title="添加关键字">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row" style="padding-left: 20px;">
+                    <div class="selectgroup selectgroup-pills">
+                        {% for item in key_words %}
+                            <label class="selectgroup-item" data-toggle="tooltip" title="关键字：{{ item.key_word }}">
+                                <input type="checkbox" name="value" value="HTML" class="selectgroup-input"
+                                       {% if item.id|user_have_current_key_word:user_key_word %}checked{% endif %}>
+                                <span class="selectgroup-button">{{ item.name }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="btn btn-success">保存</button>
+                <button class="btn btn-danger">取消</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_code %}
+    <script>
+        $(() => {
+            $("#voice_assistant").addClass("active");
+            $("#voice").addClass("show");
+            $("#key_word_config").addClass("active");
+
+            // 关键字提示信息
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock %}
+

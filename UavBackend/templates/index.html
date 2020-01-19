@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 
 
+{% block title %}
+    Uav控制台
+{% endblock %}
+
 {% block content %}
     fsdfds
+{% endblock %}
+
+{% block js_code %}
+    <script>
+        $(() => {
+            $("#dashboard_panel").addClass("active");
+        });
+    </script>
 {% endblock %}
 
 

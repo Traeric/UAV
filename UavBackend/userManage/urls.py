@@ -14,4 +14,5 @@ urlpatterns = [
     url('^cancel_login/$', views.cancel_login, name="cancel_login"),
     url('^confirm_login/$', views.confirm_login),
     url('^index/$', views.index, name="index"),
+    url('^voice_assistant_key_word_config$', views.key_word, name="key_word_config"),
 ]

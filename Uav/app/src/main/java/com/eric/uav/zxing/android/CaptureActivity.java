@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 
 import com.eric.uav.R;
 import com.eric.uav.Settings;
-import com.eric.uav.applications.scan_for_login.ConfirmLoginActivity;
+import com.eric.uav.scan_for_login.ConfirmLoginActivity;
 import com.eric.uav.utils.HttpUtils;
 import com.eric.uav.zxing.camera.CameraManager;
 import com.eric.uav.zxing.view.ViewfinderView;
