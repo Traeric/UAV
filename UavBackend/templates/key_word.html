@@ -10,7 +10,8 @@
             <div class="card-header">
                 <div class="card-title" style="display: flex; justify-content: space-between;">
                     <span>你的关键字</span>
-                    <button type="button" class="btn btn-icon btn-round btn-success" data-toggle="tooltip" title="添加关键字">
+                    <button type="button" class="btn btn-icon btn-round btn-success" data-toggle="tooltip"
+                            title="添加关键字">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -19,8 +20,9 @@
                 <div class="row" style="padding-left: 20px;">
                     <div class="selectgroup selectgroup-pills">
                         {% for item in key_words %}
-                            <label class="selectgroup-item" data-toggle="tooltip" title="关键字：{{ item.key_word }}">
-                                <input type="checkbox" name="value" value="HTML" class="selectgroup-input"
+                            <label class="selectgroup-item" data-toggle="tooltip" title="关键字：{{ item.key_word }}"
+                                   onclick="clickKeyWord(this)">
+                                <input type="checkbox" name="key_word" value="{{ item.id }}" class="selectgroup-input"
                                        {% if item.id|user_have_current_key_word:user_key_word %}checked{% endif %}>
                                 <span class="selectgroup-button">{{ item.name }}</span>
                             </label>
@@ -29,11 +31,26 @@
                 </div>
             </div>
             <div class="card-action">
-                <button class="btn btn-success">保存</button>
-                <button class="btn btn-danger">取消</button>
+                <button class="btn btn-success" onclick="save()">保存</button>
+                <button class="btn btn-danger" onclick="cancel()">取消</button>
             </div>
         </div>
     </div>
+
+    <!-- 确认更新 -->
+    <div id="save" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p style="text-align: center; font-weight: bolder; color: #000;">确认保存吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="swal-button swal-button--confirm btn btn-success" onclick="confirmSave()">确认</button>
+                    <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#save').modal('hide')">取消吧</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}
 
 {% block js_code %}
@@ -46,6 +63,43 @@
             // 关键字提示信息
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        /**
+         * 取消操作关键字
+         */
+        function cancel() {
+            location.reload();
+        }
+
+        let key_word_str = "";
+        function save() {
+            // 获取选中的关键字
+            $("input[name=key_word]:checked").each((index, item) => {
+                if (index === 0) {
+                    key_word_str += $(item).val();
+                } else {
+                    key_word_str += "," + $(item).val();
+                }
+            });
+            // 确认更新询问
+            $("#save").modal("show");
+        }
+
+        function confirmSave() {
+            $.ajax({
+                url: "",
+                type: "post",
+                data: {
+                    
+                },
+            });
+        }
+
+        function clickKeyWord(self) {
+            // 获取点击关键字下对应的input
+            let inputEle = $(self).children("input[name=key_word]");
+            inputEle.prop("checked", !inputEle.is(":checked"));
+        }
     </script>
 {% endblock %}
 
