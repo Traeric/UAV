@@ -2,7 +2,9 @@ import random
 
 from django.conf import settings
 from django.core.mail import send_mail
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, render, redirect
+from django.urls import reverse
+
 from . import models
 import urllib.request
 import re
@@ -264,7 +266,53 @@ def save_key_word(request, user_info):
     if request.method == "POST":
         key_word_str = request.POST.get("key_word_str")
         models.User.objects.filter(id=user_info.id).update(key_words=key_word_str)
+        # 更新user_info
+        user_info.key_words = key_word_str
         return HttpResponse("1")
 
+
+@utils.login_checked
+def add_custom_key_word(request, user_info):
+    """
+    添加自定义的关键字
+    :param request:
+    :param user_info:
+    :return:
+    """
+    return render(request, "custom_key_word.html", {
+        "user_info": user_info,
+    })
+
+
+@utils.login_checked
+def save_custom_key_word(request, user_info):
+    """
+    保存自定义关键字
+    :param request:
+    :param user_info:
+    :return:
+    """
+    if request.method == "POST":
+        # 获取关键字
+        name = request.POST.get("name")
+        key_words = request.POST.get("key_word")
+        code = request.POST.get("code")
+        key = models.VoiceAssistantKeyWord.objects.create(name=name, key_word=key_words, code=code)
+        # 关联用户
+        key.users.add(user_info)
+        path = reverse("key_word_config")
+        return redirect(path)
+
+
+def user_info_app(request):
+    """
+    app端展示用户信息
+    :param request:
+    :return:
+    """
+    user_info = models.User.objects.get(id=request.GET.get("id"))
+    return render(request, "remote_pages/user_info.html", {
+        "user_info": user_info,
+    })
 
 

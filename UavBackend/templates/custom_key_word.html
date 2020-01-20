@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}添加自定义关键字{% endblock %}
+
+{% block content %}
+    <div class="col-md-12">
+        <form class="card" action="{% url 'save_custom_key_word' %}" method="post">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>自定义关键字</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="padding-left: 20px;">
+                    <div class="form-group has-success">
+                        <label for="successInput">关键字名称</label>
+                        <input type="text" id="name" name="name" placeholder="关键字名称" class="form-control" required>
+                    </div>
+                    <div class="form-group has-error has-feedback">
+                        <label for="errorInput">关键字，以逗号为间隔，不能出现空格</label>
+                        <input type="text" name="key_word" placeholder="关键字" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">要执行的代码</label>
+                        <textarea class="form-control" name="code" rows="8" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="btn btn-success" type="submit">保存</button>
+                <button class="btn btn-danger" type="reset">取消</button>
+            </div>
+        </form>
+
+        <h4 class="page-title">提示</h4>
+        <div class="row justify-content-center align-items-center mb-5">
+            <div class="col-md-3 pl-md-0">
+                <div class="card-pricing2 card-success">
+                    <div class="pricing-header">
+                        <h3 class="fw-bold">关键字名称</h3>
+                        <span class="sub-title">关键字名称提示</span>
+                    </div>
+                    <div class="price-value">
+                        <div class="value">
+                            <span class="currency">?</span>
+                            <span class="amount">W<span>hat's</span></span>
+                            <span class="month">name</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-content">
+                        <li>关键词名称应该见名知意</li>
+                        <li>关键词名称不应该过长</li>
+                        <li>关键词名称仅供展示使用，与语音识别无关</li>
+                        <li class="disable">不能有特殊字符</li>
+                        <li class="disable">不能出现空格</li>
+                    </ul>
+                    <a href="#" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">好的</a>
+                </div>
+            </div>
+            <div class="col-md-3 pl-md-0 pr-md-0">
+                <div class="card-pricing2 card-primary">
+                    <div class="pricing-header">
+                        <h3 class="fw-bold">关键字</h3>
+                        <span class="sub-title">关键字提示</span>
+                    </div>
+                    <div class="price-value">
+                        <div class="value">
+                            <span class="currency">?</span>
+                            <span class="amount">W<span>hat's</span></span>
+                            <span class="month">key word</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-content">
+                        <li>关键字供语音识别使用</li>
+                        <li>多个关键字之间以逗号隔开</li>
+                        <li>关键词尽量简短</li>
+                        <li>尽量使用少的关键字</li>
+                        <li class="disable">关键字之间不能有空格</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3">好的</a>
+                </div>
+            </div>
+            <div class="col-md-3 pr-md-0">
+                <div class="card-pricing2 card-secondary">
+                    <div class="pricing-header">
+                        <h3 class="fw-bold">要执行的代码</h3>
+                        <span class="sub-title">要执行的代码提示</span>
+                    </div>
+                    <div class="price-value">
+                        <div class="value">
+                            <span class="currency">?</span>
+                            <span class="amount">W<span>hat's</span></span>
+                            <span class="month">code</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 50px; text-align: left;">
+                        <p class="text-success">在语音助手识别出语音后，需要执行相关代码，该处填写要执行的代码</p>
+                        <pre style="background-color: #131927; color: #fff;">
+    import java.util.Scanner;
+    public class ScannerTest {
+        public static void main(String[] args){
+            Scanner scanner=new Scanner(System.in);
+            System.out.print("请输入一个数");
+            int a=scanner.nextInt();
+            System.out.printf("%d的平方是%d\n",a,a*a);
+        }
+    }
+                        </pre>
+                    </div>
+                    <a href="#" class="btn btn-secondary btn-border btn-lg w-75 fw-bold mb-3">好的</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_code %}
+    <script>
+        $(() => {
+            $("#voice_assistant").addClass("active");
+            $("#voice").addClass("show");
+            $("#add_custom_key_word").addClass("active");
+        });
+    </script>
+{% endblock %}
+
+
+

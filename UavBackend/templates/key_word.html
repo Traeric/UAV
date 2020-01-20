@@ -11,13 +11,13 @@
                 <div class="card-title" style="display: flex; justify-content: space-between;">
                     <span>你的关键字</span>
                     <button type="button" class="btn btn-icon btn-round btn-success" data-toggle="tooltip"
-                            title="添加关键字">
+                            title="添加关键字" onclick="addKeyWord()">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
             </div>
             <div class="card-body">
-                <div class="row" style="padding-left: 20px;">
+                <div style="padding-left: 20px;">
                     <div class="selectgroup selectgroup-pills">
                         {% for item in key_words %}
                             <label class="selectgroup-item" data-toggle="tooltip" title="关键字：{{ item.key_word }}"
@@ -36,23 +36,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 确认更新 -->
-    <div id="save" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <p style="text-align: center; font-weight: bolder; color: #000;">确认保存吗？</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="swal-button swal-button--confirm btn btn-success" onclick="confirmSave()">确认</button>
-                    <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#save').modal('hide')">
-                        取消吧
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 {% endblock %}
 
 {% block js_code %}
@@ -85,45 +68,67 @@
                 }
             });
             // 确认更新询问
-            $("#save").modal("show");
-        }
-
-        function confirmSave() {
-            $.ajax({
-                url: "{% url 'save_key_word' %}",
-                type: "post",
-                data: {
-                    key_word_str,
-                },
-                success(args) {
-                    if (args === "1") {
-                        key_word_str = "";
-                        $("#save").modal("hide");
-                        let content = {};
-
-                        content.message = '保存成功';
-                        content.title = '成功提示';
-                        content.icon = 'fa fa-bell';
-
-                        $.notify(content, {
-                            type: "success",
-                            placement: {
-                                from: "top",
-                                align: "right"
-                            },
-                            time: 1000,
-                            delay: 0,
-                            allow_dismiss: true,
-                        });
+            swal({
+                title: '确定吗?',
+                text: "确定更新关键字吗!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: '是的',
+                        className: 'btn btn-success'
+                    },
+                    cancel: {
+                        visible: true,
+                        text: "取消",
+                        className: 'btn btn-danger'
                     }
-                },
+                }
+            }).then((Delete) => {
+                if (Delete) {
+                    $.ajax({
+                        url: "{% url 'save_key_word' %}",
+                        type: "post",
+                        data: {
+                            key_word_str,
+                        },
+                        success(args) {
+                            if (args === "1") {
+                                key_word_str = "";
+                                $("#save").modal("hide");
+                                let content = {};
+
+                                content.message = '保存成功';
+                                content.title = '成功提示';
+                                content.icon = 'fa fa-bell';
+
+                                $.notify(content, {
+                                    type: "success",
+                                    placement: {
+                                        from: "top",
+                                        align: "right"
+                                    },
+                                    time: 1000,
+                                    delay: 0,
+                                    allow_dismiss: true,
+                                });
+                            }
+                        },
+                    });
+                } else {
+                    swal.close();
+                }
             });
         }
+
 
         function clickKeyWord(self) {
             // 获取点击关键字下对应的input
             let inputEle = $(self).children("input[name=key_word]");
             inputEle.prop("checked", !inputEle.is(":checked"));
+        }
+
+        function addKeyWord() {
+            location.href = "{% url 'add_custom_key_word' %}";
         }
     </script>
 {% endblock %}
