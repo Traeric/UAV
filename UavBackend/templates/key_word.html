@@ -46,7 +46,9 @@
                 </div>
                 <div class="modal-footer">
                     <button class="swal-button swal-button--confirm btn btn-success" onclick="confirmSave()">确认</button>
-                    <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#save').modal('hide')">取消吧</button>
+                    <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#save').modal('hide')">
+                        取消吧
+                    </button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -72,6 +74,7 @@
         }
 
         let key_word_str = "";
+
         function save() {
             // 获取选中的关键字
             $("input[name=key_word]:checked").each((index, item) => {
@@ -87,10 +90,32 @@
 
         function confirmSave() {
             $.ajax({
-                url: "",
+                url: "{% url 'save_key_word' %}",
                 type: "post",
                 data: {
-                    
+                    key_word_str,
+                },
+                success(args) {
+                    if (args === "1") {
+                        key_word_str = "";
+                        $("#save").modal("hide");
+                        let content = {};
+
+                        content.message = '保存成功';
+                        content.title = '成功提示';
+                        content.icon = 'fa fa-bell';
+
+                        $.notify(content, {
+                            type: "success",
+                            placement: {
+                                from: "top",
+                                align: "right"
+                            },
+                            time: 1000,
+                            delay: 0,
+                            allow_dismiss: true,
+                        });
+                    }
                 },
             });
         }

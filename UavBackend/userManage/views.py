@@ -251,3 +251,20 @@ def key_word(request, user_info):
         "user_key_word": user_key_word,
     })
 
+
+@utils.login_checked
+def save_key_word(request, user_info):
+    """
+    保存关键字信息
+    :param user_info:
+    :param request:
+    :return:
+    """
+    # 获取用户关键字信息
+    if request.method == "POST":
+        key_word_str = request.POST.get("key_word_str")
+        models.User.objects.filter(id=user_info.id).update(key_words=key_word_str)
+        return HttpResponse("1")
+
+
+
