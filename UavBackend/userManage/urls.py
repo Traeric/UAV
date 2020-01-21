@@ -18,6 +18,6 @@ urlpatterns = [
     url('^save_key_word/$', views.save_key_word, name="save_key_word"),
     url('^add_custom_key_word/$', views.add_custom_key_word, name="add_custom_key_word"),
     url('^save_custom_key_word/$', views.save_custom_key_word, name="save_custom_key_word"),
-    # 用户信息展示页面，用于在app中展示
-    url('^user_info_app/$', views.user_info_app),
+    url('^user_info_app/$', views.user_info_app),  # 用户信息展示页面，用于在app中展示
+    url('^app_get_user_key_word/$', views.app_get_key_word),
 ]

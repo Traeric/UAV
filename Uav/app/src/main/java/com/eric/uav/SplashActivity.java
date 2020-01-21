@@ -30,6 +30,8 @@ public class SplashActivity extends AppCompatActivity {
                 if ("true".equals(loginStatus)) {
                     // 已经登录了，直接跳转首页
                     intent = new Intent(SplashActivity.this, HomePageActivity.class);
+                    // 存储作为公共变量
+                    UvaApplication.id = sharedPreferences.getString("id", "0");
                 } else {
                     // 未登录，跳转到登录界面
                     intent = new Intent(SplashActivity.this, LoginActivity.class);

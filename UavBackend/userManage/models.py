@@ -18,6 +18,7 @@ class VoiceAssistantKeyWord(models.Model):
     key_word = models.CharField(max_length=128, verbose_name="关键字列表，以逗号为间隔", null=False, blank=False)
     func_name = models.CharField(max_length=32, verbose_name="执行的方法名", default="null")
     code = models.TextField(verbose_name="要执行的代码", default="null")
+    feedback = models.CharField(max_length=32, verbose_name="语音助手反馈的语音", default="好的")
     users = models.ManyToManyField(to=User)    # 多对多关联字段
 
 

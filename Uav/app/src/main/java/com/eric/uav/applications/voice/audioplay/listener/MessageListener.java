@@ -9,7 +9,6 @@ import com.baidu.tts.client.SpeechError;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.eric.uav.applications.voice.VoiceActivity;
 import com.eric.uav.applications.voice.audioplay.MainHandlerConstant;
-import com.eric.uav.applications.voice.recog.event_handler.EventHandler;
 import com.eric.uav.applications.voice.recog.event_handler.SimpleEventHandler;
 
 import java.lang.reflect.InvocationTargetException;
@@ -101,8 +100,14 @@ public class MessageListener implements SpeechSynthesizerListener, MainHandlerCo
             try {
                 Object obj = clazz.newInstance();
                 System.out.println(FinishStatus.finishAudioPlay);
-                Method method = clazz.getMethod(FinishStatus.finishAudioPlay, Context.class);
-                method.invoke(obj, context);
+                if (!"null".equals(FinishStatus.finishAudioPlay)) {
+                    System.out.println(FinishStatus.finishAudioPlay);
+                    // 系统给定的方法
+                    Method method = clazz.getMethod(FinishStatus.finishAudioPlay, Context.class);
+                    method.invoke(obj, context);
+                } else {
+                    // 自定义的方法
+                }
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
                 e.printStackTrace();
             }

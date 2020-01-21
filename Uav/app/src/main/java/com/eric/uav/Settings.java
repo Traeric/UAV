@@ -18,5 +18,6 @@ public final class Settings {
         routerMap.put("refreshLoginStatus", "/userManage/refresh_login_status/");
         routerMap.put("cancelLogin", "/userManage/cancel_login/");
         routerMap.put("confirmLogin", "/userManage/confirm_login/");
+        routerMap.put("getKeyWord", "/userManage/app_get_user_key_word/");
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.eric.uav.R;
 import com.eric.uav.Settings;
+import com.eric.uav.UvaApplication;
 import com.eric.uav.dialog.LoadDialog;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.register.RegisterActivity;
@@ -95,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("id", result);    // 存id
                             editor.putString("logined", "true");
                             editor.apply();
+                            UvaApplication.id = result;   // 保存为公共变量
                             // 跳转到首页
                             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                             startActivity(intent);

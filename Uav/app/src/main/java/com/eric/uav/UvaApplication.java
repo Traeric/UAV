@@ -5,6 +5,9 @@ import android.app.Application;
 import com.xuexiang.xui.XUI;
 
 public class UvaApplication extends Application {
+    public static String id;
+
+
     @Override
     public void onCreate() {
         super.onCreate();

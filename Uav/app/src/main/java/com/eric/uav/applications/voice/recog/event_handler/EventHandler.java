@@ -1,5 +1,6 @@
 package com.eric.uav.applications.voice.recog.event_handler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
 
@@ -10,6 +11,7 @@ import com.eric.uav.R;
 import com.eric.uav.applications.voice.VoiceActivity;
 import com.eric.uav.applications.voice.audioplay.listener.FinishStatus;
 import com.eric.uav.applications.voice.wakeup.listener.SimpleWakeupListener;
+import com.eric.uav.utils.Dialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,6 +100,14 @@ public abstract class EventHandler {
         // 切换图片
         Glide.with(context).load(R.drawable.voice_symble).diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(((VoiceActivity) context).getVoiceAssistantLogo());
+    }
+
+    public void turnLeft(Context context) {
+        Dialog.toastWithoutAppName((Activity) context, "向左的方法执行了");
+    }
+
+    public void turnRight(Context context) {
+        Dialog.toastWithoutAppName((Activity) context, "向右的方法执行了");
     }
 
     /**

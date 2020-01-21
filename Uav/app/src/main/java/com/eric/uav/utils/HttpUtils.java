@@ -20,6 +20,8 @@ public abstract class HttpUtils {
         this.currentActivity = currentActivity;
     }
 
+    public HttpUtils() {}
+
     /**
      * Http Post请求
      *

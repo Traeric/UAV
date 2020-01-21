@@ -9,6 +9,7 @@ from . import models
 import urllib.request
 import re
 import uuid
+import json
 from . import utils
 
 
@@ -297,7 +298,8 @@ def save_custom_key_word(request, user_info):
         name = request.POST.get("name")
         key_words = request.POST.get("key_word")
         code = request.POST.get("code")
-        key = models.VoiceAssistantKeyWord.objects.create(name=name, key_word=key_words, code=code)
+        feedback = request.POST.get("feedback")
+        key = models.VoiceAssistantKeyWord.objects.create(name=name, key_word=key_words, code=code, feedback=feedback)
         # 关联用户
         key.users.add(user_info)
         path = reverse("key_word_config")
@@ -315,4 +317,30 @@ def user_info_app(request):
         "user_info": user_info,
     })
 
+
+def app_get_key_word(request):
+    """
+    获取用户选中了的关键字
+    :param request:
+    :return:
+    """
+    # 获取用户id
+    if request.method == "POST":
+        uid = request.POST.get("id")
+        # 查询出指定用户
+        user = models.User.objects.filter(id=uid)
+        key_word_list = user[0].key_words.split(",")
+        keys_list = []
+        for item in key_word_list:
+            # 查询出指定的关键字信息
+            key_object = models.VoiceAssistantKeyWord.objects.filter(id=item)
+            keys_dict = {
+                "key_word": key_object[0].key_word,
+                "func_name": key_object[0].func_name,
+                "code": key_object[0].code,
+                "feedback": key_object[0].feedback,
+            }
+            keys_list.append(keys_dict)
+        print(keys_list)
+        return HttpResponse(json.dumps(keys_list))
 
