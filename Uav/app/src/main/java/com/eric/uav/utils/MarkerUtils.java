@@ -2,8 +2,8 @@ package com.eric.uav.utils;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.RequiresApi;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -11,8 +11,6 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.eric.uav.R;
-
-import java.util.List;
 
 public class MarkerUtils {
     /**

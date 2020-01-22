@@ -2,7 +2,7 @@ package com.eric.uav.applications.voice.recog.event_handler;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import com.eric.uav.applications.voice.VoiceActivity;
 import com.eric.uav.applications.voice.audioplay.listener.FinishStatus;

@@ -1,7 +1,7 @@
 package com.eric.uav.utils;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.widget.Toast;
 
 import com.eric.uav.R;

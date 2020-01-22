@@ -6,12 +6,11 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.eric.uav.applications.link_bluetooth.BlueToothActivity;
-import com.eric.uav.homepage.HomePageActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;

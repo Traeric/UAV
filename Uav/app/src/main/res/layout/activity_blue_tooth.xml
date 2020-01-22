@@ -90,13 +90,13 @@
                         android:layout_height="50dp"
                         android:layout_below="@id/connect_wrap">
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/connectDevice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#EEEEEE">
 
-                        </android.support.v7.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
 
                     <!-- 配对设备标题 -->
@@ -138,13 +138,13 @@
                         android:layout_height="200dp"
                         android:layout_below="@+id/bond_wrap">
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/bondDevice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#EEEEEE">
 
-                        </android.support.v7.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
                     <!-- 分割线 -->
                     <TextView
@@ -199,13 +199,13 @@
                         android:layout_height="300dp"
                         android:layout_below="@+id/search_tips">
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/searchDevice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#EEEEEE">
 
-                        </android.support.v7.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
