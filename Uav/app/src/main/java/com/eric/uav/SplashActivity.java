@@ -2,8 +2,9 @@ package com.eric.uav;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;

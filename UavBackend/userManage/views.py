@@ -10,6 +10,8 @@ import urllib.request
 import re
 import uuid
 import json
+import os
+import time
 from . import utils
 
 
@@ -343,4 +345,32 @@ def app_get_key_word(request):
             keys_list.append(keys_dict)
         print(keys_list)
         return HttpResponse(json.dumps(keys_list))
+
+
+def upload_file(request):
+    """
+    上传文件
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        # 获取用户id
+        uid = request.POST.get("id")
+        # 查询用户邮箱
+        email = models.User.objects.get(id=uid).email
+        # 拼接路径
+        path = os.path.join(settings.BASE_DIR, "static", "user_info", email)
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        for i in request.FILES:
+            # 保存单个文件
+            try:
+                with open(os.path.join(path, "%s.%s" % (time.time(), request.FILES.get(i).name.rsplit(".", maxsplit=1)[1])),
+                          'wb') as f:
+                    for line in request.FILES.get(i).chunks():
+                        f.write(line)
+            except Exception as e:
+                print(e)
+                return HttpResponse("上传失败！")
+    return HttpResponse("上传成功！")
 

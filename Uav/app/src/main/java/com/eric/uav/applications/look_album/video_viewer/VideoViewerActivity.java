@@ -2,7 +2,6 @@ package com.eric.uav.applications.look_album.video_viewer;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,12 +16,20 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.eric.uav.R;
+import com.eric.uav.Settings;
 import com.eric.uav.applications.look_album.DataTransform;
+import com.eric.uav.applications.look_album.image_viewer.ImageViewerActivity;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.utils.HttpUtils;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class VideoViewerActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView videoView;
@@ -34,6 +41,7 @@ public class VideoViewerActivity extends AppCompatActivity implements View.OnCli
 
     private TextView cancelBtn;
     private RadiusImageView deleteFile;
+    private RadiusImageView uploadVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +118,9 @@ public class VideoViewerActivity extends AppCompatActivity implements View.OnCli
 
                 deleteFile = popupView.findViewById(R.id.delete_file);
                 deleteFile.setOnClickListener(this);
+
+                uploadVideo = popupView.findViewById(R.id.upload_video);
+                uploadVideo.setOnClickListener(this);
             }
             break;
             case R.id.popup_window_cancel: {
@@ -128,6 +139,25 @@ public class VideoViewerActivity extends AppCompatActivity implements View.OnCli
                     // 删除失败
                     Dialog.toastWithoutAppName(VideoViewerActivity.this, "删除失败");
                 }
+            }
+            break;
+            case R.id.upload_video: {
+                // 获取要操作的文件
+                File file = DataTransform.file;
+                Map<String, String> map = new HashMap<>();
+                map.put("id", Objects.requireNonNull(getSharedPreferences("register", MODE_PRIVATE).getString("id", "0")));
+                Map<String, File> fileMap = new HashMap<>();
+                fileMap.put(file.getName(), file);
+                // 上传文件
+                HttpUtils httpUtils = new HttpUtils() {
+                    @Override
+                    public void callback(String result) {
+                        runOnUiThread(() -> {
+                            Dialog.toastWithoutAppName(VideoViewerActivity.this, result);
+                        });
+                    }
+                };
+                httpUtils.transformFile(Settings.routerMap.get("uploadFile"), fileMap, map);
             }
             break;
             default:
