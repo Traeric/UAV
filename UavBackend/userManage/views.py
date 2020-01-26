@@ -374,3 +374,22 @@ def upload_file(request):
                 return HttpResponse("上传失败！")
     return HttpResponse("上传成功！")
 
+
+@utils.login_checked
+def display_image(request, user_info):
+    """
+    展示图片
+    :param user_info:
+    :param request:
+    :return:
+    """
+    # 组织路径
+    path = os.path.join(settings.BASE_DIR, "static", "user_info", user_info.email)
+    # 获取该路径下所有的文件
+    image_list = os.listdir(path)
+    return render(request, "display_image.html", {
+        "user_info": user_info,
+        "image_list": image_list,
+    })
+
+

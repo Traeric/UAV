@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{% load staticfiles %}
+
+{% block title %}
+    相片展示
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'plugins/rel-ebb/rel-ebb.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% for item in image_list %}
+        <div class="col-md-4">
+            <div class="card card-post card-round">
+                {% if item|file_type:".png" %}
+                    <img class="card-img-top" src="/static/user_info/{{ user_info.email }}/{{ item }}"
+                         alt="Card image cap">
+                {% else %}
+                    <RelEbbVideo src="/static/user_info/{{ user_info.email }}/{{ item }}"></RelEbbVideo>
+                {% endif %}
+                <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="d-flex">
+                        <div class="avatar">
+                            <img src="{{ user_info.avatar }}" alt="NO IMG" class="avatar-img rounded-circle">
+                        </div>
+                        <div class="info-post ml-2">
+                            <p class="username">{{ user_info.nick }}</p>
+                            <p class="date text-muted">
+                                于<span style="color: #1572e8!important;">{% convert_filename_to_date item %}</span>上传
+                            </p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-rounded btn-sm">Read More</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block js_code %}
+    <script src="{% static 'plugins/rel-ebb/rel-ebb.js' %}"></script>
+    <script>
+        $(() => {
+            $("#album_option").addClass("active");
+            $("#image_wrap").addClass("show");
+            $("#display_image").addClass("active");
+        });
+    </script>
+{% endblock %}
+

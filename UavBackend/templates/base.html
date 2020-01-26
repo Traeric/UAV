@@ -28,6 +28,8 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}">
+
+    {% block style %}{% endblock %}
 </head>
 <body data-background-color="dark">
 <div class="wrapper">
@@ -190,6 +192,31 @@
                             </ul>
                         </div>
                     </li>
+                    <!-- 提示字样 -->
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">后台功能</h4>
+                    </li>
+                    <!-- 相片操作 -->
+                    <li class="nav-item" id="album_option">
+                        <a data-toggle="collapse" href="#image_wrap">
+                            <i class="far fa-image"></i>
+                            <p>相册相关</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="image_wrap">
+                            <ul class="nav nav-collapse">
+                                <li id="display_image">
+                                    <a href="{% url 'display_image' %}">
+                                        <span class="sub-item">相册展示</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                     <li class="mx-4 mt-2">
                         <a href="#" class="btn btn-primary btn-block"><span class="btn-label mr-2"> <i
                                 class="fa fa-heart"></i> </span>Buy Pro</a>

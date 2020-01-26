@@ -22,4 +22,6 @@ urlpatterns = [
     url('^app_get_user_key_word/$', views.app_get_key_word),
     # 上传图片
     url('^upload_file/$', views.upload_file),
+    # 相册展示
+    url('^display_image/$', views.display_image, name="display_image"),
 ]
