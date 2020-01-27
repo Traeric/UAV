@@ -1,4 +1,10 @@
+import json
+import os
 import random
+import re
+import time
+import urllib.request
+import uuid
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -6,12 +12,6 @@ from django.shortcuts import HttpResponse, render, redirect
 from django.urls import reverse
 
 from . import models
-import urllib.request
-import re
-import uuid
-import json
-import os
-import time
 from . import utils
 
 
@@ -470,4 +470,43 @@ def update_user_info(request, user_info):
         user_info.password = password
     path = reverse(viewname="profile_account")
     return redirect(path)
+
+
+def login_by_account(request):
+    """
+    账号密码登录后台
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        # 查询出对应账号
+        try:
+            user = models.User.objects.get(email=email)
+            if user.password == password:
+                # 登录成功
+                request.session["user_key"] = str(uuid.uuid1())
+                # 存到用户字典中
+                settings.USER_INFO[request.session["user_key"]] = user
+                path = reverse(viewname="index")
+                return redirect(path)
+            else:
+                # 密码错误
+                return render(request, "login.html", {
+                    "error_msg": "密码错误",
+                    "email": email,
+                    "password": password,
+                })
+        except Exception as e:
+            print(e)
+            # 账号错误
+            return render(request, "login.html", {
+                "error_msg": "账号错误",
+                "email": email,
+                "password": password,
+            })
+
+
+
 

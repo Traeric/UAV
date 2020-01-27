@@ -86,13 +86,31 @@
             width: 100%;
         }
 
-        .footer .wrap {width: 60%; margin: 0 auto; display: flex;}
+        .footer .wrap {
+            width: 60%;
+            margin: 0 auto;
+            display: flex;
+        }
 
-        .footer .wrap .links .title {font-weight: bolder; font-size: 18px; margin-bottom: 10px;}
-        .footer .wrap .links ul li {margin-bottom: 5px;}
+        .footer .wrap .links .title {
+            font-weight: bolder;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
 
-        .footer .wrap .downloads {margin-left: 50px;}
-        .footer .wrap .downloads .title {font-weight: bolder; font-size: 18px; margin-bottom: 10px;}
+        .footer .wrap .links ul li {
+            margin-bottom: 5px;
+        }
+
+        .footer .wrap .downloads {
+            margin-left: 50px;
+        }
+
+        .footer .wrap .downloads .title {
+            font-weight: bolder;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
     </style>
     <script src="{% static 'js/jquery.js' %}"></script>
 </head>
@@ -116,14 +134,20 @@
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>账号密码登录</legend>
             </fieldset>
-            <form class="layui-form" action="" style="margin-top: 30px;">
+            <form class="layui-form" action="{% url 'login_by_account' %}" method="post" style="margin-top: 30px;">
+                {% if error_msg %}
+                    <div style="text-align: center; color: #e6a23c; background-color: #fdf6ec;
+                            border: 1px solid #f5dab1; border-radius: 4px; padding: 5px 0; margin-bottom: 10px;">
+                        {{ error_msg }}
+                    </div>
+                {% endif %}
                 <div class="form-item">
                     <div class="icon">
                         <i class="layui-icon-face-surprised layui-icon"></i>
                     </div>
                     <div class="input">
                         <input type="email" name="email" autocomplete="off" placeholder="请输入邮箱"
-                               class="layui-input">
+                               class="layui-input" required value="{{ email }}">
                     </div>
                 </div>
                 <div class="form-item">
@@ -131,11 +155,11 @@
                         <i class="layui-icon-password layui-icon"></i>
                     </div>
                     <div class="input">
-                        <input type="password" name="password"
+                        <input type="password" name="password" required value="{{ password }}"
                                placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <button type="button" class="layui-btn layui-btn-fluid layui-btn layui-btn-warm">登 录</button>
+                <button type="submit" class="layui-btn layui-btn-fluid layui-btn layui-btn-warm">登 录</button>
             </form>
             <div class="link" style="margin-top: 20px; display: flex; justify-content: center;">
                 <button class="layui-btn layui-btn-danger" onclick="changeErweima();">手机扫码登录</button>
