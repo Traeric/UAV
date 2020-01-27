@@ -508,5 +508,14 @@ def login_by_account(request):
             })
 
 
+def logout(request):
+    """
+    登出
+    :param request:
+    :return:
+    """
+    del settings.USER_INFO[request.session["user_key"]]
+    path = reverse("login_page")
+    return redirect(path)
 
 
