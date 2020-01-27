@@ -31,4 +31,6 @@ urlpatterns = [
     url('^profile_account/$', views.profile_account, name="profile_account"),
     url('^avatar_upload/$', views.avatar_upload, name="avatar_upload"),
     url('^update_user_info/$', views.update_user_info, name="update_user_info"),
+    # 下载客户端
+    url('^download_client/$', views.download_client),
 ]

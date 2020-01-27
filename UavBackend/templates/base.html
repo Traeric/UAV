@@ -237,9 +237,9 @@
                         </div>
                     </li>
 
-                    <li class="mx-4 mt-2">
-                        <a href="#" class="btn btn-primary btn-block"><span class="btn-label mr-2"> <i
-                                class="fa fa-heart"></i> </span>Buy Pro</a>
+                    <li class="mx-4 mt-2" onclick="downloadFile();">
+                        <a href="#" class="btn btn-primary btn-block"><span class="btn-label mr-2">
+                            <i class="fab fa-android"></i> </span>下载客户端</a>
                     </li>
                 </ul>
             </div>
@@ -355,6 +355,28 @@
 
 <script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
 
+<script>
+    function downloadFile() {
+        swal({
+            title: '扫描二维码下载Uav客户端',
+            html: '<br><img src="{% static 'images/download_app.png' %}" alt="NO IMG" >',
+            content: {
+                element: "img",
+                attributes: {
+                    src: "{% static 'images/download_app.png' %}",
+                    width: "150",
+                    height: "150",
+                },
+            },
+            buttons: {
+                confirm: {
+                    className: 'btn btn-success',
+                    text: "确定",
+                }
+            },
+        });
+    }
+</script>
 {% block js_code %}
 {% endblock %}
 </body>

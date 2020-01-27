@@ -8,6 +8,7 @@ import uuid
 
 from django.conf import settings
 from django.core.mail import send_mail
+from django.http import FileResponse
 from django.shortcuts import HttpResponse, render, redirect
 from django.urls import reverse
 
@@ -517,5 +518,19 @@ def logout(request):
     del settings.USER_INFO[request.session["user_key"]]
     path = reverse("login_page")
     return redirect(path)
+
+
+def download_client(request):
+    """
+    下载app
+    :return:
+    """
+    # 组织文件路径
+    path = os.path.join(settings.BASE_DIR, "static", "client_app", "uav-1.0.0.apk")
+    file = open(path, "rb")
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="uav-1.0.0.apk"'
+    return response
 
 
