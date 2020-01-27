@@ -19,6 +19,9 @@ import com.eric.uav.register.RegisterActivity;
 import com.eric.uav.utils.Dialog;
 import com.eric.uav.utils.HttpUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,14 +95,22 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // 登录成功
                             // 将邮箱存到SharedPreferences中，方便后面使用
-                            editor.putString("email", userName);
-                            editor.putString("id", result);    // 存id
-                            editor.putString("logined", "true");
-                            editor.apply();
-                            UvaApplication.id = result;   // 保存为公共变量
-                            // 跳转到首页
-                            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                            startActivity(intent);
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+
+                                editor.putString("email", jsonObject.getString("email"));
+                                editor.putString("nick", jsonObject.getString("nick"));
+                                editor.putString("avatar", jsonObject.getString("avatar"));
+                                editor.putString("id", jsonObject.getString("id"));    // 存id
+                                editor.putString("logined", "true");
+                                editor.apply();
+                                UvaApplication.id = jsonObject.getString("id");   // 保存为公共变量
+                                // 跳转到首页
+                                Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+    修改账户
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'plugins/rel-ebb/rel-ebb.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-12">
+        <form class="card" action="{% url 'update_user_info' %}" method="post">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>修改账户</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="padding-left: 20px;">
+                    <div class="form-group has-success">
+                        <label for="successInput">昵称</label>
+                        <input type="text" id="name" name="nick" placeholder="昵称" class="form-control" required=""
+                               value="{{ user_info.nick }}">
+                    </div>
+                    <div class="form-group has-error has-feedback">
+                        <label for="errorInput">邮箱</label>
+                        <input type="text" name="email" placeholder="邮箱" class="form-control" required=""
+                               value="{{ user_info.email }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" class="form-control" name="password" placeholder="密码" required=""
+                               value="{{ user_info.password }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">上传头像</label>
+                        <div style="display: flex; justify-content: flex-start;">
+                            <ImgUpload param="imgParam" type="drag"></ImgUpload>
+                            <img src="{{ user_info.avatar }}" alt="NO IMG" class="avatar-img rounded-circle"
+                                 style="width: 150px; height: 150px; margin-left: 20px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="btn btn-success" type="submit">保存</button>
+                <button class="btn btn-danger" type="reset">取消</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js_code %}
+    <script src="{% static 'plugins/rel-ebb/rel-ebb.js' %}"></script>
+    <script>
+        $(() => {
+            $("#account_option").addClass("active");
+            $("#account_info").addClass("show");
+            $("#profile_account").addClass("active");
+        });
+
+        function imgParam() {
+            return {
+                url: "{% url 'avatar_upload' %}",
+                method: "post",
+                maxSize: "2048",   // kb
+                fileName: "avatar",
+                uploadMultiple: false,
+                parallelNum: 2,
+                timeout: 3000,
+                success(data) {
+                    // 修改成功
+                },
+                error(code, msg) {
+                    alert(code);
+                    alert(msg);
+                },
+            };
+        }
+    </script>
+{% endblock %}
+
+
+

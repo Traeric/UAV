@@ -79,7 +79,12 @@ def login(request):
         # 比对密码
         if data_password == password:
             # 密码正确
-            return HttpResponse(str(user[0].id))
+            return HttpResponse(json.dumps({
+                "id": user[0].id,
+                "nick": user[0].nick,
+                "email": user[0].email,
+                "avatar": user[0].avatar,
+            }))
         # 密码错误
         return HttpResponse("error")
 
@@ -343,7 +348,6 @@ def app_get_key_word(request):
                 "feedback": key_object[0].feedback,
             }
             keys_list.append(keys_dict)
-        print(keys_list)
         return HttpResponse(json.dumps(keys_list))
 
 
@@ -392,4 +396,78 @@ def display_image(request, user_info):
         "image_list": image_list,
     })
 
+
+@utils.login_checked
+def view_account(request, user_info):
+    """
+    查看账户
+    :param request:
+    :param user_info:
+    :return:
+    """
+    return render(request, "view_account.html", {
+        'user_info': user_info,
+    })
+
+
+@utils.login_checked
+def profile_account(request, user_info):
+    """
+    user_info
+    :param request:
+    :param user_info:
+    :return:
+    """
+    return render(request, "profile_account.html", {
+        'user_info': user_info,
+    })
+
+
+@utils.login_checked
+def avatar_upload(request, user_info):
+    """
+    上传图片
+    :param request:
+    :param user_info:
+    :return:
+    """
+    if request.method == "POST":
+        avatar = request.FILES.get("avatar")
+        # 创建路径
+        path = os.path.join(settings.BASE_DIR, "static", "user_info", "%s-avatar" % user_info.email)
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        image_name = "{name}.{f_type}".format(name=user_info.email, f_type=avatar.name.rsplit(".", maxsplit=1)[1])
+        f_name = os.path.join(path, image_name)
+        # 保存头像
+        with open(f_name, 'wb') as f:
+            for item in avatar.chunks():
+                f.write(item)
+        # 保存头像路径到数据库
+        (models.User.objects.filter(id=user_info.id)
+         .update(avatar="/static/user_info/%s-avatar/%s" % (user_info.email, image_name)))
+        # 更新user_info
+        user_info.avatar = "/static/user_info/%s-avatar/%s" % (user_info.email, image_name)
+    return HttpResponse("ok")
+
+
+@utils.login_checked
+def update_user_info(request, user_info):
+    """
+    更新用户信息
+    :param request:
+    :param user_info:
+    :return:
+    """
+    if request.method == "POST":
+        nick = request.POST.get("nick")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        (models.User.objects.filter(id=user_info.id).update(nick=nick, email=email, password=password))
+        # 更新user_info
+        user_info.nick = nick
+        user_info.email = email
+        user_info.password = password
+    path = reverse(viewname="profile_account")
+    return redirect(path)
 

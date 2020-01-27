@@ -92,19 +92,17 @@
                                         <div class="u-text">
                                             <h4>{{ user_info.nick }}</h4>
                                             <p class="text-muted">{{ user_info.email }}</p>
-                                            <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">查看详情</a>
+                                            <a href="{% url 'view_account' %}" class="btn btn-xs btn-secondary btn-sm">查看详情</a>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">My Profile</a>
-                                    <a class="dropdown-item" href="#">My Balance</a>
-                                    <a class="dropdown-item" href="#">Inbox</a>
+                                    <a class="dropdown-item" href="{% url 'view_account' %}">我的账户</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Account Setting</a>
+                                    <a class="dropdown-item" href="{% url 'profile_account' %}">修改账户</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Logout</a>
+                                    <a class="dropdown-item" href="#">退出登录</a>
                                 </li>
                             </div>
                         </ul>
@@ -136,18 +134,18 @@
                         <div class="collapse in" id="collapseExample">
                             <ul class="nav">
                                 <li>
-                                    <a href="#profile">
-                                        <span class="link-collapse">My Profile</span>
+                                    <a href="{% url 'view_account' %}">
+                                        <span class="link-collapse">我的账户</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#edit">
-                                        <span class="link-collapse">Edit Profile</span>
+                                    <a href="{% url 'profile_account' %}">
+                                        <span class="link-collapse">修改账户</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#settings">
-                                        <span class="link-collapse">Settings</span>
+                                        <span class="link-collapse">退出登录</span>
                                     </a>
                                 </li>
                             </ul>
@@ -211,6 +209,28 @@
                                 <li id="display_image">
                                     <a href="{% url 'display_image' %}">
                                         <span class="sub-item">相册展示</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- 账户情况 -->
+                    <li class="nav-item" id="account_option">
+                        <a data-toggle="collapse" href="#account_info">
+                            <i class="fas fa-cogs"></i>
+                            <p>账户设置</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="account_info">
+                            <ul class="nav nav-collapse">
+                                <li id="view_account">
+                                    <a href="{% url 'view_account' %}">
+                                        <span class="sub-item">查看账户</span>
+                                    </a>
+                                </li>
+                                <li id="profile_account">
+                                    <a href="{% url 'profile_account' %}">
+                                        <span class="sub-item">修改账户</span>
                                     </a>
                                 </li>
                             </ul>

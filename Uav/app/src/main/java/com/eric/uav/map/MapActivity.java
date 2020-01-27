@@ -32,7 +32,9 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolylineOptions;
+import com.bumptech.glide.Glide;
 import com.eric.uav.R;
+import com.eric.uav.Settings;
 import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
@@ -41,6 +43,7 @@ import com.eric.uav.utils.Dialog;
 import com.eric.uav.utils.MarkerUtils;
 import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
+import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +67,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private LinearLayout logoutBtn;
     private LinearLayout scanScreen;
 
+    private SharedPreferences sharedPreferences;
+
     private static final int M_PERMISSION_CODE = 1001;
 
     // 点击过的位置
@@ -74,6 +79,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
 
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("地图");
@@ -86,6 +93,11 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.select_color));
         ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        // 加载头像
+        Glide.with(this).load("http://" + Settings.ServerHost + ":" +
+                Settings.ServerPort + sharedPreferences.getString("avatar", "/static/assets/img/profile.jpg"))
+                .into((RadiusImageView) findViewById(R.id.top_avatar));
+
 
         homepageActivityView = findViewById(R.id.homepage_activity);
         homepageActivityView.setOnClickListener(this);

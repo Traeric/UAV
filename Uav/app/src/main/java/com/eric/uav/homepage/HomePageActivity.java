@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.eric.uav.R;
 import com.eric.uav.Settings;
 import com.eric.uav.applications.ApplicationActivity;
@@ -30,6 +31,7 @@ import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.eric.uav.zxing.android.CaptureActivity;
 import com.eric.uav.utils.Dialog;
+import com.xuexiang.xui.widget.imageview.RadiusImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -50,12 +52,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     private WebView newListPanel;
 
+    private SharedPreferences sharedPreferences;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
 
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("首页");
@@ -68,6 +74,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
+        // 加载头像
+        Glide.with(this).load("http://" + Settings.ServerHost + ":" +
+                Settings.ServerPort + sharedPreferences.getString("avatar", "/static/assets/img/profile.jpg"))
+                .into((RadiusImageView) findViewById(R.id.top_avatar));
+
 
         // 底部栏相关设置
         mapActivity = findViewById(R.id.map_activity);

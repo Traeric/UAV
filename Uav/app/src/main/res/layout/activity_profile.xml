@@ -36,6 +36,7 @@
                     android:gravity="center">
 
                     <com.xuexiang.xui.widget.imageview.RadiusImageView
+                        android:id="@+id/user_info_avatar"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:clickable="true"
@@ -60,6 +61,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center">
                         <TextView
+                            android:id="@+id/user_info_nick"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Eric Jin"
@@ -75,6 +77,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center">
                         <TextView
+                            android:id="@+id/user_info_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2789519045@qq.com"

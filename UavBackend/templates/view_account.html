@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+    查看账户
+{% endblock %}
+
+{% block content %}
+    <div class="card card-profile" style="width: 80%; margin: 0 auto;">
+        <div class="card-header" style="background-image: url('{% static 'images/blogpost.jpg' %}')">
+            <div class="profile-picture">
+                <div class="avatar avatar-xl">
+                    <img src="{{ user_info.avatar }}" alt="NO IMG" class="avatar-img rounded-circle">
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="user-profile text-center">
+                <div class="name">{{ user_info.nick }}</div>
+                <div class="job">{{ user_info.email }}</div>
+                <div class="desc">A man who hates loneliness</div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="view-profile">
+                <a href="{% url 'profile_account' %}" class="btn btn-secondary btn-block">修改账户信息</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_code %}
+    <script>
+        $(() => {
+            $("#account_option").addClass("active");
+            $("#account_info").addClass("show");
+            $("#view_account").addClass("active");
+        });
+    </script>
+{% endblock %}
+
+
+

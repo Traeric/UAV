@@ -7,8 +7,8 @@ class User(models.Model):
     """用户表"""
     email = models.EmailField(verbose_name="邮箱", unique=True)
     password = models.CharField(max_length=16, verbose_name="密码")
-    avatar = models.CharField(max_length=32, verbose_name="头像")
-    nick = models.CharField(max_length=8, verbose_name="昵称")
+    avatar = models.CharField(max_length=32, verbose_name="头像", default="/static/assets/img/profile.jpg")
+    nick = models.CharField(max_length=8, verbose_name="昵称", default="游客")
     key_words = models.CharField(max_length=128, verbose_name="当前用户拥有的关键字id，以逗号为间隔", default="")
 
 

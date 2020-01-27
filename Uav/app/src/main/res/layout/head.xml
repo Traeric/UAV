@@ -19,6 +19,7 @@
         android:gravity="center_vertical">
 
         <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:id="@+id/top_avatar"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"

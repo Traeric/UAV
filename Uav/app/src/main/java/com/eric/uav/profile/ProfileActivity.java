@@ -15,7 +15,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.eric.uav.R;
+import com.eric.uav.Settings;
 import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
@@ -23,6 +25,7 @@ import com.eric.uav.map.MapActivity;
 import com.eric.uav.utils.Dialog;
 import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
+import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     // 底部栏相关状态
@@ -38,10 +41,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private RoundButton detailInfo;
     private RelativeLayout lookDetailLayout;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
 
         // 初始化样式
         ((TextView) findViewById(R.id.title)).setText("个人中心");
@@ -54,6 +61,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.select_color));
+        // 加载头像
+        Glide.with(this).load("http://" + Settings.ServerHost + ":" +
+                Settings.ServerPort + sharedPreferences.getString("avatar", "/static/assets/img/profile.jpg"))
+                .into((RadiusImageView) findViewById(R.id.top_avatar));
 
         // 底部栏按钮
         homepageActivity = findViewById(R.id.homepage_activity);
@@ -74,6 +85,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         moreFuncBtn = findViewById(R.id.more_func);
         moreFuncBtn.setOnClickListener(this);
+
+        setProfile();
+    }
+
+    public void setProfile() {
+        ((TextView) findViewById(R.id.user_info_nick)).setText(sharedPreferences.getString("nick", "游客"));
+        ((TextView) findViewById(R.id.user_info_email)).setText(sharedPreferences.getString("email", "nill"));
+        // 加载头像
+        Glide.with(this).load("http://" + Settings.ServerHost + ":" +
+                Settings.ServerPort + sharedPreferences.getString("avatar", "/static/assets/img/profile.jpg"))
+                .into((RadiusImageView) findViewById(R.id.user_info_avatar));
     }
 
     @Override

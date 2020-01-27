@@ -24,4 +24,9 @@ urlpatterns = [
     url('^upload_file/$', views.upload_file),
     # 相册展示
     url('^display_image/$', views.display_image, name="display_image"),
+    # 账户设置
+    url('^view_account/$', views.view_account, name="view_account"),
+    url('^profile_account/$', views.profile_account, name="profile_account"),
+    url('^avatar_upload/$', views.avatar_upload, name="avatar_upload"),
+    url('^update_user_info/$', views.update_user_info, name="update_user_info"),
 ]
