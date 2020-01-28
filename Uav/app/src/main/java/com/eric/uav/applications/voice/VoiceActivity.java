@@ -51,7 +51,7 @@ public class VoiceActivity extends AppCompatActivity {
 
     protected String sn; // 纯离线合成SDK授权码；离在线合成SDK免费，没有此参数
     // TtsMode.MIX; 离在线融合，在线优先； TtsMode.ONLINE 纯在线； TtsMode.OFFLINE 纯离线合成，需要纯离线SDK
-    protected TtsMode ttsMode = IOfflineResourceConst.DEFAULT_OFFLINE_TTS_MODE;
+    protected TtsMode ttsMode = TtsMode.ONLINE;
 
     private ImageView voiceAssistantLogo;
 
@@ -81,6 +81,7 @@ public class VoiceActivity extends AppCompatActivity {
         // 启动唤醒
         Map<String, Object> params = new HashMap<>();
         params.put(SpeechConstant.WP_WORDS_FILE, "assets:///WakeUp.bin");
+        params.put(SpeechConstant.APP_ID, "18118235");
         myWakeup.start(params);
 
         // 语音识别部分
@@ -210,7 +211,7 @@ public class VoiceActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<>();
         // 以下参数均为选填
         // 设置在线发声音人： 0 普通女声（默认） 1 普通男声 3 情感男声<度逍遥> 4 情感儿童声<度丫丫>, 其它发音人见文档
-        params.put(SpeechSynthesizer.PARAM_SPEAKER, "4");
+        params.put(SpeechSynthesizer.PARAM_SPEAKER, "0");
         // 设置合成的音量，0-15 ，默认 5
         params.put(SpeechSynthesizer.PARAM_VOLUME, "15");
         // 设置合成的语速，0-15 ，默认 5
