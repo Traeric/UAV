@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.eric.uav.R;
 import com.eric.uav.Settings;
@@ -22,6 +23,8 @@ import com.eric.uav.applications.ApplicationActivity;
 import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
+import com.eric.uav.profile.info.ProfileInfoActivity;
+import com.eric.uav.settings.SettingsActivity;
 import com.eric.uav.utils.Dialog;
 import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
@@ -40,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private RoundButton detailInfo;
     private RelativeLayout lookDetailLayout;
+    private RelativeLayout setting;
 
     private SharedPreferences sharedPreferences;
 
@@ -80,8 +84,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         detailInfo = findViewById(R.id.look_detail_profile_info);
         View.OnClickListener onClickListener = view -> startActivity(new Intent(ProfileActivity.this, ProfileInfoActivity.class));
         detailInfo.setOnClickListener(onClickListener);
+
         lookDetailLayout = findViewById(R.id.look_profile);
         lookDetailLayout.setOnClickListener(onClickListener);
+
+        setting = findViewById(R.id.profile_setting);
+        setting.setOnClickListener(this);
 
         moreFuncBtn = findViewById(R.id.more_func);
         moreFuncBtn.setOnClickListener(this);
@@ -117,6 +125,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 Intent intent = new Intent(ProfileActivity.this, ApplicationActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
+            }
+            break;
+            case R.id.profile_setting: {
+                startActivity(new Intent(this, SettingsActivity.class));
             }
             break;
             case R.id.logout_lin:

@@ -1,4 +1,4 @@
-package com.eric.uav.profile;
+package com.eric.uav.profile.info;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

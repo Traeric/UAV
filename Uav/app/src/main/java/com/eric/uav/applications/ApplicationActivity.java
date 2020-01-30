@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.eric.uav.R;
@@ -28,6 +29,7 @@ import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
+import com.eric.uav.settings.SettingsActivity;
 import com.eric.uav.utils.Dialog;
 import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
@@ -44,6 +46,7 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private ImageView voiceBtn;
     private ImageView lookAlbum;
     private ImageView blueTooth;
+    private ImageView settings;
 
     private TextView moreFuncBtn;
     private LinearLayout logoutBtn;
@@ -51,6 +54,8 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
     private RadiusImageView bannerVideo;
     private RadiusImageView bannerAlbum;
+    private RadiusImageView bannerSendAt;
+    private RadiusImageView bannerSettings;
 
     private SharedPreferences sharedPreferences;
 
@@ -97,11 +102,20 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
         lookAlbum = findViewById(R.id.look_Album);
         lookAlbum.setOnClickListener(this);
 
+        settings = findViewById(R.id.app_setting);
+        settings.setOnClickListener(this);
+
         bannerVideo = findViewById(R.id.banner_video);
         bannerVideo.setOnClickListener(this);
 
         bannerAlbum = findViewById(R.id.banner_album);
         bannerAlbum.setOnClickListener(this);
+
+        bannerSendAt = findViewById(R.id.banner_sendAt);
+        bannerSendAt.setOnClickListener(this);
+
+        bannerSettings = findViewById(R.id.banner_settings);
+        bannerSettings.setOnClickListener(this);
 
         blueTooth = findViewById(R.id.link_bluetooth);
         blueTooth.setOnClickListener(this);
@@ -131,16 +145,23 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
                 overridePendingTransition(0, 0);
             }
             break;
-            case R.id.check_uav_video: {
+            case R.id.check_uav_video:
+            case R.id.banner_video: {
                 // 跳转到航拍画面的Activity
                 Intent intent = new Intent(ApplicationActivity.this, UavVideoActivity.class);
                 startActivity(intent);
             }
             break;
-            case R.id.send_at: {
+            case R.id.send_at:
+            case R.id.banner_sendAt: {
                 // 跳转到发送指令的界面
                 Intent intent = new Intent(ApplicationActivity.this, SendATActivity.class);
                 startActivity(intent);
+            }
+            break;
+            case R.id.app_setting:
+            case R.id.banner_settings: {
+                startActivity(new Intent(ApplicationActivity.this, SettingsActivity.class));
             }
             break;
             case R.id.logout_lin: {
@@ -196,18 +217,9 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
                 startActivity(intent);
             }
             break;
-            case R.id.look_Album: {
-                startActivity(new Intent(ApplicationActivity.this, LookAlbumActivity.class));
-            }
-            break;
-            case R.id.banner_video: {
-                // 跳转到航拍画面的Activity
-                startActivity(new Intent(ApplicationActivity.this, UavVideoActivity.class));
-            }
-            break;
+            case R.id.look_Album:
             case R.id.banner_album: {
-                Intent intent = new Intent(ApplicationActivity.this, LookAlbumActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(ApplicationActivity.this, LookAlbumActivity.class));
             }
             break;
             case R.id.link_bluetooth: {

@@ -1,11 +1,14 @@
 package com.eric.uav.applications.voice;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
 import com.baidu.speech.asr.SpeechConstant;
@@ -33,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class VoiceActivity extends AppCompatActivity {
     private MyWakeup myWakeup;
@@ -211,11 +215,12 @@ public class VoiceActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<>();
         // 以下参数均为选填
         // 设置在线发声音人： 0 普通女声（默认） 1 普通男声 3 情感男声<度逍遥> 4 情感儿童声<度丫丫>, 其它发音人见文档
-        params.put(SpeechSynthesizer.PARAM_SPEAKER, "0");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        params.put(SpeechSynthesizer.PARAM_SPEAKER, Objects.requireNonNull(sp.getString("voiceStyle", "0")));
         // 设置合成的音量，0-15 ，默认 5
-        params.put(SpeechSynthesizer.PARAM_VOLUME, "15");
+        params.put(SpeechSynthesizer.PARAM_VOLUME, Objects.requireNonNull(sp.getString("volumeSet", "5")));
         // 设置合成的语速，0-15 ，默认 5
-        params.put(SpeechSynthesizer.PARAM_SPEED, "5");
+        params.put(SpeechSynthesizer.PARAM_SPEED, Objects.requireNonNull(sp.getString("speedSet", "5")));
 
         params.put(SpeechSynthesizer.PARAM_MIX_MODE, SpeechSynthesizer.MIX_MODE_HIGH_SPEED_SYNTHESIZE);
         // 该参数设置为TtsMode.MIX生效。即纯在线模式不生效。

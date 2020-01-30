@@ -1,0 +1,43 @@
+<resources>
+    <!-- 音色设置 -->
+    <string-array name="timbre_title">
+        <item>普通女声</item>
+        <item>普通男声</item>
+        <item>情感男声</item>
+        <item>情感儿童声</item>
+    </string-array>
+    <string-array name="timbre_value">
+        <item>0</item>
+        <item>1</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- 音量设置 -->
+    <string-array name="volume_title">
+        <item>小声</item>
+        <item>正常</item>
+        <item>大声</item>
+        <item>超大声</item>
+    </string-array>
+    <string-array name="volume_value">
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+    </string-array>
+
+    <!-- 语速设置 -->
+    <string-array name="speed_title">
+        <item>慢速</item>
+        <item>正常</item>
+        <item>快速</item>
+        <item>超快速</item>
+    </string-array>
+    <string-array name="speed_value">
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+    </string-array>
+</resources>
