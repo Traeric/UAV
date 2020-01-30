@@ -3,6 +3,7 @@ package com.eric.uav.profile;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -40,10 +41,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TextView moreFuncBtn;
     private LinearLayout logoutBtn;
     private LinearLayout scanScreen;
+    private LinearLayout openAdmin;
+
+    private PopupWindow popupWindow;
 
     private RoundButton detailInfo;
     private RelativeLayout lookDetailLayout;
     private RelativeLayout setting;
+
+    private RelativeLayout profileAdmin;
+    private RelativeLayout profileScan;
 
     private SharedPreferences sharedPreferences;
 
@@ -93,6 +100,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         moreFuncBtn = findViewById(R.id.more_func);
         moreFuncBtn.setOnClickListener(this);
+
+        profileAdmin = findViewById(R.id.profile_admin);
+        profileAdmin.setOnClickListener(this);
+
+        profileScan = findViewById(R.id.profile_scan);
+        profileScan.setOnClickListener(this);
 
         setProfile();
     }
@@ -154,7 +167,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             break;
             case R.id.more_func: {
                 View moreFuncView = getLayoutInflater().inflate(R.layout.popupwindow_more_func, null);
-                PopupWindow popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
                 popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
                 popupWindow.showAsDropDown(moreFuncBtn);
@@ -173,11 +186,26 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 scanScreen = moreFuncView.findViewById(R.id.scan_btn);
                 scanScreen.setOnClickListener(this);
+
+                openAdmin = moreFuncView.findViewById(R.id.open_admin);
+                openAdmin.setOnClickListener(this);
             }
             break;
-            case R.id.scan_btn: {
+            case R.id.scan_btn:
+            case R.id.profile_scan: {
                 // 开始二维码扫描
                 startActivity(new Intent(this, CaptureActivity.class));
+            }
+            break;
+            case R.id.open_admin:
+            case R.id.profile_admin: {
+                if (popupWindow != null) {
+                    popupWindow.dismiss();
+                }
+                Intent intent = new Intent();
+                intent.setData(Uri.parse("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/index/"));
+                intent.setAction(Intent.ACTION_VIEW);
+                startActivity(intent);
             }
             break;
             default:

@@ -103,7 +103,86 @@
                 android:layout_below="@+id/top_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
+                android:orientation="vertical"
+                android:background="#fff">
+                <!-- 后台管理 -->
+                <RelativeLayout
+                    android:elevation="8dp"
+                    android:id="@+id/profile_admin"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/profile_admin_shape"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+                    <ImageView
+                        android:id="@+id/profile_admin_icon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/profile_admin"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_toRightOf="@+id/profile_admin_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="后台管理"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="#fff"/>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="15dp"
+                        android:src="@drawable/goto_target"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+                <!-- 扫码登录 -->
+                <RelativeLayout
+                    android:layout_marginBottom="10dp"
+                    android:elevation="8dp"
+                    android:id="@+id/profile_scan"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/profile_scan_shape"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+                    <ImageView
+                        android:id="@+id/profile_scan_icon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/profile_scan_img"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_toRightOf="@+id/profile_scan_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="扫描二维码登录网站"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="#fff"/>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="15dp"
+                        android:src="@drawable/goto_target"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/profile_line_2"
+                android:layout_below="@+id/profile_line_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="#fff"
                 android:layout_marginTop="10dp"
                 android:weightSum="3">
@@ -115,9 +194,10 @@
                     android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/user_profile"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginRight="5dp">
                     <ImageView
                         android:id="@+id/profile_look"
@@ -138,6 +218,7 @@
                 </RelativeLayout>
                 <!-- 设置 -->
                 <RelativeLayout
+                    android:layout_marginBottom="10dp"
                     android:elevation="8dp"
                     android:layout_weight="1"
                     android:id="@+id/profile_setting"
@@ -145,7 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/look_profile"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/setting_bg">
@@ -167,13 +248,14 @@
                 </RelativeLayout>
                 <!-- 退出登录 -->
                 <RelativeLayout
+                    android:layout_marginBottom="10dp"
                     android:elevation="8dp"
                     android:id="@+id/logout"
                     android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_setting"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/logout_bg"

@@ -488,6 +488,7 @@ def login_by_account(request):
             if user.password == password:
                 # 登录成功
                 request.session["user_key"] = str(uuid.uuid1())
+                request.session["logined"] = True
                 # 存到用户字典中
                 settings.USER_INFO[request.session["user_key"]] = user
                 path = reverse(viewname="index")

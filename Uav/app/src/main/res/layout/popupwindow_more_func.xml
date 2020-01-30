@@ -59,10 +59,41 @@
                 android:background="#5d5d5d" />
 
             <LinearLayout
+                android:layout_below="@+id/scan_line"
+                android:id="@+id/open_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="13dp"
+                    android:src="@drawable/more_func_admin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="后台管理"
+                    android:textColor="#fff"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/admin_line"
+                android:layout_width="80dp"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/open_admin"
+                android:layout_marginLeft="40dp"
+                android:background="#5d5d5d" />
+
+            <LinearLayout
                 android:id="@+id/logout_lin"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_below="@+id/scan_line">
+                android:layout_below="@+id/admin_line">
 
                 <ImageView
                     android:layout_width="14dp"

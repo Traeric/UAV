@@ -3,11 +3,9 @@ package com.eric.uav.homepage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +18,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.eric.uav.R;
 import com.eric.uav.Settings;
@@ -29,8 +31,8 @@ import com.eric.uav.applications.uav_video.UavVideoActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.map.MapActivity;
 import com.eric.uav.profile.ProfileActivity;
-import com.eric.uav.zxing.android.CaptureActivity;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.zxing.android.CaptureActivity;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -49,10 +51,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private TextView moreFuncBtn;
     private LinearLayout logoutBtn;
     private LinearLayout scanScreen;
+    private LinearLayout openAdmin;
 
     private WebView newListPanel;
 
     private SharedPreferences sharedPreferences;
+
+    private PopupWindow popupWindow;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -147,7 +152,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             break;
             case R.id.more_func: {
                 View moreFuncView = getLayoutInflater().inflate(R.layout.popupwindow_more_func, null);
-                PopupWindow popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
                 popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
                 popupWindow.showAsDropDown(moreFuncBtn);
@@ -166,11 +171,22 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                 scanScreen = moreFuncView.findViewById(R.id.scan_btn);
                 scanScreen.setOnClickListener(this);
+
+                openAdmin = moreFuncView.findViewById(R.id.open_admin);
+                openAdmin.setOnClickListener(this);
             }
             break;
             case R.id.scan_btn: {
                 // 开始二维码扫描
                 startActivity(new Intent(this, CaptureActivity.class));
+            }
+            break;
+            case R.id.open_admin: {
+                popupWindow.dismiss();
+                Intent intent = new Intent();
+                intent.setData(Uri.parse("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/index/"));
+                intent.setAction(Intent.ACTION_VIEW);
+                startActivity(intent);
             }
             break;
             default:

@@ -3,6 +3,7 @@ package com.eric.uav.applications;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -51,6 +52,9 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
     private TextView moreFuncBtn;
     private LinearLayout logoutBtn;
     private LinearLayout scanScreen;
+    private LinearLayout openAdmin;
+
+    private PopupWindow popupWindow;
 
     private RadiusImageView bannerVideo;
     private RadiusImageView bannerAlbum;
@@ -186,7 +190,7 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
             break;
             case R.id.more_func: {
                 View moreFuncView = getLayoutInflater().inflate(R.layout.popupwindow_more_func, null);
-                PopupWindow popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
                 popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
                 popupWindow.showAsDropDown(moreFuncBtn);
@@ -205,11 +209,22 @@ public class ApplicationActivity extends AppCompatActivity implements View.OnCli
 
                 scanScreen = moreFuncView.findViewById(R.id.scan_btn);
                 scanScreen.setOnClickListener(this);
+
+                openAdmin = moreFuncView.findViewById(R.id.open_admin);
+                openAdmin.setOnClickListener(this);
             }
             break;
             case R.id.scan_btn: {
                 // 开始二维码扫描
                 startActivity(new Intent(this, CaptureActivity.class));
+            }
+            break;
+            case R.id.open_admin: {
+                popupWindow.dismiss();
+                Intent intent = new Intent();
+                intent.setData(Uri.parse("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/index/"));
+                intent.setAction(Intent.ACTION_VIEW);
+                startActivity(intent);
             }
             break;
             case R.id.yuyingshibie: {
