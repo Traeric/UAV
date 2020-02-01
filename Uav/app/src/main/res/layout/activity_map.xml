@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     tools:context=".map.MapActivity">
 
@@ -25,36 +25,151 @@
             <com.amap.api.maps.MapView
                 android:id="@+id/map"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="60dp">
-            </com.amap.api.maps.MapView>
-            <!-- 控制按钮 -->
+                android:layout_height="match_parent" />
+
+            <!-- 悬浮窗显示的内容 -->
             <LinearLayout
+                android:id="@+id/ball_content"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:gravity="center">
-                <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
                     android:id="@+id/current_location"
-                    style="@style/RoundButton.Auto"
-                    android:text="获取当前定位" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toLeftOf="@+id/current_location_ball"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:text="获取当前位置"
+                        android:textColor="#67C23A"
+                        android:textSize="15sp"
+                        android:shadowColor="#ff000000"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="3"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/current_location_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/float_current_position"
+                        android:backgroundTint="#67C23A"
+                        android:clickable="true"
+                        app:borderWidth="0dp"
+                        app:elevation="5dp"
+                        app:fabSize="mini" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/uav_position"
-                    app:rb_borderColor="@color/success"
-                    android:textColor="@color/success"
-                    style="@style/RoundButton.Auto"
-                    android:layout_marginLeft="10dp"
-                    android:text="切换到无人机定位" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toLeftOf="@+id/uav_position_ball"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:text="切换到无人机定位"
+                        android:textColor="#74d0fe"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:shadowColor="#ff000000"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="3" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/uav_position_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:clickable="true"
+                        app:borderWidth="0dp"
+                        app:elevation="5dp"
+                        android:src="@drawable/float_uav_position"
+                        android:backgroundTint="#74d0fe"
+                        app:fabSize="mini" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/phone_position"
-                    app:rb_borderColor="@color/warn"
-                    android:textColor="@color/warn"
-                    style="@style/RoundButton.Auto"
-                    android:layout_marginLeft="10dp"
-                    android:text="切换到手机定位" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="38dp"
+                        android:layout_toLeftOf="@+id/phone_position_ball"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:text="切换到手机定位"
+                        android:textColor="#e3a4e6"
+                        android:textSize="15sp"
+                        android:elevation="50dp"
+                        android:textStyle="bold"
+                        android:shadowColor="#ff000000"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="3" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/phone_position_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="80dp"
+                        android:clickable="true"
+                        app:borderWidth="0dp"
+                        app:elevation="5dp"
+                        android:src="@drawable/float_phone_position"
+                        android:backgroundTint="#e3a4e6"
+                        app:fabSize="mini" />
+                </LinearLayout>
             </LinearLayout>
+            <!-- 悬浮窗 -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatBall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#F56C6C"
+                android:clickable="true"
+                android:elevation="50dp"
+                app:borderWidth="0dp"
+                android:src="@drawable/open_float_btn"
+                app:rippleColor="#e7d16b" />
         </RelativeLayout>
 
         <RelativeLayout

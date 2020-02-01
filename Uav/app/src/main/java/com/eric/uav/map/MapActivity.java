@@ -1,6 +1,8 @@
 package com.eric.uav.map;
 
 import android.Manifest;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,10 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +20,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdate;
@@ -43,17 +46,13 @@ import com.eric.uav.profile.ProfileActivity;
 import com.eric.uav.utils.Dialog;
 import com.eric.uav.utils.MarkerUtils;
 import com.eric.uav.zxing.android.CaptureActivity;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener, AMap.OnMapClickListener {
-    private RoundButton getLocation;
-    private RoundButton phonePosition;
-    private RoundButton uavPosition;
-
     private MapView mapView;
     private MyLocationStyle myLocationStyle;
     private AMap aMap;
@@ -78,6 +77,16 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     // 点击过的位置
     private List<LatLng> clickLatLngList = new ArrayList<>();
     private Marker uavMarker;   // 无人机的marker
+
+    // 悬浮球相关内容
+    private FloatingActionButton floatBall;
+    private LinearLayout ballContent;
+    private int[] contentBallId = new int[]{R.id.phone_position_ball,  R.id.uav_position_ball, R.id.current_location_ball};
+    private FloatingActionButton[] contentBall = new FloatingActionButton[contentBallId.length];
+    private int[] contentItemId = new int[]{R.id.phone_position, R.id.uav_position, R.id.current_location};
+    private LinearLayout[] contentItem = new LinearLayout[contentItemId.length];
+    private AnimatorSet[] addBillTranslate = new AnimatorSet[contentItemId.length];
+    private boolean isAdd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,19 +133,45 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         // 设置地图点击事件
         aMap.setOnMapClickListener(this);
 
-        // 获取定位信息
-        getLocation = findViewById(R.id.current_location);
-        getLocation.setOnClickListener(this);
-        // 切换到手机定位
-        phonePosition = findViewById(R.id.phone_position);
-        phonePosition.setOnClickListener(this);
-        // 切换到无人机定位
-        uavPosition = findViewById(R.id.uav_position);
-        uavPosition.setOnClickListener(this);
-
         moreFuncBtn = findViewById(R.id.more_func);
         moreFuncBtn.setOnClickListener(this);
+
+        // 悬浮球相关
+        initView();
+        bindEvents();
     }
+
+
+    /**
+     * 初始化悬浮球相关变量
+     */
+    public void initView() {
+        floatBall = findViewById(R.id.floatBall);
+        ballContent = findViewById(R.id.ball_content);
+        for (int i = 0; i < contentBallId.length; i++) {
+            contentBall[i] = findViewById(contentBallId[i]);
+        }
+
+        for (int i = 0; i < contentItemId.length; i++) {
+            contentItem[i] = findViewById(contentItemId[i]);
+        }
+
+        for (int i = 0; i < addBillTranslate.length; i++) {
+            addBillTranslate[i] = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.add_bill_anim);
+        }
+    }
+
+
+    /**
+     * 添加悬浮窗的动画
+     */
+    private void bindEvents() {
+        floatBall.setOnClickListener(this);
+        for (int i = 0; i < contentBallId.length; i++) {
+            contentBall[i].setOnClickListener(this);
+        }
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -149,7 +184,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 overridePendingTransition(0, 0);
             }
             break;
-            case R.id.current_location: {
+            case R.id.current_location_ball: {
                 Dialog.toastWithoutAppName(MapActivity.this,
                         "当前位置：\n经度：" + aMap.getMyLocation().getLongitude() + "\n纬度：" + aMap.getMyLocation().getLatitude());
             }
@@ -229,7 +264,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
             }
             break;
-            case R.id.phone_position: {
+            case R.id.phone_position_ball: {
                 // 获取当前定位
                 // 经度
                 double longitude = aMap.getMyLocation().getLongitude();
@@ -240,7 +275,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 aMap.moveCamera(mCameraUpdate);
             }
             break;
-            case R.id.uav_position: {
+            case R.id.uav_position_ball: {
                 if (uavMarker != null) {
                     // 如果已经绘制过了，先清除上一次绘制的位置
                     uavMarker.remove();
@@ -254,6 +289,20 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 // 绘制marker
                 uavMarker = MarkerUtils.drawUavMarker(latLng, MapActivity.this, aMap);
                 clickLatLngList.add(0, latLng);
+            }
+            break;
+            case R.id.floatBall: {
+
+                floatBall.setImageResource(isAdd ? R.drawable.open_float_btn : R.drawable.close_float_btn);
+                isAdd = !isAdd;
+                ballContent.setVisibility(isAdd ? View.VISIBLE : View.GONE);
+                if (isAdd) {
+                    for (int i = 0; i < addBillTranslate.length; i++) {
+                        addBillTranslate[i].setTarget(contentItem[i]);
+                        addBillTranslate[i].setStartDelay(150 * i);
+                        addBillTranslate[i].start();
+                    }
+                }
             }
             break;
             default:
@@ -299,6 +348,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         uiSettings.setScaleControlsEnabled(true);
         //显示默认的定位按钮
         uiSettings.setMyLocationButtonEnabled(true);
+        // 不显示缩放按钮
+        uiSettings.setZoomControlsEnabled(false);
     }
 
     /**
