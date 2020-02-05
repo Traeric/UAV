@@ -4,19 +4,22 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eric.uav.R;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.utils.VideoUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -122,6 +125,11 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
                 if (file.getFile().getAbsolutePath().endsWith(".png")) {
                     file.setBitmap(BitmapFactory.decodeFile(file.getFile().getAbsolutePath()));
                 }
+                // 如果是视频
+                if (file.getFile().getAbsolutePath().endsWith(".mp4")) {
+                    file.setBitmap(VideoUtils.getInstance().getVideoThumbnail(file.getFile().getAbsolutePath(),
+                            720, 1280, MediaStore.Images.Thumbnails.MINI_KIND));
+                }
                 // 从列表中移除掉这个文件
                 files.remove(file);
             }
@@ -171,6 +179,7 @@ public class LookAlbumActivity extends AppCompatActivity implements View.OnClick
 
     /**
      * 接收Activity的返回
+     *
      * @param requestCode
      * @param resultCode
      * @param data

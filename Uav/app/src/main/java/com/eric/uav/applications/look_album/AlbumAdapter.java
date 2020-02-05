@@ -4,11 +4,16 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +27,7 @@ import android.widget.VideoView;
 import com.eric.uav.R;
 import com.eric.uav.applications.look_album.image_viewer.ImageViewerActivity;
 import com.eric.uav.applications.look_album.video_viewer.VideoViewerActivity;
+import com.eric.uav.utils.VideoUtils;
 
 import java.util.List;
 
@@ -45,8 +51,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
     @Override
     public void onBindViewHolder(@NonNull GridViewHolder gridViewHolder, int i) {
         if (list.get(i).getFile().getAbsolutePath().endsWith(".mp4")) {
+            // 设置视频地址
             gridViewHolder.videoView.setVideoPath(list.get(i).getFile().getAbsolutePath());
-            gridViewHolder.videoView.setBackgroundResource(R.drawable.video_scale);
+            // 设置缩略图
+            gridViewHolder.videoView.setBackground(new BitmapDrawable(context.getResources(), list.get(i).getBitmap()));
             // 禁止无法播放视频的弹窗
             gridViewHolder.videoView.setOnErrorListener((MediaPlayer mp, int what, int extra) -> {
                 gridViewHolder.videoView.stopPlayback(); //播放异常，则停止播放，防止弹窗使界面阻塞
