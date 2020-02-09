@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -38,14 +39,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private RelativeLayout applicationActivityView;
     private RelativeLayout logout;
 
-    private TextView moreFuncBtn;
-    private LinearLayout logoutBtn;
-    private LinearLayout scanScreen;
-    private LinearLayout openAdmin;
 
-    private PopupWindow popupWindow;
-
-    private RoundButton detailInfo;
+    private TextView detailInfo;
     private RelativeLayout lookDetailLayout;
     private RelativeLayout setting;
 
@@ -61,8 +56,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         sharedPreferences = getSharedPreferences("register", MODE_PRIVATE);
 
-        // 初始化样式
-        ((TextView) findViewById(R.id.title)).setText("个人中心");
         findViewById(R.id.homepage_activity_item).setBackgroundResource(R.drawable.home_page);
         findViewById(R.id.map_activity_item).setBackgroundResource(R.drawable.map);
         findViewById(R.id.application_activity_item).setBackgroundResource(R.drawable.other);
@@ -72,10 +65,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         ((TextView) findViewById(R.id.map_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.application_activity_item_tips)).setTextColor(getResources().getColor(R.color.no_select_color));
         ((TextView) findViewById(R.id.personnal_activity_item_tips)).setTextColor(getResources().getColor(R.color.select_color));
-        // 加载头像
-        Glide.with(this).load("http://" + Settings.ServerHost + ":" +
-                Settings.ServerPort + sharedPreferences.getString("avatar", "/static/assets/img/profile.jpg"))
-                .into((RadiusImageView) findViewById(R.id.top_avatar));
 
         // 底部栏按钮
         homepageActivity = findViewById(R.id.homepage_activity);
@@ -88,8 +77,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(this);
 
-        detailInfo = findViewById(R.id.look_detail_profile_info);
         View.OnClickListener onClickListener = view -> startActivity(new Intent(ProfileActivity.this, ProfileInfoActivity.class));
+        detailInfo = findViewById(R.id.look_detail_profile_info);
         detailInfo.setOnClickListener(onClickListener);
 
         lookDetailLayout = findViewById(R.id.look_profile);
@@ -98,9 +87,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setting = findViewById(R.id.profile_setting);
         setting.setOnClickListener(this);
 
-        moreFuncBtn = findViewById(R.id.more_func);
-        moreFuncBtn.setOnClickListener(this);
-
         profileAdmin = findViewById(R.id.profile_admin);
         profileAdmin.setOnClickListener(this);
 
@@ -108,7 +94,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         profileScan.setOnClickListener(this);
 
         setProfile();
+
+        setTopIconClickEvent();
     }
+
+
+    public void setTopIconClickEvent() {
+        findViewById(R.id.scan_icon).setOnClickListener(this);
+        findViewById(R.id.admin_icon).setOnClickListener(this);
+        findViewById(R.id.logout_icon).setOnClickListener(this);
+    }
+
 
     public void setProfile() {
         ((TextView) findViewById(R.id.user_info_nick)).setText(sharedPreferences.getString("nick", "游客"));
@@ -144,8 +140,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(this, SettingsActivity.class));
             }
             break;
-            case R.id.logout_lin:
-            case R.id.logout: {
+            case R.id.logout:
+            case R.id.logout_icon: {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
                 builder.setTitle("确认退出？");
                 builder.setIcon(R.drawable.profile_logout);
@@ -165,43 +161,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 builder.show();
             }
             break;
-            case R.id.more_func: {
-                View moreFuncView = getLayoutInflater().inflate(R.layout.popupwindow_more_func, null);
-                popupWindow = new PopupWindow(moreFuncView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                popupWindow.setOutsideTouchable(true);    // 点击其他区域能够隐藏popupWindow
-                popupWindow.setFocusable(true);    // 设置点击一下出现，再点击隐藏的效果
-                popupWindow.showAsDropDown(moreFuncBtn);
-                // 设置阴影
-                WindowManager.LayoutParams lp = ProfileActivity.this.getWindow().getAttributes();
-                lp.alpha = 0.8f;
-                ProfileActivity.this.getWindow().setAttributes(lp);
-                popupWindow.setOnDismissListener(() -> {
-                    WindowManager.LayoutParams lpDel = ProfileActivity.this.getWindow().getAttributes();
-                    lpDel.alpha = 1f;
-                    ProfileActivity.this.getWindow().setAttributes(lpDel);
-                });
 
-                logoutBtn = moreFuncView.findViewById(R.id.logout_lin);
-                logoutBtn.setOnClickListener(this);
-
-                scanScreen = moreFuncView.findViewById(R.id.scan_btn);
-                scanScreen.setOnClickListener(this);
-
-                openAdmin = moreFuncView.findViewById(R.id.open_admin);
-                openAdmin.setOnClickListener(this);
-            }
-            break;
-            case R.id.scan_btn:
+            case R.id.scan_icon:
             case R.id.profile_scan: {
                 // 开始二维码扫描
                 startActivity(new Intent(this, CaptureActivity.class));
             }
             break;
-            case R.id.open_admin:
+            case R.id.admin_icon:
             case R.id.profile_admin: {
-                if (popupWindow != null) {
-                    popupWindow.dismiss();
-                }
                 Intent intent = new Intent();
                 intent.setData(Uri.parse("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/index/"));
                 intent.setAction(Intent.ACTION_VIEW);

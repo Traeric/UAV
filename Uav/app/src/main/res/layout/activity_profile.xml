@@ -9,272 +9,304 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
-        <include
-            android:id="@+id/head"
-            layout="@layout/head" />
-
         <!-- 中间布局 -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/head"
-            android:layout_marginBottom="60dp">
+            android:layout_marginBottom="60dp"
+            android:background="#fff">
             <!-- 顶部背景 -->
             <RelativeLayout
                 android:id="@+id/top_bg"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@drawable/profile_bg">
-                <!-- 头像 -->
-                <LinearLayout
-                    android:id="@+id/avatar_wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/bg"
-                    android:layout_marginTop="50dp"
-                    android:gravity="center">
+                android:layout_height="200dp"
+                android:background="@drawable/profile_head_bg">
 
-                    <com.xuexiang.xui.widget.imageview.RadiusImageView
-                        android:id="@+id/user_info_avatar"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:clickable="true"
-                        android:src="@drawable/avatar"
-                        app:riv_border_color="#ececec"
-                        app:riv_border_width="5px"
-                        app:riv_is_circle="true"
-                        app:riv_selected_border_color="@color/xui_config_color_gray_4"
-                        app:riv_selected_border_width="2px"
-                        app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
-                </LinearLayout>
-                <!-- 用户简介 -->
-                <RelativeLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/avatar_wrap"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <!-- 昵称 -->
-                    <RelativeLayout
-                        android:id="@+id/nick_wrap"
+                    android:layout_height="60dp"
+                    android:gravity="right"
+                    android:layout_marginEnd="20dp"
+                    tools:ignore="RtlHardcoded">
+                    <ImageView
+                        android:id="@+id/scan_icon"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/scan_screen" />
+                    <ImageView
+                        android:id="@+id/admin_icon"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/more_func_admin" />
+                    <ImageView
+                        android:id="@+id/logout_icon"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/logout" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/profile_radius"
+                    android:elevation="3dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/user_info_nick"
+                        android:layout_height="wrap_content">
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/user_info_avatar"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:clickable="true"
+                            android:src="@drawable/avatar"
+                            app:riv_border_color="#ececec"
+                            app:riv_border_width="5px"
+                            app:riv_is_circle="true"
+                            app:riv_selected_border_color="@color/xui_config_color_gray_4"
+                            app:riv_selected_border_width="2px"
+                            app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Eric Jin"
-                            android:textSize="20sp"
-                            android:textColor="#fff"/>
-                    </RelativeLayout>
-                    <!-- 邮箱 -->
-                    <RelativeLayout
-                        android:id="@+id/email_wrap"
-                        android:layout_marginTop="5dp"
-                        android:layout_below="@+id/nick_wrap"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/user_info_nick"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Eric Jin"
+                                android:textColor="#000"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/user_info_email"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2789519045@qq.com"
+                                android:textColor="#000" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/look_detail_profile_info"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/user_info_email"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2789519045@qq.com"
-                            android:textColor="#80ffffff"/>
-                    </RelativeLayout>
-                    <!-- 查看详细信息按钮 -->
-                    <RelativeLayout
-                        android:layout_below="@+id/email_wrap"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/personnel_btn"
                         android:gravity="center"
-                        android:layout_marginTop="10dp">
-                        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
-                            android:id="@+id/look_detail_profile_info"
-                            style="@style/RoundButton.Auto"
-                            android:text="查看详情" />
-                    </RelativeLayout>
-                </RelativeLayout>
+                        android:text="个人主页"
+                        android:textColor="#fff" />
+                </LinearLayout>
             </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/profile_line_1"
-                android:layout_below="@+id/top_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#fff">
+                android:layout_below="@+id/top_bg"
+                android:background="#fff"
+                android:orientation="vertical">
                 <!-- 后台管理 -->
                 <RelativeLayout
-                    android:elevation="8dp"
                     android:id="@+id/profile_admin"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/profile_admin_shape"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:clickable="true"
+                    android:elevation="8dp">
+
                     <ImageView
                         android:id="@+id/profile_admin_icon"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/profile_admin"/>
+                        android:src="@drawable/profile_admin" />
+
                     <TextView
-                        android:textStyle="bold"
-                        android:layout_toRightOf="@+id/profile_admin_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="后台管理"
                         android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/profile_admin_icon"
                         android:gravity="center"
+                        android:text="后台管理"
+                        android:textColor="#fff"
                         android:textSize="16sp"
-                        android:textColor="#fff"/>
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
                         android:layout_margin="15dp"
-                        android:src="@drawable/goto_target"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@drawable/goto_target" />
                 </RelativeLayout>
                 <!-- 扫码登录 -->
                 <RelativeLayout
-                    android:layout_marginBottom="10dp"
-                    android:elevation="8dp"
                     android:id="@+id/profile_scan"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/profile_scan_shape"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:clickable="true"
+                    android:elevation="8dp">
+
                     <ImageView
                         android:id="@+id/profile_scan_icon"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/profile_scan_img"/>
+                        android:src="@drawable/profile_scan_img" />
+
                     <TextView
-                        android:textStyle="bold"
-                        android:layout_toRightOf="@+id/profile_scan_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="扫描二维码登录网站"
                         android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/profile_scan_icon"
                         android:gravity="center"
+                        android:text="扫描二维码登录网站"
+                        android:textColor="#fff"
                         android:textSize="16sp"
-                        android:textColor="#fff"/>
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
                         android:layout_margin="15dp"
-                        android:src="@drawable/goto_target"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@drawable/goto_target" />
                 </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/profile_line_2"
-                android:layout_below="@+id/profile_line_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#fff"
+                android:layout_below="@+id/profile_line_1"
                 android:layout_marginTop="10dp"
+                android:background="#fff"
                 android:weightSum="3">
                 <!-- 查看资料 -->
                 <RelativeLayout
-                    android:elevation="8dp"
-                    android:layout_weight="1"
                     android:id="@+id/look_profile"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/user_profile"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_weight="1"
+                    android:background="@drawable/user_profile"
+                    android:clickable="true"
+                    android:elevation="8dp">
+
                     <ImageView
                         android:id="@+id/profile_look"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/user_info"/>
+                        android:src="@drawable/user_info" />
+
                     <TextView
-                        android:textStyle="bold"
-                        android:layout_toRightOf="@+id/profile_look"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="资料"
                         android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/profile_look"
                         android:gravity="center"
+                        android:text="资料"
+                        android:textColor="#fff"
                         android:textSize="16sp"
-                        android:textColor="#fff"/>
+                        android:textStyle="bold" />
                 </RelativeLayout>
                 <!-- 设置 -->
                 <RelativeLayout
-                    android:layout_marginBottom="10dp"
-                    android:elevation="8dp"
-                    android:layout_weight="1"
                     android:id="@+id/profile_setting"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/look_profile"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/setting_bg">
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/setting_bg"
+                    android:clickable="true"
+                    android:elevation="8dp">
+
                     <ImageView
                         android:id="@+id/profile_setting_icon"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/setting"/>
+                        android:src="@drawable/setting" />
+
                     <TextView
-                        android:layout_toRightOf="@+id/profile_setting_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/profile_setting_icon"
                         android:text="设置"
                         android:textColor="#fff"
-                        android:textStyle="bold"
-                        android:layout_centerVertical="true"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
                 </RelativeLayout>
                 <!-- 退出登录 -->
                 <RelativeLayout
-                    android:layout_marginBottom="10dp"
-                    android:elevation="8dp"
                     android:id="@+id/logout"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_setting"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/logout_bg"
-                    android:layout_weight="1">
+                    android:clickable="true"
+                    android:elevation="8dp">
+
                     <ImageView
                         android:id="@+id/profile_logout_logo"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/profile_logout"/>
+                        android:src="@drawable/profile_logout" />
+
                     <TextView
-                        android:textColor="#fff"
-                        android:textStyle="bold"
-                        android:layout_toRightOf="@+id/profile_logout_logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="退出"
                         android:layout_centerVertical="true"
-                        android:textSize="16sp"/>
+                        android:layout_toRightOf="@+id/profile_logout_logo"
+                        android:text="退出"
+                        android:textColor="#fff"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

@@ -12,16 +12,9 @@
         android:layout_below="@+id/top_head">
 
         <RelativeLayout
-            android:id="@+id/bluetooth_line_1"
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
-            android:background="#090723" />
-
-        <RelativeLayout
             android:id="@+id/head"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/bluetooth_line_1"
             android:gravity="center"
             android:background="#090723">
 

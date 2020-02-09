@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    android:paddingTop="28dp"
     android:id="@+id/video_box"
     tools:context=".applications.look_album.video_viewer.VideoViewerActivity">
 

@@ -41,26 +41,18 @@
     </style>
 
     <style name="homepageTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#404040</item>
     </style>
 
     <style name="mapTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#404040</item>
     </style>
 
     <style name="profileTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#404040</item>
+        <item name="android:statusBarColor">#1089fe</item>
     </style>
 
     <style name="applicationsTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#404040</item>
     </style>
 
@@ -74,8 +66,6 @@
     </style>
 
     <style name="sendATTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#090723</item>
     </style>
 
@@ -86,33 +76,23 @@
     </style>
 
     <style name="voiceTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#344751</item>
     </style>
 
     <style name="profileInfoTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#344751</item>
     </style>
 
     <style name="lookAlbumTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#EEEEEE</item>
+        <item name="android:statusBarColor">#344751</item>
     </style>
 
     <style name="imageViewerTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#000</item>
     </style>
 
     <style name="blueToothTheme" parent="XUITheme.Phone">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">#000</item>
+        <item name="android:statusBarColor">#090723</item>
     </style>
 
     <style name="confirmLoginTheme" parent="XUITheme.Phone">

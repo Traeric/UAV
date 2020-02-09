@@ -6,12 +6,6 @@
     tools:context=".applications.send_at.SendATActivity">
 
     <RelativeLayout
-        android:id="@+id/send_at_line_1"
-        android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:background="#090723"/>
-    <RelativeLayout
-        android:layout_below="@+id/send_at_line_1"
         android:id="@+id/top_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
