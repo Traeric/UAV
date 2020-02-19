@@ -272,6 +272,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(HomePageActivity.this, LookAlbumActivity.class));
             }
             break;
+            case R.id.news_list: {
+                Dialog.toastWithoutAppName(this, "点击了");
+            }
+            break;
             default:
                 break;
         }
@@ -292,5 +296,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         });
         newListPanel.getSettings().setJavaScriptEnabled(true);    // 支持javascript
         newListPanel.loadUrl("http://" + Settings.ServerHost + ":" + Settings.ServerPort + "/userManage/news_list");
+
+        // 设置点击事件
+        newListPanel.setOnClickListener(this);
     }
 }

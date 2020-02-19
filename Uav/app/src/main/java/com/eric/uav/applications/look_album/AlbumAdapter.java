@@ -71,6 +71,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
                 Intent intent = new Intent(context, VideoViewerActivity.class);
                 DataTransform.videoSrc = list.get(i).getFile().getAbsolutePath();
                 DataTransform.file = list.get(i).getFile();
+                DataTransform.convertFile = list.get(i);
                 ((Activity) context).startActivityForResult(intent, DataTransform.DELETE_VIDEO);
                 ((Activity) context).overridePendingTransition(0, 0);
             });
@@ -84,6 +85,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.GridViewHold
                 Intent intent = new Intent(context, ImageViewerActivity.class);
                 DataTransform.imageBitmap = list.get(i).getBitmap();
                 DataTransform.file = list.get(i).getFile();
+                DataTransform.convertFile = list.get(i);
                 ((Activity) context).startActivityForResult(intent, DataTransform.DELETE_IMAGE);
                 ((Activity) context).overridePendingTransition(0, 0);
             });

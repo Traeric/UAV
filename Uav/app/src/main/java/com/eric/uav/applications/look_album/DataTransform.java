@@ -14,4 +14,6 @@ public class DataTransform {
     public static int DELETE_IMAGE = 100;
 
     public static int DELETE_VIDEO = 101;
+
+    public static ConvertFile convertFile;
 }
