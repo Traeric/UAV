@@ -6,7 +6,7 @@ urlpatterns = [
     url('^register/$', views.register),
     url('^login/$', views.login),
     url('^test/$', views.test),
-    url('^news_list/$', views.news_list),
+    url('^news_list/$', views.news_list, name="news_list"),
     url('^login_back/$', views.login_back, name="login_page"),
     url('^login_by_account/$', views.login_by_account, name="login_by_account"),
     url('^logout/$', views.logout, name="logout"),

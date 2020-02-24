@@ -96,8 +96,11 @@ def news_list(request):
     :param request:
     :return:
     """
+    # 获取页数
+    page = request.POST.get("page", "1")
     # 爬取链接
-    uav_url = "http://www.wrjzj.com/a/2.aspx"
+    uav_url = "http://www.wrjzj.com/a/2-%s.aspx" % page
+    print(uav_url)
     # 想要伪装的头部
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
@@ -138,9 +141,12 @@ def news_list(request):
         command = command_pattern.findall(item)
         item_dict['command'] = command[0]
         news_arr.append(item_dict)
-    return render(request, "remote_pages/news_list.html", {
-        "news_list": news_arr,
-    })
+    if request.method == "POST":
+        return HttpResponse(json.dumps(news_arr))
+    else:
+        return render(request, "remote_pages/news_list.html", {
+            "news_list": news_arr,
+        })
 
 
 def login_back(request):
@@ -321,8 +327,11 @@ def user_info_app(request):
     :return:
     """
     user_info = models.User.objects.get(id=request.GET.get("id"))
+    # 获取用户的关键字
+    key_words = models.VoiceAssistantKeyWord.objects.filter(id__in=user_info.key_words.split(","))
     return render(request, "remote_pages/user_info.html", {
         "user_info": user_info,
+        "key_words": key_words,
     })
 
 

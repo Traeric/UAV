@@ -1,24 +1,72 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Uav新闻页面</title>
     <link rel="stylesheet" href="{% static "plugins/layui/css/layui.css" %}">
+    <script src="{% static 'js/jquery.js' %}"></script>
     <style>
-        #wrap .item {border-bottom: 1px solid #f0f0f0; padding: 5px 0;}
-        #wrap .item:active {background-color: #ececec;}
-        #wrap .item .title {font-size: 16px; margin-bottom: 5px;}
-        #wrap .item .content {display: flex; justify-content: space-between;}
-        #wrap .item .content .image-item {margin-right: 5px;}
-        #wrap .item .content .image-item img {height: 100px; width: 160px; border-radius: 8px; overflow: hidden;}
-        #wrap .item .content .right .summary {color: #898989; margin-bottom: 10px;}
-        #wrap .item .info {display: flex; justify-content: space-between; align-items: center;}
-        #wrap .item .info .right {display: inline-block;}
-        #wrap .item .time i {color: #FF5722;}
-        #wrap .item .right .view {margin-right: 10px;}
-        #wrap .item .info .right .view i {color: #5FB878;}
-        #wrap .item .info .right .comment i {color: #01AAED;}
+        #wrap .item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 5px;
+        }
+
+        #wrap .item:active {
+            background-color: #ececec;
+        }
+
+        #wrap .item .title {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        #wrap .item .content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #wrap .item .content .image-item {
+            margin-right: 5px;
+        }
+
+        #wrap .item .content .image-item img {
+            height: 100px;
+            width: 160px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #wrap .item .content .right .summary {
+            color: #898989;
+            margin-bottom: 10px;
+        }
+
+        #wrap .item .info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #wrap .item .info .right {
+            display: inline-block;
+        }
+
+        #wrap .item .time i {
+            color: #FF5722;
+        }
+
+        #wrap .item .right .view {
+            margin-right: 10px;
+        }
+
+        #wrap .item .info .right .view i {
+            color: #5FB878;
+        }
+
+        #wrap .item .info .right .comment i {
+            color: #01AAED;
+        }
     </style>
 </head>
 <body>
@@ -57,5 +105,81 @@
         </div>
     {% endfor %}
 </div>
+<script>
+    let CURRENTPAGE = 1;
+    let REQUESTDATA = false;
+    $(() => {
+        $(window).scroll(() => {
+            // 获取当前窗口的高度
+            let currentWin = document.scrollingElement.clientHeight;
+            // 获取滚动条在Y轴的滚动距离
+            let scrollTop = document.scrollingElement.scrollTop;
+            // dom的高度
+            let domHeight = document.scrollingElement.scrollHeight;
+            // 检查是否到底部
+            if (!REQUESTDATA && scrollTop > currentWin && scrollTop + currentWin + 10 >= domHeight) {
+                REQUESTDATA = true;   // 表示正在请求数据
+                // 添加加载提示
+                $("#wrap").append(`
+                    <div id="load" style='height: 50px; line-height:50px; text-align: center; vertical-align: baseline;'>
+                        <img alt="NO IMG" src="{% static 'images/load.gif' %}" width="50" height="50">
+                        <span style="color: #aaa;">加载中...</span>
+                    </div>
+                `);
+                // 加载数据
+                $.ajax({
+                    url: "{% url 'news_list' %}",
+                    type: "post",
+                    data: {
+                        "page": ++CURRENTPAGE,
+                    },
+                    dataType: "JSON",
+                    success(args) {
+                        // 删除加载数据的提示
+                        $("#load").remove();
+                        // 添加数据
+                        for (let item of args) {
+                            $("#wrap").append(`
+                                <div class="item">
+                                    <div class="title">
+                                        ${item.title}
+                                    </div>
+                                    <div class="content">
+                                        <div class="image-item">
+                                            <img src="${item.image}" alt="NO IMG">
+                                        </div>
+                                        <div class="right">
+                                            <div class="summary">
+                                                ${item.summary}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <div class="time">
+                                            <i class="layui-icon layui-icon-date"></i>
+                                            <span>${item.date}</span>
+                                        </div>
+                                        <div class="right">
+                                            <span class="view">
+                                                <i class="layui-icon layui-icon-star"></i>
+                                                <span>${item.view}</span>
+                                            </span>
+                                            <span class="comment">
+                                                <i class="layui-icon layui-icon-reply-fill"></i>
+                                                <span>${item.command}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `);
+                        }
+                        // 允许加载数据
+                        REQUESTDATA = false;
+                    },
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>
