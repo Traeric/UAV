@@ -100,7 +100,6 @@ def news_list(request):
     page = request.POST.get("page", "1")
     # 爬取链接
     uav_url = "http://www.wrjzj.com/a/2-%s.aspx" % page
-    print(uav_url)
     # 想要伪装的头部
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
@@ -120,6 +119,11 @@ def news_list(request):
         item_dict = {
             "title": title[0]
         }
+        # 获取文章的链接
+        article_pattern = re.compile(
+            r'<div class="title">.*?<a .*?>.*?</a>.*?<a href="(.*?)" title=".*?">.*?</a>.*?</div>', re.S)
+        article_link = article_pattern.findall(item)
+        item_dict["link"] = article_link[0]
         # 匹配图片
         image_pattern = re.compile(r'<img src="(.*?)" .*?/>', re.S)
         image = image_pattern.findall(item)
@@ -147,6 +151,37 @@ def news_list(request):
         return render(request, "remote_pages/news_list.html", {
             "news_list": news_arr,
         })
+
+
+def article_content(request):
+    if request.method == "POST":
+        link = request.POST.get("link")
+        # 获取文章数据
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
+                          '(KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+        }
+        # 构建请求对象
+        req = urllib.request.Request(url=link, headers=headers)
+        content = urllib.request.urlopen(req).read().decode()
+        res = {}
+        # 匹配内容
+        # 匹配文章标题
+        title_pattern = re.compile(
+            r'<div class="newscontent common_newsmain">.*?<div class="left">.*?<h1><a .*?>(.*?)</a></h1>.*', re.S)
+        title = title_pattern.findall(content)
+        res['title'] = title[0]
+        # 匹配文章信息
+        info_pattern = re.compile(
+            r'<div class="newscontent common_newsmain">.*?<div class="left">.*?<div class="dp">(.*?)</div>.*', re.S)
+        info = info_pattern.findall(content)
+        res['info'] = info[0]
+        # 匹配文章内容
+        content_pattern = re.compile(
+            r'<div class="newscontent common_newsmain">.*?<div class="left">.*?<div class="ct">.*?<div class="ct_box">(.*?)</div>.*?</div>.*', re.S)
+        ar_content = content_pattern.findall(content)
+        res['ar_content'] = ar_content[0]
+        return HttpResponse(json.dumps(res))
 
 
 def login_back(request):

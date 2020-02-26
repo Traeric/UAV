@@ -67,12 +67,58 @@
         #wrap .item .info .right .comment i {
             color: #01AAED;
         }
+
+        #panel {
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            transition: all .3s linear;
+        }
+
+        #panel .position {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #panel .position .content {
+            height: calc(100% - 50px);
+            overflow: auto;
+        }
+
+        #panel .position .tools {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #panel .position .tools .btn {
+            height: 40px;
+            width: 40px;
+            margin-top: 5px;
+            background-color: rgba(0, 0, 0, .4);
+            border-radius: 50%;
+            box-shadow: 2px 2px 6px #c9c9c9;
+        }
+
+        #panel .position .tools .btn .bg {
+            background-image: url("{% static 'images/close.png' %}");
+            background-size: cover;
+            width: 20px;
+            height: 20px;
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
 <div id="wrap">
     {% for item in news_list %}
-        <div class="item">
+        <div class="item" onclick="showPanel(this)" data-link="{{ item.link }}">
             <div class="title">
                 {{ item.title }}
             </div>
@@ -104,6 +150,14 @@
             </div>
         </div>
     {% endfor %}
+</div>
+<div id="panel">
+    <div class="position">
+        <div class="content"></div>
+        <div class="tools">
+            <div class="btn"><div class="bg"></div></div>
+        </div>
+    </div>
 </div>
 <script>
     let CURRENTPAGE = 1;
@@ -140,7 +194,7 @@
                         // 添加数据
                         for (let item of args) {
                             $("#wrap").append(`
-                                <div class="item">
+                                <div class="item"  onclick="showPanel(this)"  data-link="${item.link}">
                                     <div class="title">
                                         ${item.title}
                                     </div>
@@ -178,6 +232,49 @@
                     },
                 });
             }
+        });
+    });
+</script>
+<script>
+    // 获取整个屏幕的长度
+    let winHeight = document.scrollingElement.clientHeight;
+
+    $(() => {
+        // 初始化panel
+        $("#panel").css({
+            "top": winHeight + 'px',
+            "height": winHeight + 'px',
+        });
+    });
+
+    function showPanel(self) {
+        // 设置给panel
+        $("#panel").css({
+            "top": 0,
+        });
+        // 获取文章链接
+        let link = $(self).data('link');
+        // 获取文章内容
+        $.ajax({
+            url: "{% url 'article_content' %}",
+            type: "post",
+            data: {
+                'link': link,
+            },
+            dataType: "JSON",
+            success(args) {
+                $("#panel .position .content").append(`
+                    <div class="title">${args.title}</div>
+                    <div class="info">${args.info}</div>
+                    <div class="content">${args.ar_content}</div>
+                `);
+            }
+        });
+    }
+
+    $("#panel .btn").click(() => {
+        $("#panel").css({
+            "top": winHeight + 'px',
         });
     });
 </script>
