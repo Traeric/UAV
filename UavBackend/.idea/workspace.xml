@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c991ac1d-c430-4873-b52d-367ef2d5bf3a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Uav/app/src/main/java/com/eric/uav/homepage/HomePageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Uav/app/src/main/java/com/eric/uav/homepage/HomePageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Uav/app/src/main/res/layout/activity_home_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Uav/app/src/main/res/layout/activity_home_page.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/remote_pages/news_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/remote_pages/news_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userManage/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/userManage/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,8 +62,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/remote_pages/news_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="298" column="31" selection-start-line="298" selection-start-column="31" selection-end-line="298" selection-end-column="31" />
+            <state relative-caret-position="274">
+              <caret line="107" column="31" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
               <folding>
                 <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
               </folding>
@@ -153,7 +154,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="115" />
     <option name="y" value="536" />
     <option name="width" value="1400" />
@@ -365,12 +366,12 @@
       <workItem from="1582543073989" duration="10059000" />
       <workItem from="1582609238173" duration="2579000" />
       <workItem from="1582722597375" duration="4481000" />
-      <workItem from="1582790302529" duration="3283000" />
+      <workItem from="1582790302529" duration="4970000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137913000" />
+    <option name="totallyTimeSpent" value="139600000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -671,8 +672,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/remote_pages/news_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="298" column="31" selection-start-line="298" selection-start-column="31" selection-end-line="298" selection-end-column="31" />
+        <state relative-caret-position="274">
+          <caret line="107" column="31" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
           <folding>
             <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
           </folding>

@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/top_head">
 
-        <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            app:title_height="20dp"
-            app:title_textsize="12sp" />
+<!--        <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--            android:id="@+id/banner"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            app:title_height="20dp"-->
+<!--            app:title_textsize="12sp" />-->
 
 
         <LinearLayout
@@ -31,9 +31,7 @@
             <WebView
                 android:id="@+id/news_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <RelativeLayout

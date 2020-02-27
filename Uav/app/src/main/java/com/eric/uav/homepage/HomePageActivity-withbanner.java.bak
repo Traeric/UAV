@@ -94,7 +94,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         applicationActivity.setOnClickListener(this);
 
         // 初始化banner
-//        initBanner();
+        initBanner();
         // 初始化新闻列表
         initNewsList();
 
