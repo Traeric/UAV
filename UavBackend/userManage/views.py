@@ -180,7 +180,11 @@ def article_content(request):
         content_pattern = re.compile(
             r'<div class="newscontent common_newsmain">.*?<div class="left">.*?<div class="ct">.*?<div class="ct_box">(.*?)</div>.*?</div>.*', re.S)
         ar_content = content_pattern.findall(content)
-        res['ar_content'] = ar_content[0]
+        # 为内容中的图片添加网站前缀  http://www.wrjzj.com
+        res['ar_content'] = re.sub(r'<img src=".*?"/>',
+                                   lambda val: ('<img src="http://www.wrjzj.com%s"/>' %
+                                                re.compile(r'<img src="(.*?)"/>', re.S).findall(val.group())[0]),
+                                   ar_content[0])
         return HttpResponse(json.dumps(res))
 
 

@@ -82,9 +82,25 @@
             position: relative;
         }
 
-        #panel .position .content {
+        #panel .position .uav-content {
             height: calc(100% - 50px);
-            overflow: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #panel .position .uav-content .title {
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
+        #panel .position .uav-content .info {
+            font-size: 10px;
+            color: #595959;
+            margin: 0 10px;
+        }
+
+        #panel .position .uav-content .content img {
+            width: 100%;
         }
 
         #panel .position .tools {
@@ -153,7 +169,7 @@
 </div>
 <div id="panel">
     <div class="position">
-        <div class="content"></div>
+        <div class="uav-content"></div>
         <div class="tools">
             <div class="btn"><div class="bg"></div></div>
         </div>
@@ -248,6 +264,10 @@
     });
 
     function showPanel(self) {
+        // 禁用总的滚动条
+        $(document.body).css({
+            "overflow-y": "hidden",
+        });
         // 设置给panel
         $("#panel").css({
             "top": 0,
@@ -263,7 +283,7 @@
             },
             dataType: "JSON",
             success(args) {
-                $("#panel .position .content").append(`
+                $("#panel .position .uav-content").empty().append(`
                     <div class="title">${args.title}</div>
                     <div class="info">${args.info}</div>
                     <div class="content">${args.ar_content}</div>
@@ -272,10 +292,18 @@
         });
     }
 
+    // 关闭新闻页面
     $("#panel .btn").click(() => {
+        // 禁用总的滚动条
+        $(document.body).css({
+            "overflow-y": "auto",
+        });
         $("#panel").css({
             "top": winHeight + 'px',
         });
+        setTimeout(() => {
+            $("#panel .position .uav-content").empty();
+        }, 500);
     });
 </script>
 </body>
