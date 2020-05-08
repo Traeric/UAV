@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Uav</string>
+    <string name="app_name">Fly地面站</string>
 
     <string name="title_activity_register">RegisterActivity</string>
     <string name="dummy_button">Dummy Button</string>

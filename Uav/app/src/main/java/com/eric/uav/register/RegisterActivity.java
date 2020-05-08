@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void callback(String result) {
                         // 成功返回
+                        builder.dismiss();
                         // 该步必须放到runOnUiThread API接口中执行，在当前线程中是不能执行ui线程里的组件的
                         runOnUiThread(() -> {
                             if ("0".equals(result)) {
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                             editor.putString("captcha", result);
                             editor.putString("email", email);
                             editor.apply();
-                            // 设置到验证码的哪一步
+                            // 设置到验证码的那一步
                             step = CAPTCHA;
                             // 加载填写验证码的Fragment
                             currentFragment = new CaptchaFragment();
