@@ -1,0 +1,80 @@
+GET http://localhost:8000/userManage/send_command?cmd=123456&cmd=789&cmd=78545&cmd=854854521&cmd=78544155&cmd=85782452&cmd=744dsdsds
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035528.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456&cmd=789&cmd=78545&cmd=854854521&cmd=78544155&cmd=85782452
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035520.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456&cmd=789&cmd=78545&cmd=854854521&cmd=78544155
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035512.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456&cmd=789&cmd=78545&cmd=854854521
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035502.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456&cmd=789&cmd=78545
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035453.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456&cmd=789
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035443.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035432.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T035416.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T034801.200.html
+
+###
+
+GET http://localhost:8000/userManage/send_command?cmd=123456
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-24T034644.200.html
+
+###
+

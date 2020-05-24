@@ -583,3 +583,42 @@ def download_client(request):
     return response
 
 
+def connect_test(request):
+    return render(request, "connect_test.html")
+
+
+def send_command(request):
+    """
+    接收客户端发送的指令
+    :param request:
+    :return:
+    """
+    # 获取发送过来的指令
+    cmd = request.POST.get("cmd")
+    # 将指令更新到列表中
+    utils.COMMAND_LIST.append(cmd)
+    return HttpResponse("ok")
+
+
+def get_command(request):
+    """
+    获取客户端发送的指令
+    :param request:
+    :return:
+    """
+    return HttpResponse(json.dumps(utils.COMMAND_LIST))
+
+
+def get_location(request):
+    """
+    获取无人机在地图上的位置
+    :param request:
+    :return:
+    """
+    # 随机生成位置
+    latitude = 31.033262
+    longitude = 112.209156
+    location_str = "%d|%d" % (latitude, longitude)
+    print(location_str)
+    return HttpResponse(location_str)
+

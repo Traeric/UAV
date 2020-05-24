@@ -3,6 +3,10 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 
+# 全局变量
+COMMAND_LIST = []
+
+
 def login_checked(func):
     """
     检查登录的装饰器

@@ -19,11 +19,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
@@ -36,17 +31,35 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
 import com.eric.uav.R;
+import com.eric.uav.Settings;
 import com.eric.uav.utils.CameraUtils;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.utils.HttpUtils;
+import com.eric.uav.utils.MarkerUtils;
 import com.kongqw.rockerlibrary.view.RockerView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class UavVideoActivity extends AppCompatActivity implements View.OnClickListener {
     private TextureView videoView;
@@ -72,6 +85,9 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
 
 
     private LinearLayout linearLayout;
+
+    private Marker uavMarker;   // 无人机的marker
+    private Timer timer;
 
     // 屏幕旋转监听
     /**
@@ -192,7 +208,7 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
                 return super.dispatchTouchEvent(ev);
             }
             // 判断是否点击了右侧控件
-            if (rawX > (width - 160 * density) && rawY < 40 * density) {
+            if (rawX > (width - 180 * density) && rawY < 50 * density) {
                 return super.dispatchTouchEvent(ev);
             }
             clicked = true;
@@ -227,7 +243,17 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void angle(double v) {
                 if (clicked) {
-                    Toast.makeText(UavVideoActivity.this, "摇杆方向：" + v, Toast.LENGTH_SHORT).show();
+                    // 将指令发送给无人机
+                    HttpUtils httpUtils = new HttpUtils() {
+                        @Override
+                        public void callback(String result) {
+
+                        }
+                    };
+                    Map<String, String> param = new HashMap<>();
+                    param.put("cmd", String.valueOf(v));
+                    httpUtils.sendPost(Settings.routerMap.get("send_command"), param);
+//                    Toast.makeText(UavVideoActivity.this, "摇杆方向：" + v, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -240,6 +266,7 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
 
     private static final int REQUEST_CUT_CAPTURE = 1;
     private static final int REQUEST_RECORD_SCREEN = 2;
+    private boolean open_map = false;
 
     @Override
     public void onClick(View view) {
@@ -252,8 +279,45 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
                 float density = dm.density;
 
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.height = (int) (200 * density - mapView.getWidth());
-                layoutParams.width = (int) (200 * density - mapView.getWidth());
+                if (!open_map) {
+                    layoutParams.height = (int) (200 * density);
+                    layoutParams.width = (int) (200 * density);
+                    // 设置无人机的位置 每隔500ms刷新一次
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (uavMarker != null) {
+                                // 如果已经绘制过了，先清除上一次绘制的位置
+                                uavMarker.remove();
+                                // 刷新地图
+                                aMap.reloadMap();
+                            }
+                            // 获取无人机定位
+                            HttpUtils httpUtils = new HttpUtils() {
+                                @Override
+                                public void callback(String result) {
+                                    String[] location = result.split("\\|");
+                                    LatLng latLng = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
+                                    CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(
+                                            new CameraPosition(latLng, 10, 30, 0));
+                                    aMap.moveCamera(mCameraUpdate);
+                                    // 绘制marker
+                                    uavMarker = MarkerUtils.drawUavMarker(latLng, UavVideoActivity.this, aMap);
+                                }
+                            };
+                            Map<String, String> param = new HashMap<>();
+                            param.put("null", "null");
+                            httpUtils.sendPost(Settings.routerMap.get("get_location"), param);
+                        }
+                    }, 0, 1000);
+                } else {
+                    layoutParams.height = 0;
+                    layoutParams.width = 0;
+                    timer.cancel();
+                }
+                open_map = !open_map;
+
                 mapView.setLayoutParams(layoutParams);
 
                 ValueAnimator vaMap;
@@ -324,7 +388,7 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
         super.onActivityResult(requestCode, resultCode, data);
         linearLayout.setSystemUiVisibility(View.INVISIBLE);  // 设置状态栏为不可见
         MediaProjection mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data);
-        //WindowManager对象用于获取屏幕尺寸
+        // WindowManager对象用于获取屏幕尺寸
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int windowHeight = displayMetrics.heightPixels;
         int windowWidth = displayMetrics.widthPixels;
@@ -433,5 +497,12 @@ public class UavVideoActivity extends AppCompatActivity implements View.OnClickL
             }
             requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
         }
+    }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        timer.cancel();
     }
 }

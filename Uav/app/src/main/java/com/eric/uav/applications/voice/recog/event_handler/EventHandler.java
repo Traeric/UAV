@@ -8,10 +8,12 @@ import com.baidu.speech.asr.SpeechConstant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.eric.uav.R;
+import com.eric.uav.Settings;
 import com.eric.uav.applications.voice.VoiceActivity;
 import com.eric.uav.applications.voice.audioplay.listener.FinishStatus;
 import com.eric.uav.applications.voice.wakeup.listener.SimpleWakeupListener;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.utils.HttpUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,11 +105,35 @@ public abstract class EventHandler {
     }
 
     public void turnLeft(Context context) {
-        Dialog.toastWithoutAppName((Activity) context, "向左的方法执行了");
+        // 将指令发送给无人机
+        HttpUtils httpUtils = new HttpUtils() {
+            @Override
+            public void callback(String result) {
+
+            }
+        };
+        Map<String, String> param = new HashMap<>();
+        param.put("cmd", "执行向左的指令");
+        httpUtils.sendPost(Settings.routerMap.get("send_command"), param);
+
+
+//        Dialog.toastWithoutAppName((Activity) context, "向左的方法执行了");
     }
 
     public void turnRight(Context context) {
-        Dialog.toastWithoutAppName((Activity) context, "向右的方法执行了");
+        // 将指令发送给无人机
+        HttpUtils httpUtils = new HttpUtils() {
+            @Override
+            public void callback(String result) {
+
+            }
+        };
+        Map<String, String> param = new HashMap<>();
+        param.put("cmd", "执行向右的指令");
+        httpUtils.sendPost(Settings.routerMap.get("send_command"), param);
+
+
+//        Dialog.toastWithoutAppName((Activity) context, "向右的方法执行了");
     }
 
     /**

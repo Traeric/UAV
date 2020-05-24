@@ -34,4 +34,9 @@ urlpatterns = [
     url('^update_user_info/$', views.update_user_info, name="update_user_info"),
     # 下载客户端
     url('^download_client/$', views.download_client),
+    # 客户端与无人机测试页面  由于没有无人机
+    url('^connect_test/$', views.connect_test),
+    url('^send_command/$', views.send_command),
+    url('^get_command/$', views.get_command, name="get_command"),
+    url("^get_location/$", views.get_location),
 ]

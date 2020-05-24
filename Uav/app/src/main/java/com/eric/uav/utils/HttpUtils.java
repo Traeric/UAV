@@ -88,29 +88,26 @@ public abstract class HttpUtils {
     }
 
     public static String sendGet() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String path = "http://192.168.42.29:8000/userManage/test";
-                    URL url = new URL(path);
-                    //得到connection对象。
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    //设置请求方式
-                    connection.setRequestMethod("GET");
-                    //连接
-                    connection.connect();
-                    //得到响应码
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        //得到响应流
-                        InputStream inputStream = connection.getInputStream();
-                        System.err.println(inputStream2Stream(inputStream));
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+        new Thread(() -> {
+            try {
+                String path = "http://192.168.42.29:8000/userManage/test";
+                URL url = new URL(path);
+                //得到connection对象。
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                //设置请求方式
+                connection.setRequestMethod("GET");
+                //连接
+                connection.connect();
+                //得到响应码
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    //得到响应流
+                    InputStream inputStream = connection.getInputStream();
+                    System.err.println(inputStream2Stream(inputStream));
                 }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
         return null;

@@ -47,6 +47,7 @@
                     android:text="UAV"
                     android:height="80dp"
                     android:gravity="center"
+                    android:textColor="#fff"
                     android:textSize="45sp" />
             </RelativeLayout>
         </RelativeLayout>

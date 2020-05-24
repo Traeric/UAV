@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无人机测试端</title>
+    <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/connect_test.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+</head>
+<body>
+
+<div class="moon"></div>
+<div class="moon__crater moon__crater1"></div>
+<div class="moon__crater moon__crater2"></div>
+<div class="moon__crater moon__crater3"></div>
+
+<div class="star star1"></div>
+<div class="star star2"></div>
+<div class="star star3"></div>
+<div class="star star4"></div>
+<div class="star star5"></div>
+
+<div class="error">
+    <!-- 发送指令 -->
+    <div class="panel panel-info" style="border: 1px solid #bce8f1; border-radius: 4px;">
+        <div class="panel-heading" style="background-color: #bbe8f7; color: #fff; padding: 1px 10px;">
+            <h3 class="panel-title">接收指令</h3>
+        </div>
+        <div class="panel-body" id="cmd_panel"
+             style="background-color: #fff; overflow: auto; width: 550px; height: 300px; padding: 5px 10px;">
+
+        </div>
+    </div>
+</div>
+
+<div class="astronaut">
+    <div class="astronaut__backpack"></div>
+    <div class="astronaut__body"></div>
+    <div class="astronaut__body__chest"></div>
+    <div class="astronaut__arm-left1"></div>
+    <div class="astronaut__arm-left2"></div>
+    <div class="astronaut__arm-right1"></div>
+    <div class="astronaut__arm-right2"></div>
+    <div class="astronaut__arm-thumb-left"></div>
+    <div class="astronaut__arm-thumb-right"></div>
+    <div class="astronaut__leg-left"></div>
+    <div class="astronaut__leg-right"></div>
+    <div class="astronaut__foot-left"></div>
+    <div class="astronaut__foot-right"></div>
+    <div class="astronaut__wrist-left"></div>
+    <div class="astronaut__wrist-right"></div>
+
+    <div class="astronaut__cord">
+        <canvas id="cord" height="500px" width="500px"></canvas>
+    </div>
+
+    <div class="astronaut__head">
+        <canvas id="visor" width="60px" height="60px"></canvas>
+        <div class="astronaut__head-visor-flare1"></div>
+        <div class="astronaut__head-visor-flare2"></div>
+    </div>
+</div>
+<script src="{% static 'assets/js/connect_test.js' %}"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script>
+    $(() => {
+        setInterval(() => {
+            $.ajax({
+                url: "{% url 'get_command' %}",
+                type: "get",
+                dataType: "JSON",
+                success(args) {
+                    // 将结果更新到页面
+                    $("#cmd_panel").empty();
+                    for (let item of args) {
+                        $("#cmd_panel").append(`<p>${item}</p>`);
+                    }
+                },
+            });
+        }, 500);
+    });
+</script>
+</body>
+</html>

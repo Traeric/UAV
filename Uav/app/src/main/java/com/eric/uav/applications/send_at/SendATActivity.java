@@ -1,18 +1,25 @@
 package com.eric.uav.applications.send_at;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.eric.uav.R;
+import com.eric.uav.Settings;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.utils.HttpUtils;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class SendATActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView closeActivity;
@@ -59,11 +66,22 @@ public class SendATActivity extends AppCompatActivity implements View.OnClickLis
                     Dialog.tipsDialog(this, "指令不能为空！");
                     return;
                 }
-                // 将指令发送到界面中显示
-                cmdList.add(cmd);
-                cmdDisplay.setAdapter(new CommandDisplayAdapter(this, cmdList));
-                // 清空输入框
-                atCmd.setText("");
+                // 发送指令到无人机
+                HttpUtils httpUtils = new HttpUtils() {
+                    @Override
+                    public void callback(String result) {
+                        runOnUiThread(() -> {
+                            // 将指令发送到界面中显示
+                            cmdList.add(cmd);
+                            cmdDisplay.setAdapter(new CommandDisplayAdapter(SendATActivity.this, cmdList));
+                            // 清空输入框
+                            atCmd.setText("");
+                        });
+                    }
+                };
+                Map<String, String> param = new HashMap<>();
+                param.put("cmd", cmd);
+                httpUtils.sendPost(Settings.routerMap.get("send_command"), param);
             }
             break;
             default:

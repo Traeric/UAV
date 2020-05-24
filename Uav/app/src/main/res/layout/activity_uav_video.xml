@@ -40,6 +40,8 @@
 
         <!-- 显示控件 -->
         <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"

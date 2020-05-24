@@ -44,13 +44,16 @@ import com.eric.uav.homepage.HomePageActivity;
 import com.eric.uav.login.LoginActivity;
 import com.eric.uav.profile.ProfileActivity;
 import com.eric.uav.utils.Dialog;
+import com.eric.uav.utils.HttpUtils;
 import com.eric.uav.utils.MarkerUtils;
 import com.eric.uav.zxing.android.CaptureActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener, AMap.OnMapClickListener {
     private MapView mapView;
@@ -81,7 +84,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     // 悬浮球相关内容
     private FloatingActionButton floatBall;
     private LinearLayout ballContent;
-    private int[] contentBallId = new int[]{R.id.phone_position_ball,  R.id.uav_position_ball, R.id.current_location_ball};
+    private int[] contentBallId = new int[]{R.id.phone_position_ball, R.id.uav_position_ball, R.id.current_location_ball};
     private FloatingActionButton[] contentBall = new FloatingActionButton[contentBallId.length];
     private int[] contentItemId = new int[]{R.id.phone_position, R.id.uav_position, R.id.current_location};
     private LinearLayout[] contentItem = new LinearLayout[contentItemId.length];
@@ -282,13 +285,23 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                     // 刷新地图
                     aMap.reloadMap();
                 }
-                LatLng latLng = new LatLng(31.033262, 112.209156);
-                CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(
-                        new CameraPosition(latLng, 15, 30, 0));
-                aMap.moveCamera(mCameraUpdate);
-                // 绘制marker
-                uavMarker = MarkerUtils.drawUavMarker(latLng, MapActivity.this, aMap);
-                clickLatLngList.add(0, latLng);
+                // 获取无人机定位
+                HttpUtils httpUtils = new HttpUtils() {
+                    @Override
+                    public void callback(String result) {
+                        String[] location = result.split("\\|");
+                        LatLng latLng = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
+                        CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(
+                                new CameraPosition(latLng, 10, 30, 0));
+                        aMap.moveCamera(mCameraUpdate);
+                        // 绘制marker
+                        uavMarker = MarkerUtils.drawUavMarker(latLng, MapActivity.this, aMap);
+                        clickLatLngList.add(0, latLng);
+                    }
+                };
+                Map<String, String> param = new HashMap<>();
+                param.put("null", "null");
+                httpUtils.sendPost(Settings.routerMap.get("get_location"), param);
             }
             break;
             case R.id.floatBall: {
